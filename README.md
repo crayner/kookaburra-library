@@ -1,2 +1,2 @@
-# kookaburra-library
+# Kookaburra Library Bundle
 Library Bundle for Kookaburra

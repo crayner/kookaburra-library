@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../vendor/kookaburra/library/src/Controller/
+    type: annotation
+    schemes: [ 'https' ]
