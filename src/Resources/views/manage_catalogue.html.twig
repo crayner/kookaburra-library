@@ -1,0 +1,11 @@
+{% extends 'kookaburra.html.twig' %}
+
+{% set module = {'baseURL': 'library', 'crumbs': [{uri: 'library__manage_catalogue', name: 'Library'}],  'title': 'Manage Catalogue'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'Library' %}
+
+{% block content %}
+    <h3>{{ 'Search & Filter'|trans }}</h3>
+    <h3>{{ 'View'|trans }}</h3>
+    <section id="paginationContent"></section>
+{% endblock content %}
