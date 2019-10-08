@@ -52,6 +52,12 @@ class Library implements EntityInterface
     private $facility;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $active = true;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -128,6 +134,26 @@ class Library implements EntityInterface
     public function setFacility(?Space $facility): Library
     {
         $this->facility = $facility;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->active = $this->active ? true : false;
+    }
+
+    /**
+     * Active.
+     *
+     * @param bool $active
+     * @return Library
+     */
+    public function setActive(bool $active): Library
+    {
+        $this->active = $active ? true : false;
         return $this;
     }
 

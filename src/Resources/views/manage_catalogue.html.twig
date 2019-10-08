@@ -6,6 +6,6 @@
 
 {% block content %}
     <h3>{{ 'Search & Filter'|trans }}</h3>
-    <h3>{{ 'View'|trans }}</h3>
+    <h3>{{ 'View'|trans }}<button class="fas fa-plus-circle fa-fw text-gray-700" title="{{ 'Add'|trans }}" style="float:right; font-size: 1.25rem" onclick="window.open('{{ path('library__edit', {item: 0}) }}','_self')"></button></h3>
     <section id="paginationContent"></section>
 {% endblock content %}

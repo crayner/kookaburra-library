@@ -12,7 +12,9 @@
 
 namespace Kookaburra\Library\Controller;
 
+use App\Container\Container;
 use App\Container\ContainerManager;
+use App\Container\Panel;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\CatalogueSearch;
@@ -20,6 +22,7 @@ use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\CatalogueSearchType;
 use Kookaburra\Library\Form\DuplicateCopyIdentifierType;
 use Kookaburra\Library\Form\DuplicateItemType;
+use Kookaburra\Library\Form\EditType;
 use Kookaburra\Library\Manager\CataloguePagination;
 use Kookaburra\Library\Manager\LibraryManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -204,5 +207,68 @@ class LibraryController extends AbstractController
         $manager->singlePanel($form->createView());
 
         return $this->render('@KookaburraLibrary/duplicate_item.html.twig');
+    }
+
+    /**
+     * edit
+     * @param Request $request
+     * @param ContainerManager $manager
+     * @param int $item
+     * @param string $tabName
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/{item}/edit/{tabName}", name="edit")
+     */
+    public function edit(Request $request, ContainerManager $manager, int $item = 0, string $tabName = 'Catalogue')
+    {
+        $item = ProviderFactory::getRepository(LibraryItem::class)->find($item) ?: new LibraryItem();
+        $container = new Container();
+        $container->setTarget('formContent')->setSelectedPanel($tabName)->setApplication($tabName);
+
+        $form = $this->createForm(EditType::class, $item,
+            [
+                'action' => $this->generateUrl('library__edit', ['item' => $item->getId() ?: 0]),
+            ]
+        );
+
+        if ($request->getContentType() === 'json') {
+            $errors = [];
+            $status = 'success';
+            $content = json_decode($request->getContent(), true);
+            $form->submit($content);
+            $panel = new Panel('Catalogue');
+            $container->addForm('Catalogue', $form->createView())->addPanel($panel);
+
+            $panel = new Panel('General');
+            $container->addForm('General', $form->createView())->addPanel($panel);
+
+            $panel = new Panel('Specific');
+            $container->addForm('Specific', $form->createView())->addPanel($panel);
+
+            $manager->addContainer($container)->buildContainers();
+            return new JsonResponse(
+                [
+                    'form' => $manager->getFormFromContainer('formContent', $tabName),
+                    'errors' => $errors,
+                    'status' => 'success',
+                ],
+                200);
+        }
+
+        $panel = new Panel('Catalogue');
+        $container->addForm('single', $form->createView())->addPanel($panel);
+
+        $panel = new Panel('General');
+        $container->addForm('single', $form->createView())->addPanel($panel);
+
+        $panel = new Panel('Specific');
+        $container->addForm('single', $form->createView())->addPanel($panel);
+
+        $manager->addContainer($container)->buildContainers();
+
+        return $this->render('@KookaburraLibrary/edit_item.html.twig',
+            [
+                'item' => $item,
+            ]
+        );
     }
 }
