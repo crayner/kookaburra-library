@@ -29,7 +29,7 @@ class CataloguePagination extends ReactPaginationManager
         $column->setLabel('SchoolID')
             ->setContentKey(['identifier','typeName'])
             ->setHelp('Type')
-            ->setSort(false)
+            ->setSort(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
@@ -37,7 +37,7 @@ class CataloguePagination extends ReactPaginationManager
         $column->setLabel('Name')
             ->setContentKey(['name','producer'])
             ->setHelp('Producer')
-            ->setSort(false)
+            ->setSort(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
@@ -71,6 +71,15 @@ class CataloguePagination extends ReactPaginationManager
             ->setSpanClass('fas fa-trash-alt fa-fw fa-1-5x text-gray-700')
             ->setRoute('library__delete_item')
             ->setOnClick('areYouSure')
+            ->setRouteParams(['item' => 'id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
+        $action->setTitle('Duplicate')
+            ->setAClass('thickbox p-3 sm:p-0')
+            ->setColumnClass('p-2 sm:p-3')
+            ->setSpanClass('fas fa-clone fa-fw fa-1-5x text-gray-700')
+            ->setRoute('library__duplicate_item')
             ->setRouteParams(['item' => 'id']);
         $row->addAction($action);
 

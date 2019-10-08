@@ -11,6 +11,7 @@
  */
 namespace Kookaburra\Library\DependencyInjection;
 
+use Kookaburra\Library\Manager\LibraryManager;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -30,11 +31,22 @@ class KookaburraLibraryExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $configuration = $this->getConfiguration($configs, $container);
+        $config        = $this->processConfiguration($configuration, $configs);
+
         $locator = new FileLocator(__DIR__ . '/../Resources/config');
         $loader  = new YamlFileLoader(
             $container,
             $locator
         );
         $loader->load('services.yaml');
+
+        if ($container->has(LibraryManager::class))
+        {
+            $container
+                ->getDefinition(LibraryManager::class)
+                ->addMethodCall('setGenerateIdentifier', [$config['generate_identifier']])
+                ->addMethodCall('setMaximumCopies', [$config['maximum_copies']]);
+        }
     }
 }

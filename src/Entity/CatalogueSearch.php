@@ -12,7 +12,7 @@
 
 namespace Kookaburra\Library\Entity;
 
-use App\Entity\LibraryType;
+use Kookaburra\Library\Entity\LibraryType;
 use App\Entity\Space;
 
 /**

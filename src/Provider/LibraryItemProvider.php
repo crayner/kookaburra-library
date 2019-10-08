@@ -12,10 +12,10 @@
 
 namespace Kookaburra\Library\Provider;
 
-use App\Entity\LibraryItem;
 use App\Manager\Traits\EntityTrait;
 use App\Provider\EntityProviderInterface;
 use Kookaburra\Library\Entity\CatalogueSearch;
+use Kookaburra\Library\Entity\LibraryItem;
 
 /**
  * Class LibraryItemProvider

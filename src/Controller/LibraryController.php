@@ -12,13 +12,20 @@
 
 namespace Kookaburra\Library\Controller;
 
-use App\Entity\LibraryItem;
+use App\Container\ContainerManager;
 use App\Provider\ProviderFactory;
+use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\CatalogueSearch;
+use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\CatalogueSearchType;
+use Kookaburra\Library\Form\DuplicateCopyIdentifierType;
+use Kookaburra\Library\Form\DuplicateItemType;
 use Kookaburra\Library\Manager\CataloguePagination;
+use Kookaburra\Library\Manager\LibraryManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -66,5 +73,136 @@ class LibraryController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Your request was completed successfully.');
         return $this->forward(LibraryController::class.'::manageCatalogue');
+    }
+
+    /**
+     * duplicateItem
+     * @param LibraryItem $item
+     * @param Request $request
+     * @param ContainerManager $manager
+     * @param LibraryManager $libraryManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ROUTE")
+     * @Route("/duplicate/{item}/item/", name="duplicate_item")
+     */
+    public function duplicateItem(LibraryItem $item, Request $request, ContainerManager $manager, LibraryManager $libraryManager)
+    {
+        $form = $this->createForm(DuplicateItemType::class, $item,
+            [
+                'action' => $this->generateUrl('library__duplicate_item', ['item' => $item->getId()]),
+            ]
+        );
+
+        if ($request->getContentType() === 'json') {
+            $errors = [];
+            $status = 'success';
+            $content = json_decode($request->getContent(), true);
+
+            $form->submit($content);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $copies = $form->get('copies')->getData();
+                if ($libraryManager->isGenerateIdentifier())
+                {
+                    $em = $this->getDoctrine()->getManager();
+                    for($x=1; $x<=$copies; $x++)
+                    {
+                        $newItem = clone $item;
+                        $libraryManager->newIdentifier($newItem);
+                        $em->persist($newItem);
+                    }
+                    $em->flush();
+                } else {
+                    $manager->singlePanel($form->createView());
+                    return new JsonResponse(
+                        [
+                            'form' => $manager->getFormFromContainer('formContent', 'single'),
+                            'errors' => $errors,
+                            'status' => 'redirect',
+                            'redirect' => $this->generateUrl('library__duplicate_item_copies', ['item' => $item->getId(), 'copies' => $copies]),
+                        ],
+                        200);
+
+                }
+                $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your request was completed successfully. # records were added.', ['count' => $form->get('copies')->getData()])];
+            } else {
+                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('Your request failed because your inputs were invalid.')];
+                $status = 'error';
+            }
+
+            $manager->singlePanel($form->createView());
+            return new JsonResponse(
+                [
+                    'form' => $manager->getFormFromContainer('formContent', 'single'),
+                    'errors' => $errors,
+                    'status' => $status,
+                ],
+                200);
+        }
+
+        $manager->singlePanel($form->createView());
+
+        return $this->render('@KookaburraLibrary/duplicate_item.html.twig');
+    }
+
+    /**
+     * duplicateIDList
+     * @param Request $request
+     * @param LibraryItem $item
+     * @param int $copies
+     * @Security("is_granted('ROLE_ROUTE', ['library__duplicate_item'])")
+     * @Route("/duplicate/{item}/item/{copies}/copies/", name="duplicate_item_copies")
+     */
+    public function duplicateIdentifiers(Request $request, LibraryItem $item, int $copies, ContainerManager $manager)
+    {
+        $form = $this->createForm(DuplicateCopyIdentifierType::class, $item,
+            [
+                'copies' => $copies,
+                'action' => $this->generateUrl('library__duplicate_item_copies', ['item' => $item->getId(), 'copies' => $copies]),
+            ]
+        );
+
+        if ($request->getContentType() === 'json') {
+            $errors = [];
+            $status = 'success';
+            $content = json_decode($request->getContent(), true);
+
+            $form->submit($content);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                for($x=1; $x<=$copies; $x++)
+                {
+                    $identifier = $form->get('identifier'.$x)->getData();
+                    $newItem = clone $item;
+                    $newItem->setIdentifier($identifier);
+                    $em->persist($newItem);
+                }
+                $em->flush();
+
+                $manager->singlePanel($form->createView());
+                $this->addFlash('success', TranslationsHelper::translate('Your request was completed successfully. # records were added.', ['count' => $copies]));
+                return new JsonResponse(
+                    [
+                        'form' => $manager->getFormFromContainer('formContent', 'single'),
+                        'errors' => $errors,
+                        'status' => 'redirect',
+                        'redirect' => $this->generateUrl('library__duplicate_item', ['item' => $item->getId()]),
+                    ],
+                    200);
+            } else {
+                $manager->singlePanel($form->createView());
+                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('Your request failed because your inputs were invalid.')];
+                return new JsonResponse(
+                    [
+                        'form' => $manager->getFormFromContainer('formContent', 'single'),
+                        'errors' => $errors,
+                        'status' => 'error',
+                    ],
+                    200);
+            }
+        }
+
+        $manager->singlePanel($form->createView());
+
+        return $this->render('@KookaburraLibrary/duplicate_item.html.twig');
     }
 }
