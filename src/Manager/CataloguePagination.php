@@ -70,7 +70,7 @@ class CataloguePagination extends ReactPaginationManager
             ->setColumnClass('p-2 sm:p-3')
             ->setSpanClass('fas fa-trash-alt fa-fw fa-1-5x text-gray-700')
             ->setRoute('library__delete_item')
-            ->setOnClick('caution')
+            ->setOnClick('areYouSure')
             ->setRouteParams(['item' => 'id']);
         $row->addAction($action);
 
