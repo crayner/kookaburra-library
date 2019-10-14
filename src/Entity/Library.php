@@ -156,5 +156,4 @@ class Library implements EntityInterface
         $this->active = $active ? true : false;
         return $this;
     }
-
 }

@@ -213,16 +213,17 @@ class LibraryController extends AbstractController
      * edit
      * @param Request $request
      * @param ContainerManager $manager
+     * @param LibraryManager $libraryManager
      * @param int $item
      * @param string $tabName
      * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/{item}/edit/{tabName}", name="edit")
      */
-    public function edit(Request $request, ContainerManager $manager, int $item = 0, string $tabName = 'Catalogue')
+    public function edit(Request $request, ContainerManager $manager, LibraryManager $libraryManager, int $item = 0, string $tabName = 'Catalogue')
     {
         $item = ProviderFactory::getRepository(LibraryItem::class)->find($item) ?: new LibraryItem();
         $container = new Container();
-        $container->setTarget('formContent')->setSelectedPanel($tabName)->setApplication($tabName);
+        $container->setTarget('formContent')->setSelectedPanel($tabName)->setApplication('LibraryApp');
 
         $form = $this->createForm(EditType::class, $item,
             [
@@ -235,21 +236,38 @@ class LibraryController extends AbstractController
             $status = 'success';
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
+
+            if (!$form->isValid()) {
+                $status = 'error';
+                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('Your request failed because your inputs were invalid.')];
+            } else {
+                $item = $libraryManager->handleItem($item, $content);
+                $form = $this->createForm(EditType::class, $item,
+                    [
+                        'action' => $this->generateUrl('library__edit', ['item' => $item->getId() ?: 0]),
+                    ]
+                );
+                $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your request was completed successfully.')];
+
+            }
+
             $panel = new Panel('Catalogue');
-            $container->addForm('Catalogue', $form->createView())->addPanel($panel);
+            $container->addPanel($panel);
 
             $panel = new Panel('General');
-            $container->addForm('General', $form->createView())->addPanel($panel);
+            $container->addPanel($panel);
 
             $panel = new Panel('Specific');
-            $container->addForm('Specific', $form->createView())->addPanel($panel);
+            $container->addPanel($panel);
 
+            $container->addForm('single', $form->createView());
             $manager->addContainer($container)->buildContainers();
+
             return new JsonResponse(
                 [
-                    'form' => $manager->getFormFromContainer('formContent', $tabName),
+                    'form' => $manager->getFormFromContainer('formContent', 'single'),
                     'errors' => $errors,
-                    'status' => 'success',
+                    'status' => $status,
                 ],
                 200);
         }
@@ -258,10 +276,10 @@ class LibraryController extends AbstractController
         $container->addForm('single', $form->createView())->addPanel($panel);
 
         $panel = new Panel('General');
-        $container->addForm('single', $form->createView())->addPanel($panel);
+        $container->addPanel($panel);
 
         $panel = new Panel('Specific');
-        $container->addForm('single', $form->createView())->addPanel($panel);
+        $container->addPanel($panel);
 
         $manager->addContainer($container)->buildContainers();
 

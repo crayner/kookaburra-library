@@ -16,6 +16,7 @@ use App\Entity\Department;
 use App\Entity\Person;
 use App\Entity\SchoolYear;
 use App\Entity\Space;
+use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
@@ -30,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(options={"auto_increment": 1}, name="LibraryItem", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})})
  * @ORM\HasLifecycleCallbacks()
  */
-class LibraryItem
+class LibraryItem implements EntityInterface
 {
     use BooleanList;
 
@@ -87,19 +88,19 @@ class LibraryItem
 
     /**
      * @var string|null
-     * @ORM\Column(length=100)
+     * @ORM\Column(length=100,nullable=true)
      */
     private $vendor;
 
     /**
      * @var \DateTime|null
-     * @ORM\Column(type="date", name="purchaseDate", nullable=true)
+     * @ORM\Column(type="date",name="purchaseDate",nullable=true)
      */
     private $purchaseDate;
 
     /**
      * @var string|null
-     * @ORM\Column(length=50, name="invoiceNumber")
+     * @ORM\Column(length=50,name="invoiceNumber",nullable=true)
      */
     private $invoiceNumber;
 
@@ -117,7 +118,7 @@ class LibraryItem
 
     /**
      * @var string|null
-     * @ORM\Column(name="imageLocation", options={"comment": "URL or local FS path of image."})
+     * @ORM\Column(name="imageLocation",options={"comment": "URL or local FS path of image."},nullable=true)
      * @Assert\Url()
      */
     private $imageLocation;
@@ -424,7 +425,7 @@ class LibraryItem
      */
     public function setFields(?array $fields): LibraryItem
     {
-        $this->fields = $fields;
+        $this->fields = $fields ?: [];
         return $this;
     }
 
@@ -699,11 +700,11 @@ class LibraryItem
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getBookable(): ?string
+    public function getBookable(): string
     {
-        return $this->bookable;
+        return $this->bookable = self::checkBoolean($this->bookable, 'N');
     }
 
     /**
@@ -979,6 +980,8 @@ class LibraryItem
      */
     public function update(): LibraryItem
     {
+        if (null === $this->getSpace() || '' === $this->getSpace())
+            $this->setSpace($this->getLibrary()->getFacility());
         return $this->setTimestampUpdate(new \DateTime())->setPersonUpdate(UserHelper::getCurrentUser());
     }
 
@@ -990,6 +993,8 @@ class LibraryItem
      */
     public function persist(): LibraryItem
     {
+        if (null === $this->getSpace() || '' === $this->getSpace())
+            $this->setSpace($this->getLibrary()->getFacility());
         return $this->update()->setPersonCreator(UserHelper::getCurrentUser())->setTimestampCreator(new \DateTime());
     }
 

@@ -71,7 +71,7 @@ class EditType extends AbstractType
                             ->orderBy('l.name')
                             ->setParameter('true',true);
                     },
-                    'submit_on_change' => true,
+                    'on_change' => 'selectLibraryAndType',
                     'panel' => 'Catalogue',
                 ]
             )
@@ -87,11 +87,12 @@ class EditType extends AbstractType
                             ->orderBy('lt.name')
                             ->setParameter('yes','Y');
                     },
-                    'submit_on_change' => true,
+                    'on_change' => 'selectLibraryAndType',
                     'panel' => 'Catalogue',
                 ]
             )
         ;
+        $this->subscriber->setOptions($options);
         $builder->addEventSubscriber($this->subscriber);
     }
 
@@ -104,6 +105,7 @@ class EditType extends AbstractType
         $resolver->setDefaults([
             'translation_domain' => 'messages',
             'data_class' => LibraryItem::class,
+            'allow_extra_fields' => true,
         ]);
     }
 

@@ -12,6 +12,7 @@
  */
 namespace Kookaburra\Library\Entity;
 
+use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryTypeRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="LibraryType")
  */
-class LibraryType
+class LibraryType implements EntityInterface
 {
     use BooleanList;
 
@@ -46,8 +47,8 @@ class LibraryType
     private $active = 'Y';
 
     /**
-     * @var string|null
-     * @ORM\Column(type="text")
+     * @var array
+     * @ORM\Column(type="array")
      */
     private $fields;
 
@@ -106,18 +107,20 @@ class LibraryType
     }
 
     /**
-     * @return string|null
+     * @return array
      */
-    public function getFields(): ?string
+    public function getFields(): array
     {
         return $this->fields;
     }
 
     /**
-     * @param string|null $fields
+     * Fields.
+     *
+     * @param array $fields
      * @return LibraryType
      */
-    public function setFields(?string $fields): LibraryType
+    public function setFields(array $fields): LibraryType
     {
         $this->fields = $fields;
         return $this;

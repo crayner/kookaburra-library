@@ -12,9 +12,11 @@
 
 namespace Kookaburra\Library\Manager;
 
-
 use App\Provider\ProviderFactory;
+use App\Util\TranslationsHelper;
+use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
+use Kookaburra\Library\Entity\LibraryType;
 
 class LibraryManager
 {
@@ -84,5 +86,40 @@ class LibraryManager
         } while (!$ok);
 
         return $item->setIdentifier($key);
+    }
+
+    /**
+     * setTranslations
+     */
+    public function setTranslations()
+    {
+        TranslationsHelper::addTranslation('Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.');
+        TranslationsHelper::addTranslation('The specified record cannot be found.');
+    }
+
+    /**
+     * handleItem
+     * @param LibraryItem $item
+     * @param array $content
+     * @return LibraryItem
+     */
+    public function handleItem(LibraryItem $item, array $content): LibraryItem
+    {
+        $fields = [];
+        $library = ProviderFactory::getRepository(Library::class)->find($content['library']);
+        $libraryType = ProviderFactory::getRepository(LibraryType::class)->find($content['libraryType']);
+        $item->setLibrary($library)->setLibraryType($libraryType);
+
+        foreach($libraryType->getFields() as $q=>$field)
+            $fields[$field['name']] = isset($content['field'.$q]) ? $content['field'.$q] : '';
+
+        $item->setFields($fields);
+
+        $em = ProviderFactory::getEntityManager();
+        $em->refresh($library);
+        $em->refresh($libraryType);
+        $em->persist($item);
+        $em->flush();
+        return $item;
     }
 }
