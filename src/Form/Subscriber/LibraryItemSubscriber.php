@@ -147,6 +147,8 @@ class LibraryItemSubscriber implements EventSubscriberInterface
             ->add('general', HeaderType::class,
                 [
                     'label' => 'General Details',
+                    'help' => 'Item Identifier {identifier}',
+                    'help_translation_parameters' => ['{identifier}' => $this->getOptions()['data']->getIdentifier()],
                     'panel' => 'General',
                 ]
             )
@@ -328,6 +330,8 @@ class LibraryItemSubscriber implements EventSubscriberInterface
             ->add('specific', HeaderType::class,
                 [
                     'label' => 'Specific Details',
+                    'help' => 'Item Identifier {identifier}',
+                    'help_translation_parameters' => ['{identifier}' => $this->getOptions()['data']->getIdentifier()],
                     'panel' => 'Specific',
                 ]
             )

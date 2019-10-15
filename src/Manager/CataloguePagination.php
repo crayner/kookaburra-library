@@ -65,6 +65,15 @@ class CataloguePagination extends ReactPaginationManager
         $row->addColumn($column);
 
         $action = new PaginationAction();
+        $action->setTitle('Edit')
+            ->setAClass('thickbox p-3 sm:p-0')
+            ->setColumnClass('p-2 sm:p-3')
+            ->setSpanClass('far fa-edit fa-fw fa-1-5x text-gray-700')
+            ->setRoute('library__edit')
+            ->setRouteParams(['item' => 'id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
         $action->setTitle('Delete')
             ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('p-2 sm:p-3')

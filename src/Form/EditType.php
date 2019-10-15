@@ -56,6 +56,8 @@ class EditType extends AbstractType
             ->add('libraryItemType', HeaderType::class,
                 [
                     'label' => 'Library Item Type',
+                    'help' => 'Item Identifier {identifier}',
+                    'help_translation_parameters' => ['{identifier}' => $options['data']->getIdentifier()],
                     'panel' => 'Catalogue',
                 ]
             )
