@@ -24,14 +24,14 @@
         "sort-packages": true
     },
     "scripts": {
-        "auto-scripts": {
+        "install-module": {
             "module:install 'Library'": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@install-module"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@install-module"
         ]
     },
     "autoload": {
