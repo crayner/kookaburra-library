@@ -1,11 +1,10 @@
 version: 0.0.00
-installedOn: false
 module:
     name: Library
     description: 'Allows the management of a catalog from which items can be borrowed.'
     entryURL: manage_catalogue
     type: Additional
-    active: Y
+    active: 'Y'
     category: Learn
     version: 0.0.00
     author: 'Craig Rayner'
@@ -137,3 +136,4 @@ module:
             permissions:
                 - Administrator
                 - 'Support Staff'
+installedOn: false
