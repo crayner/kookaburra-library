@@ -33,7 +33,7 @@ class LibraryItemEvent
 
     /**
      * @var LibraryItem|null
-     * @ORM\ManyToOne(targetEntity="LibraryItem")
+     * @ORM\ManyToOne(targetEntity="LibraryItem", inversedBy="events")
      * @ORM\JoinColumn(name="gibbonLibraryItemID", referencedColumnName="gibbonLibraryItemID", nullable=false)
      */
     private $libraryItem;

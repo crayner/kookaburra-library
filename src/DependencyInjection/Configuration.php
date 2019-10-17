@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('generate_identifier')->defaultTrue()->end()
                 ->integerNode('maximum_copies')->defaultValue(20)->end()
+                ->arrayNode('item_types')->end()
             ->end()
         ;
         return $treeBuilder;

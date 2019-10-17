@@ -1,0 +1,525 @@
+'Print Publication':
+    name: 'Print Publication'
+    active: true
+    fields:
+        Format:
+            name: Format
+            description: ''
+            type: Select
+            options: ',Art - Original,Art - Reproduction,Book,Braille,Cartographic material,Chart,Diorama,Electronic Resource,Filmstrip,Flash Card,Game,Globe,Journal,Kit,Large print,Magazine,Manuscript,Microform,Microscope slide,Model,Motion Picture,Music,Picture,Realia,Resource,Serial,Slide,Sound Recording,Technical Drawing,Text,Toy,Transparency,Videorecording'
+            default: ''
+            required: false
+        Publisher:
+            name: Publisher
+            description: 'Name of the company who published the volume.'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Publication Date':
+            name: 'Publication Date'
+            description: 'Format: dd/mm/yyyy, mm/yyyy or yyyy.'
+            type: Text
+            options: '10'
+            default: ''
+            required: false
+        'Country of Publication':
+            name: 'Country of Publication'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        Edition:
+            name: Edition
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        ISBN10:
+            name: ISBN10
+            description: '10-digit unique ISBN number.'
+            type: Text
+            options: '10'
+            default: ''
+            required: false
+        ISBN13:
+            name: ISBN13
+            description: '13-digit unique ISBN number.'
+            type: Text
+            options: '13'
+            default: ''
+            required: true
+        Description:
+            name: Description
+            description: 'A brief blurb describing the volume.'
+            type: Textarea
+            options: '10'
+            default: ''
+            required: false
+        Subjects:
+            name: Subjects
+            description: 'Comma separated list of subjects.'
+            type: Textarea
+            options: '2'
+            default: ''
+            required: false
+        Collection:
+            name: Collection
+            description: ''
+            type: Select
+            options: ',Fiction, Fiction - Best Sellers, Fiction - Classics, Fiction - Mystery, Fiction - Series, Fiction - Young Adult, Nonfiction, Nonfiction - College Prep, Nonfiction - Graphic Novels, Nonfiction - Life Skills, Nonfiction - Reference'
+            default: ''
+            required: false
+        'Control Number':
+            name: 'Control Number'
+            description: ''
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Cataloging Authority':
+            name: 'Cataloging Authority'
+            description: 'Issuing authority for Control Number.'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Reader Age (Youngest)':
+            name: 'Reader Age (Youngest)'
+            description: 'Age in years, youngest reading age recommendation.'
+            type: Text
+            options: '3'
+            default: ''
+            required: false
+        'Reader Age (Oldest)':
+            name: 'Reader Age (Oldest)'
+            description: 'Age in years, oldest reading age recommendation.'
+            type: Text
+            options: '3'
+            default: ''
+            required: false
+        'Page Count':
+            name: 'Page Count'
+            description: 'The number of pages in the volume.'
+            type: Text
+            options: '4'
+            default: ''
+            required: false
+        Height:
+            name: Height
+            description: 'The physical height of the volume, in cm.'
+            type: Text
+            options: '6'
+            default: ''
+            required: false
+        Width:
+            name: Width
+            description: 'The physical width of the volume, in cm.'
+            type: Text
+            options: '6'
+            default: ''
+            required: false
+        Thickness:
+            name: Thickness
+            description: 'The physical thickness of the volume, in cm.'
+            type: Text
+            options: '6'
+            default: ''
+            required: false
+        Language:
+            name: Language
+            description: 'The primary language of the volume.'
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        Link:
+            name: Link
+            description: 'Link to web-based information on the volume.'
+            type: URL
+            options: '255'
+            default: ''
+            required: false
+Computer:
+    name: Computer
+    active: true
+    fields:
+        'Form Factor':
+            name: 'Form Factor'
+            description: ''
+            type: Select
+            options: 'Desktop, Laptop, Tablet, Phone, Set-Top Box, Other'
+            default: Laptop
+            required: true
+        'Operating System':
+            name: 'Operating System'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Serial Number':
+            name: 'Serial Number'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Model Name':
+            name: 'Model Name'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Model ID':
+            name: 'Model ID'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'CPU Type':
+            name: 'CPU Type'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'CPU Speed':
+            name: 'CPU Speed'
+            description: 'In GHz.'
+            type: Text
+            options: '6'
+            default: ''
+            required: false
+        Memory:
+            name: Memory
+            description: 'Total RAM, in GB.'
+            type: Text
+            options: '6'
+            default: ''
+            required: false
+        'Storage Type':
+            name: 'Storage Type'
+            description: 'Primary internal storage type.'
+            type: Select
+            options: ',HDD, SSD, Hybrid, Other'
+            default: ''
+            required: false
+        Storage:
+            name: Storage
+            description: 'Total HDD/SDD capacity, in GB.'
+            type: Text
+            options: '6'
+            default: ''
+            required: false
+        'Wireless MAC Address':
+            name: 'Wireless MAC Address'
+            description: ''
+            type: Text
+            options: '17'
+            default: ''
+            required: false
+        'Wired MAC Address':
+            name: 'Wired MAC Address'
+            description: ''
+            type: Text
+            options: '17'
+            default: ''
+            required: false
+        Accessories:
+            name: Accessories
+            description: 'Any chargers, display dongles, remotes etc?'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Warranty Number':
+            name: 'Warranty Number'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Warranty Expiry':
+            name: 'Warranty Expiry'
+            description: 'Format: dd/mm/yyyy.'
+            type: Date
+            options: ''
+            default: ''
+            required: false
+        'Last Reinstall Date':
+            name: 'Last Reinstall Date'
+            description: 'Format: dd/mm/yyyy.'
+            type: Date
+            options: ''
+            default: ''
+            required: false
+        'Repair Log/Notes':
+            name: 'Repair Log/Notes'
+            description: ''
+            type: Textarea
+            options: '10'
+            default: ''
+            required: false
+Electronics:
+    name: Electronics
+    active: true
+    fields:
+        Type:
+            name: Type
+            description: 'What kind of product is this?'
+            type: Text
+            options: '50'
+            default: ''
+            required: true
+        'Serial Number':
+            name: 'Serial Number'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Model Name':
+            name: 'Model Name'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Model ID':
+            name: 'Model ID'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        Accessories:
+            name: Accessories
+            description: 'Any chargers, remotes controls, etc?'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Warranty Number':
+            name: 'Warranty Number'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Warranty Expiry':
+            name: 'Warranty Expiry'
+            description: 'Format: dd/mm/yyyy.'
+            type: Date
+            options: ''
+            default: ''
+            required: false
+        'Repair Log/Notes':
+            name: 'Repair Log/Notes'
+            description: ''
+            type: Textarea
+            options: '10'
+            default: ''
+            required: false
+Other:
+    name: Other
+    active: true
+    fields:
+        Type:
+            name: Type
+            description: 'What kind of product is this?'
+            type: Text
+            options: '50'
+            default: ''
+            required: true
+Software:
+    name: Software
+    active: true
+    fields:
+        Version:
+            name: Version
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Operating System':
+            name: 'Operating System'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'License Type':
+            name: 'License Type'
+            description: 'E.g. Open Source, Site License, number of users.'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'License Name':
+            name: 'License Name'
+            description: 'If the software is registered, who is it registered to?'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'License Serial Number':
+            name: 'License Serial Number'
+            description: ''
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'License Expiry':
+            name: 'License Expiry'
+            description: 'Format: dd/mm/yyyy.'
+            type: Date
+            options: ''
+            default: ''
+            required: false
+        'License Management Link':
+            name: 'License Management Link'
+            description: 'Link to web-based management tool.'
+            type: URL
+            options: '255'
+            default: ''
+            required: false
+'Audio/Visual Hardware':
+    name: 'Audio/Visual Hardware'
+    active: true
+    fields:
+        Type:
+            name: Type
+            description: 'What kind of product is this?'
+            type: Text
+            options: '50'
+            default: ''
+            required: true
+        'Serial Number':
+            name: 'Serial Number'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Model Name':
+            name: 'Model Name'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Model ID':
+            name: 'Model ID'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        Accessories:
+            name: Accessories
+            description: 'Any chargers, remotes controls, etc?'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Warranty Number':
+            name: 'Warranty Number'
+            description: ''
+            type: Text
+            options: '50'
+            default: ''
+            required: false
+        'Warranty Expiry':
+            name: 'Warranty Expiry'
+            description: 'Format: dd/mm/yyyy.'
+            type: Date
+            options: ''
+            default: ''
+            required: false
+        'Repair Log/Notes':
+            name: 'Repair Log/Notes'
+            description: ''
+            type: Textarea
+            options: '10'
+            default: ''
+            required: false
+'Optical Media':
+    name: 'Optical Media'
+    active: true
+    fields:
+        Type:
+            name: Type
+            description: 'What type of optical media is this?'
+            type: Select
+            options: 'CD,DVD,Blu-Ray'
+            default: ''
+            required: true
+        Format:
+            name: Format
+            description: 'Technical details of media formatting.'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        Language:
+            name: Language
+            description: ''
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        Subtitles:
+            name: Subtitles
+            description: ''
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Aspect Ratio':
+            name: 'Aspect Ratio'
+            description: ''
+            type: Text
+            options: '20'
+            default: ''
+            required: false
+        'Number of Discs':
+            name: 'Number of Discs'
+            description: ''
+            type: Select
+            options: ',1,2,3,4,5'
+            default: ''
+            required: false
+        'Content Rating':
+            name: 'Content Rating'
+            description: 'Details of age guidance or retrictions.'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        Studio:
+            name: Studio
+            description: 'Name of originating studio.'
+            type: Text
+            options: '255'
+            default: ''
+            required: false
+        'Release Date':
+            name: 'Release Date'
+            description: 'Format: dd/mm/yyyy, mm/yyyy or yyyy.'
+            type: Text
+            options: '10'
+            default: ''
+            required: false
+        'Run Time':
+            name: 'Run Time'
+            description: 'In minutes.'
+            type: Text
+            options: '3'
+            default: ''
+            required: false

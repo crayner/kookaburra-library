@@ -1,11 +1,40 @@
 {% extends 'kookaburra.html.twig' %}
 
+{% form_theme form
+    'form/kookaburra_form.html.twig'
+%}
+
 {% set module = {'baseURL': 'library', 'crumbs': [{uri: 'library__manage_catalogue', name: 'Library'}],  'title': 'Manage Catalogue'} %}
 {% set breadcrumbs = 'new' %}
 {% set moduleName = 'Library' %}
 
 {% block content %}
     <h3>{{ 'Search & Filter'|trans }}</h3>
-    <h3>{{ 'View'|trans }}<a title="{{ 'Add'|trans }}" style="float:right; font-size: 1.25rem" onclick="window.open('{{ path('library__edit', {item: 0}) }}','_self')"><span class="fas fa-plus-circle fa-fw text-gray-700"></span></a></h3>
+    {{ form_start(form) }}
+    <table class="noIntBorder fullWidth relative">
+        <tbody>
+            {{ form_row(form.search) }}
+            {{ form_row(form.type) }}
+            {{ form_row(form.location) }}
+            {{ form_row(form.status) }}
+            {{ form_row(form.person) }}
+            {{ form_row(form.searchFields) }}
+            <tr id="" class="flex flex-col sm:flex-row justify-between content-center p-0">
+                <td class="flex-grow justify-center px-2 border-b-0 sm:border-b border-t-0 right" colspan="2">
+                    <div>
+                        {{ form_widget(form.submit) }}
+                        {{ form_widget(form.clear) }}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {{ form_end(form) }}
+    <h3>{{ 'View'|trans }}<a title="{{ 'Add'|trans }}" style="float:right; font-size: 1.25rem" onclick="window.open('{{ path('library__edit', {item: 0}) }}','_self')"><span class="fas fa-plus-circle fa-fw text-gray-700"></span></a>
+        {% if is_granted('ROLE_SYSTEM_ADMIN') and content|length is same as(0) %}
+            <a title="{{ 'Load Demonstration Data'|trans }}" style="float:right; font-size: 1.25rem" onclick="window.open('{{ path('library__demonstration') }}','_self')"><span class="fas fa-truck-loading fa-fw text-gray-700"></span></a>
+        {% endif %}
+    </h3>
+    {% dump %}
     <section id="paginationContent"></section>
 {% endblock content %}

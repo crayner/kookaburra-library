@@ -20,6 +20,9 @@ use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class LibraryItem
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryItemRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryItem", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryItem", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})},indexes={@ORM\Index(name="item_type", columns={"item_type"}),@ORM\Index(name="library", columns={"library"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class LibraryItem implements EntityInterface
@@ -52,12 +55,11 @@ class LibraryItem implements EntityInterface
     private $library;
 
     /**
-     * @var LibraryType|null
-     * @ORM\ManyToOne(targetEntity="LibraryType")
-     * @ORM\JoinColumn(name="gibbonLibraryTypeID", referencedColumnName="gibbonLibraryTypeID", nullable=false)
+     * @var string|null
+     * @ORM\Column(length=32)
      * @Assert\NotBlank()
      */
-    private $libraryType;
+    private $itemType = 'Print Publication';
 
     /**
      * @var string|null
@@ -81,16 +83,16 @@ class LibraryItem implements EntityInterface
     private $producer;
 
     /**
-     * @var array
-     * @ORM\Column(type="array")
-     */
-    private $fields;
-
-    /**
      * @var string|null
      * @ORM\Column(length=100,nullable=true)
      */
     private $vendor;
+
+    /**
+     * @var array
+     * @ORM\Column(type="array")
+     */
+    private $fields = [];
 
     /**
      * @var \DateTime|null
@@ -232,7 +234,7 @@ class LibraryItem implements EntityInterface
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
      * @ORM\JoinColumn(name="gibbonPersonIDStatusResponsible", referencedColumnName="gibbonPersonID", nullable=true)
-     * The person who is responsible for the current status.
+     * The person who is responsible for the current status. (borrower/repairer/etc)
      */
     private $responsibleForStatus;
 
@@ -276,30 +278,20 @@ class LibraryItem implements EntityInterface
     private $personReturnAction;
 
     /**
-     * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDCreator", referencedColumnName="gibbonPersonID")
-     */
-    private $personCreator;
-
-    /**
      * @var \DateTime|null
-     * @ORM\Column(type="datetime", name="timestampCreator")
      */
-    private $timestampCreator;
+    private $audit;
 
     /**
-     * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDUpdate", referencedColumnName="gibbonPersonID", nullable=true)
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Kookaburra\Library\Entity\LibraryItemEvent", mappedBy="libraryItem")
      */
-    private $personUpdate;
+    private $events;
 
-    /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", name="timestampUpdate", nullable=true)
-     */
-    private $timestampUpdate;
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -340,21 +332,12 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return LibraryType|null
+     * getLibraryTypeList
+     * @return array
      */
-    public function getLibraryType(): ?LibraryType
+    public static function getItemTypeList(): array
     {
-        return $this->libraryType;
-    }
-
-    /**
-     * @param LibraryType|null $libraryType
-     * @return LibraryItem
-     */
-    public function setLibraryType(?LibraryType $libraryType): LibraryItem
-    {
-        $this->libraryType = $libraryType;
-        return $this;
+        return LibraryManager::getItemTypeList();
     }
 
     /**
@@ -408,24 +391,6 @@ class LibraryItem implements EntityInterface
     public function setProducer(?string $producer): LibraryItem
     {
         $this->producer = $producer;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getFields(): array
-    {
-        return $this->fields = $this->fields ?: [];
-    }
-
-    /**
-     * @param array|null $fields
-     * @return LibraryItem
-     */
-    public function setFields(?array $fields): LibraryItem
-    {
-        $this->fields = $fields ?: [];
         return $this;
     }
 
@@ -862,78 +827,6 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return Person|null
-     */
-    public function getPersonCreator(): ?Person
-    {
-        return $this->personCreator;
-    }
-
-    /**
-     * @param Person|null $personCreator
-     * @return LibraryItem
-     */
-    public function setPersonCreator(?Person $personCreator): LibraryItem
-    {
-        $this->personCreator = $personCreator;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getTimestampCreator(): ?\DateTime
-    {
-        return $this->timestampCreator;
-    }
-
-    /**
-     * @param \DateTime|null $timestampCreator
-     * @return LibraryItem
-     */
-    public function setTimestampCreator(?\DateTime $timestampCreator): LibraryItem
-    {
-        $this->timestampCreator = $timestampCreator;
-        return $this;
-    }
-
-    /**
-     * @return Person|null
-     */
-    public function getPersonUpdate(): ?Person
-    {
-        return $this->personUpdate;
-    }
-
-    /**
-     * @param Person|null $personUpdate
-     * @return LibraryItem
-     */
-    public function setPersonUpdate(?Person $personUpdate): LibraryItem
-    {
-        $this->personUpdate = $personUpdate;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getTimestampUpdate(): ?\DateTime
-    {
-        return $this->timestampUpdate;
-    }
-
-    /**
-     * @param \DateTime|null $timestampUpdate
-     * @return LibraryItem
-     */
-    public function setTimestampUpdate(?\DateTime $timestampUpdate): LibraryItem
-    {
-        $this->timestampUpdate = $timestampUpdate;
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public static function getImageTypeList(): array
@@ -982,6 +875,8 @@ class LibraryItem implements EntityInterface
     {
         if (null === $this->getSpace() || '' === $this->getSpace())
             $this->setSpace($this->getLibrary()->getFacility());
+        if (null === $this->getDepartment() || '' === $this->getDepartment())
+            $this->setSpace($this->getLibrary()->getDepartment());
         return $this->setTimestampUpdate(new \DateTime())->setPersonUpdate(UserHelper::getCurrentUser());
     }
 
@@ -995,7 +890,9 @@ class LibraryItem implements EntityInterface
     {
         if (null === $this->getSpace() || '' === $this->getSpace())
             $this->setSpace($this->getLibrary()->getFacility());
-        return $this->update()->setPersonCreator(UserHelper::getCurrentUser())->setTimestampCreator(new \DateTime());
+        if (null === $this->getDepartment() || '' === $this->getDepartment())
+            $this->setSpace($this->getLibrary()->getDepartment());
+       return $this->update()->setPersonCreator(UserHelper::getCurrentUser())->setTimestampCreator(new \DateTime());
     }
 
     /**
@@ -1018,12 +915,93 @@ class LibraryItem implements EntityInterface
             'id' => $this->getId(),
             'identifier' => $this->getIdentifier(),
             'producer' => $this->getProducer(),
-            'typeName' => $this->getLibraryType()->getName(),
+            'typeName' => $this->getItemType(),
             'space' => $this->getSpace()->getName(),
             'locationDetail' => $this->getLocationDetail(),
             'owner' => $this->getOwnershipType() === 'Individual' ? $this->getOwnership()->formatName(false): ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'organisationName'),
             'status' => TranslationsHelper::translate($this->getStatus()),
             'borrowable' => $this->getBorrowable() ? TranslationsHelper::translate('Yes') : TranslationsHelper::translate('No'),
         ];
+    }
+
+    /**
+     * getFields
+     * @return array
+     */
+    public function getFields(): array
+    {
+        return $this->fields ?: [];
+    }
+
+    /**
+     * Fields.
+     *
+     * @param array $fields
+     * @return LibraryItem
+     */
+    public function setFields(?array $fields): LibraryItem
+    {
+        $this->fields = $fields ?: [];
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getItemType(): ?string
+    {
+        return $this->itemType;
+    }
+
+    /**
+     * ItemType.
+     *
+     * @param string|null $itemType
+     * @return LibraryItem
+     */
+    public function setItemType(?string $itemType): LibraryItem
+    {
+        $this->itemType = $itemType;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getAudit(): ?\DateTime
+    {
+        return $this->audit;
+    }
+
+    /**
+     * Audit.
+     *
+     * @param \DateTime|null $audit
+     * @return LibraryItem
+     */
+    public function setAudit(?\DateTime $audit): LibraryItem
+    {
+        $this->audit = $audit;
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events = $this->events ?: new ArrayCollection();
+    }
+
+    /**
+     * Events.
+     *
+     * @param Collection|null $events
+     * @return LibraryItem
+     */
+    public function setEvents(?Collection $events): LibraryItem
+    {
+        $this->events = $events ?: new ArrayCollection();
+        return $this;
     }
 }

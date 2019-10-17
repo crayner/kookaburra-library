@@ -1,0 +1,139 @@
+version: 0.0.00
+installedOn: false
+module:
+    name: Library
+    description: 'Allows the management of a catalog from which items can be borrowed.'
+    entryURL: manage_catalogue
+    type: Additional
+    active: 'N'
+    category: Learn
+    version: 0.0.00
+    author: 'Craig Rayner'
+    url: 'https://www.craigrayner.com'
+    actions:
+        'Manage Catalog':
+            name: 'Manage Catalog'
+            precedence: 0
+            category: Catalogue
+            description: 'Control all items in the school library catalog'
+            URLList: 'manage_catalogue, library_lending_item.php,library_lending_item_signout.php,library_lending_item_return.php,library_lending_item_edit.php,library_lending_item_renew.php'
+            entryURL: manage_catalogue
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Lending & Activity Log':
+            name: 'Lending & Activity Log'
+            precedence: 0
+            category: Catalogue
+            description: 'Manage lending, returns, reservations, repairs, decommissioning, etc.'
+            URLList: 'manage_catalogue, library_lending_item.php,library_lending_item_signout.php,library_lending_item_return.php,library_lending_item_edit.php,library_lending_item_renew.php'
+            entryURL: manage_catalogue
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Browse The Library':
+            name: 'Browse The Library'
+            precedence: 0
+            category: Catalogue
+            description: 'Search and view all borrowable items maintained by the library.'
+            URLList: library_browse.php
+            entryURL: library_browse.php
+            entrySidebar: 'N'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'Y'
+            defaultPermissionStudent: 'Y'
+            defaultPermissionParent: 'Y'
+            defaultPermissionSupport: 'Y'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'Y'
+            categoryPermissionParent: 'Y'
+            categoryPermissionOther: 'Y'
+            permissions:
+                - Administrator
+                - Teacher
+                - Parent
+                - Student
+                - 'Support Staff'
+        'View Overdue Items':
+            name: 'View Overdue Items'
+            precedence: 0
+            category: Reports
+            description: 'View items which are on loan and have exceeded their due date.'
+            URLList: report_viewOverdueItems.php
+            entryURL: report_viewOverdueItems.php
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'Y'
+            categoryPermissionParent: 'Y'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Student Borrowing Record':
+            name: 'Student Borrowing Record'
+            precedence: 0
+            category: Reports
+            description: 'View items borrowed by an individual student.'
+            URLList: report_studentBorrowingRecord.php
+            entryURL: report_studentBorrowingRecord.php
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'Y'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+                - Teacher
+        'Catalogue Summary':
+            name: 'Catalogue Summary'
+            precedence: 0
+            category: Reports
+            description: 'Provides an summary overview of items in the catalog.'
+            URLList: report_catalogSummary.php
+            entryURL: report_catalogSummary.php
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'Y'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'Y'
+            categoryPermissionParent: 'Y'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+                - 'Support Staff'

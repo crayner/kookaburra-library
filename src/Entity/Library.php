@@ -12,15 +12,17 @@
 
 namespace Kookaburra\Library\Entity;
 
+use App\Entity\Department;
 use App\Entity\Space;
 use App\Manager\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Library
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="Library",uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),@ORM\UniqueConstraint(name="abbr", columns={"abbr"})}, indexes={@ORM\Index(name="facility", columns={"facility"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="Library",uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),@ORM\UniqueConstraint(name="abbr", columns={"abbr"})},indexes={@ORM\Index(name="facility", columns={"facility"})})
  */
 class Library implements EntityInterface
 {
@@ -52,10 +54,24 @@ class Library implements EntityInterface
     private $facility;
 
     /**
+     * @var Department|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\Department")
+     * @ORM\JoinColumn(name="department",referencedColumnName="gibbonDepartmentID",nullable=true)
+     */
+    private $department;
+
+    /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
     private $active = true;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="smallint",options={"comment": "Lending period default for this library in days."})
+     * @Assert\Range(min=1,max=365)
+     */
+    private $lendingPeriod;
 
     /**
      * @return int|null
@@ -154,6 +170,46 @@ class Library implements EntityInterface
     public function setActive(bool $active): Library
     {
         $this->active = $active ? true : false;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLendingPeriod(): int
+    {
+        return $this->lendingPeriod;
+    }
+
+    /**
+     * LendingPeriod.
+     *
+     * @param int $lendingPeriod
+     * @return Library
+     */
+    public function setLendingPeriod(int $lendingPeriod): Library
+    {
+        $this->lendingPeriod = $lendingPeriod;
+        return $this;
+    }
+
+    /**
+     * @return Department|null
+     */
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    /**
+     * Department.
+     *
+     * @param Department|null $department
+     * @return Library
+     */
+    public function setDepartment(?Department $department): Library
+    {
+        $this->department = $department;
         return $this;
     }
 }

@@ -15,8 +15,11 @@ namespace Kookaburra\Library\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
+use App\Manager\MessageManager;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\CatalogueSearchType;
@@ -31,6 +34,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class LibraryController
@@ -41,15 +45,26 @@ class LibraryController extends AbstractController
 {
     /**
      * manageCatalogue
+     * @param CataloguePagination $pagination
+     * @param Request $request
+     * @param LibraryManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/catalogue/manage/", name="manage_catalogue")
+     * @Route("/catalogue/manage/", name="status")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function manageCatalogue(CataloguePagination $pagination, Request $request)
+    public function manageCatalogue(CataloguePagination $pagination, Request $request, LibraryManager $manager)
     {
         $search = new CatalogueSearch();
         $form = $this->createForm(CatalogueSearchType::class, $search);
 
         $form->handleRequest($request);
+
+        if ($form->get('clear')->isClicked()) {
+            $search = new CatalogueSearch();
+            $form = $this->createForm(CatalogueSearchType::class, $search);
+        }
+
 
         $provider = ProviderFactory::create(LibraryItem::class);
         $content = $provider->getCatalogueList($search);
@@ -59,6 +74,7 @@ class LibraryController extends AbstractController
         return $this->render('@KookaburraLibrary/manage_catalogue.html.twig',
             [
                 'content' => $content,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -218,6 +234,7 @@ class LibraryController extends AbstractController
      * @param string $tabName
      * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/{item}/edit/{tabName}", name="edit")
+     * @IsGranted("ROLE_ROUTE")
      */
     public function edit(Request $request, ContainerManager $manager, LibraryManager $libraryManager, int $item = 0, string $tabName = 'Catalogue')
     {
@@ -288,5 +305,31 @@ class LibraryController extends AbstractController
                 'item' => $item,
             ]
         );
+    }
+
+    /**
+     * demonstrationLoad
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @IsGranted("ROLE_SYSTEM_ADMIN")
+     * @Route("/demonstartion/", name="demonstration")
+     */
+    public function demonstrationLoad()
+    {
+        $content = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/migration/demo/libraryDemo.yaml'));
+        $em = ProviderFactory::getEntityManager();
+        try {
+            $em->beginTransaction();
+            foreach($content['demo'] as $sql)
+                $em->getConnection()->exec($sql);
+            $em->commit();
+        } catch (PDOException $e) {
+            $em->rollback();
+            $this->addFlash('error',$e->getMessage());
+        } catch (DBALException $e) {
+            $em->rollback();
+            $this->addFlash('error',$e->getMessage());
+        }
+
+        return $this->redirectToRoute('library__manage_catalogue');
     }
 }

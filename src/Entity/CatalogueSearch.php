@@ -12,8 +12,9 @@
 
 namespace Kookaburra\Library\Entity;
 
-use Kookaburra\Library\Entity\LibraryType;
+use App\Entity\Person;
 use App\Entity\Space;
+use Kookaburra\Library\Manager\LibraryManager;
 
 /**
  * Class CatalogueSearch
@@ -27,7 +28,7 @@ class CatalogueSearch
     private $search = '';
 
     /**
-     * @var LibraryType|null
+     * @var string|null
      */
     private $type;
 
@@ -35,6 +36,11 @@ class CatalogueSearch
      * @var Space|null
      */
     private $location;
+
+    /**
+     * @var null|string
+     */
+    private $status;
 
     /**
      * @var Person|null
@@ -51,36 +57,45 @@ class CatalogueSearch
      */
     public function getSearch(): string
     {
-        return $this->search;
+        return $this->search ?: '';
     }
 
     /**
      * Search.
      *
-     * @param string $search
+     * @param null|string $search
      * @return CatalogueSearch
      */
-    public function setSearch(string $search): CatalogueSearch
+    public function setSearch(?string $search): CatalogueSearch
     {
-        $this->search = $search;
+        $this->search = $search ?: '';
         return $this;
     }
 
     /**
-     * @return LibraryType|null
+     * @return string|null
      */
-    public function getType(): ?LibraryType
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
+     * getTypeList
+     * @return array
+     */
+    public static function getTypeList(): array
+    {
+        return LibraryManager::getItemTypeList();
+    }
+
+    /**
      * Type.
      *
-     * @param LibraryType|null $type
+     * @param string|null $type
      * @return CatalogueSearch
      */
-    public function setType(?LibraryType $type): CatalogueSearch
+    public function setType(?string $type): CatalogueSearch
     {
         $this->type = $type;
         return $this;
@@ -107,6 +122,26 @@ class CatalogueSearch
     }
 
     /**
+     * @return string|null
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * Status.
+     *
+     * @param string|null $status
+     * @return CatalogueSearch
+     */
+    public function setStatus(?string $status): CatalogueSearch
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
      * @return Person|null
      */
     public function getPerson(): ?Person
@@ -127,22 +162,32 @@ class CatalogueSearch
     }
 
     /**
-     * @return string
+     * getSearchFields
+     * @return string|null
      */
     public function getSearchFields(): string
     {
-        return $this->searchFields;
+        return $this->searchFields ?: '';
     }
 
     /**
      * SearchFields.
      *
-     * @param string $searchFields
+     * @param null|string $searchFields
      * @return CatalogueSearch
      */
-    public function setSearchFields(string $searchFields): CatalogueSearch
+    public function setSearchFields(?string $searchFields): CatalogueSearch
     {
-        $this->searchFields = $searchFields;
+        $this->searchFields = $searchFields ?: '';
         return $this;
+    }
+
+    /**
+     * getStatusList
+     * @return array
+     */
+    public static function getStatusList(): array
+    {
+        return LibraryItem::getStatusList();
     }
 }

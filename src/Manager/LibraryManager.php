@@ -16,7 +16,6 @@ use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
-use Kookaburra\Library\Entity\LibraryType;
 
 class LibraryManager
 {
@@ -29,6 +28,11 @@ class LibraryManager
      * @var int
      */
     private $maximumCopies = 20;
+
+    /**
+     * @var array
+     */
+    private static $itemTypes;
 
     /**
      * @return bool
@@ -121,5 +125,63 @@ class LibraryManager
         $em->persist($item);
         $em->flush();
         return $item;
+    }
+
+    /**
+     * getItemTypes
+     * @return array
+     */
+    public function getItemTypes(): array
+    {
+        return self::$itemTypes ?: [];
+    }
+
+    /**
+     * ItemTypes.
+     *
+     * @param array $itemTypes
+     * @return LibraryManager
+     */
+    public function setItemTypes(?array $itemTypes): LibraryManager
+    {
+        self::$itemTypes = $itemTypes ?: [];
+        return $this;
+    }
+
+    /**
+     * ItemTypes.
+     *
+     * @param array $itemTypes
+     * @return LibraryManager
+     */
+    public function mergeItemTypes(array $itemTypes): LibraryManager
+    {
+        self::$itemTypes = array_merge($this->getItemTypes(), $itemTypes);
+        return $this;
+    }
+
+    /**
+     * getItemType
+     * @param string $name
+     * @return array
+     */
+    public function getItemType(string $name): array
+    {
+        return $this->getItemTypes()[$name];
+    }
+
+    /**
+     * getItemTypeList
+     * @return array
+     */
+    public static function getItemTypeList(): array
+    {
+        $result = [];
+        foreach(self::$itemTypes as $name=>$type)
+        {
+            if ($type['active'])
+                $result[] = [$name];
+        }
+        return $result;
     }
 }
