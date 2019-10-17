@@ -23,17 +23,6 @@
         },
         "sort-packages": true
     },
-    "scripts": {
-        "install-module": {
-            "module:install 'Library'": "symfony-cmd"
-        },
-        "post-install-cmd": [
-            "@install-module"
-        ],
-        "post-update-cmd": [
-            "@install-module"
-        ]
-    },
     "autoload": {
         "psr-4": {
             "Kookaburra\\Library\\": "/src/"
