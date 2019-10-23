@@ -1,0 +1,16 @@
+kookaburra_library:
+    # Generate the item identifier, when false, the form allows staff to enter their own code.  (
+    # Useful for entering codes generated with bar codes.
+    generate_identifier: true
+    # Maximum number of duplicates the system allows you to generate.
+    maximum_copies: 20
+    # Default borrowing period.  This is overridden by individual library settings.
+    borrow_period: 7
+    # how many times can the item be renewed.
+    renewal_maximum: 1
+    # We try our best to include all possible item types, but you can add your own here.  See the help for format instructions.
+    item_types: []
+    # Who can borrow from the library.  Possible groups are Staff, Students, Parents and/or Others
+    allowed_borrowers:
+        - 'Staff'
+        - 'Students'

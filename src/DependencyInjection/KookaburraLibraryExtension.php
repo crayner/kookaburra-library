@@ -49,8 +49,12 @@ class KookaburraLibraryExtension extends Extension
                 ->getDefinition(LibraryManager::class)
                 ->addMethodCall('setGenerateIdentifier', [$config['generate_identifier']])
                 ->addMethodCall('setItemTypes', [$this->loadItemTypes(null)])
+                ->addMethodCall('setAllowedBorrowers', [$this->loadAllowedBorrowers(isset($config['allowed_borrowers']) ? $config['allowed_borrowers'] : [])])
                 ->addMethodCall('mergeItemTypes', [$this->loadItemTypes(isset($config['item_types']) && is_array($config['item_types']) ? $config['item_types'] : [])])
-                ->addMethodCall('setMaximumCopies', [$config['maximum_copies']]);
+                ->addMethodCall('setMaximumCopies', [$config['maximum_copies']])
+                ->addMethodCall('setBorrowPeriod', [$config['borrow_period']])
+                ->addMethodCall('setRenewalMaximum', [$config['renewal_maximum']])
+            ;
         }
     }
 
@@ -86,5 +90,25 @@ class KookaburraLibraryExtension extends Extension
         }
 
         return $itemTypes;
+    }
+
+    /**
+     * loadAllowedBorrowers
+     * @param array $allowedBorrowers
+     * @return array
+     */
+    private function loadAllowedBorrowers(array $allowedBorrowers = []){
+        if ([] === $allowedBorrowers)
+            return ['Students', 'Staff'];
+
+        $x = [];
+        foreach($allowedBorrowers as $w)
+            if (in_array($w, ['Staff', 'Students', 'Parents', 'Others']))
+                $x[] = $w;
+
+        if ([] === $x)
+            return ['Students', 'Staff'];
+
+        return $x;
     }
 }

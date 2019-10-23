@@ -32,7 +32,10 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('generate_identifier')->defaultTrue()->end()
                 ->integerNode('maximum_copies')->defaultValue(20)->end()
+                ->integerNode('borrow_period')->defaultValue(7)->end()
+                ->integerNode('renewal_maximum')->defaultValue(1)->end()
                 ->arrayNode('item_types')->end()
+                ->arrayNode('allowed_borrowers')->scalarPrototype()->end()
             ->end()
         ;
         return $treeBuilder;

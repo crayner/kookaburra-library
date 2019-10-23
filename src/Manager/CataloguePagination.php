@@ -12,15 +12,33 @@
 
 namespace Kookaburra\Library\Manager;
 
-
 use App\Manager\Entity\PaginationAction;
 use App\Manager\Entity\PaginationColumn;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
 use App\Manager\ReactPaginationManager;
+use App\Manager\ScriptManager;
+use App\Util\TranslationsHelper;
 
+/**
+ * Class CataloguePagination
+ * @package Kookaburra\Library\Manager
+ */
 class CataloguePagination extends ReactPaginationManager
 {
+    /**
+     * CataloguePagination constructor.
+     */
+    public function __construct(ScriptManager $scriptManager)
+    {
+        parent::__construct($scriptManager);
+        TranslationsHelper::setDomain('Library');
+    }
+
+    /**
+     * execute
+     * @return ReactPaginationInterface
+     */
     public function execute(): ReactPaginationInterface
     {
         $row = new PaginationRow();
@@ -70,6 +88,36 @@ class CataloguePagination extends ReactPaginationManager
             ->setColumnClass('p-2 sm:p-3')
             ->setSpanClass('far fa-edit fa-fw fa-1-5x text-gray-700')
             ->setRoute('library__edit')
+            ->setRouteParams(['item' => 'id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
+        $action->setTitle('Lending')
+            ->setAClass('thickbox p-3 sm:p-0')
+            ->setColumnClass('p-2 sm:p-3')
+            ->setSpanClass('fas fa-book-reader fa-fw fa-1-5x text-gray-700')
+            ->setRoute('library__loan_item')
+            ->setDisplayWhen('isAvailable')
+            ->setRouteParams(['item' => 'id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
+        $action->setTitle('Action')
+            ->setAClass('thickbox p-3 sm:p-0')
+            ->setColumnClass('p-2 sm:p-3')
+            ->setSpanClass('fas fa-cog fa-fw fa-1-5x text-gray-700')
+            ->setRoute('library__loan_item')
+            ->setDisplayWhen('isNotAvailable')
+            ->setRouteParams(['item' => 'id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
+        $action->setTitle('Return')
+            ->setAClass('thickbox p-3 sm:p-0')
+            ->setColumnClass('p-2 sm:p-3')
+            ->setSpanClass('fas fa-undo fa-fw fa-1-5x text-gray-700')
+            ->setRoute('library__return_item')
+            ->setDisplayWhen('onLoan')
             ->setRouteParams(['item' => 'id']);
         $row->addAction($action);
 

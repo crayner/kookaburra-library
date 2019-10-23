@@ -174,11 +174,11 @@ class Library implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return ?int
      */
-    public function getLendingPeriod(): int
+    public function getLendingPeriod(?int $default = null): ?int
     {
-        return $this->lendingPeriod;
+        return $this->lendingPeriod ?: $default;
     }
 
     /**

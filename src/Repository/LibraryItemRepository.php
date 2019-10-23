@@ -52,26 +52,35 @@ class LibraryItemRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * findBySearch
+     * @param CatalogueSearch $search
+     * @return mixed
+     */
     public function findBySearch(CatalogueSearch $search)
     {
         $query = $this->createQueryBuilder('li')
-            ->where('(li.identifier LIKE :search OR li.name LIKE :search OR li.producer LIKE :search)')
+            ->where('li.identifier LIKE :search OR li.name LIKE :search OR li.producer LIKE :search')
             ->setParameter('search', '%'.$search->getSearch().'%')
             ->andWhere('(li.fields LIKE :searchField)')
             ->setParameter('searchField', '%'.$search->getSearchFields().'%');
 
-        if ($search->getType() instanceof LibraryType)
+        if (null !== $search->getType())
             $query->andWhere('li.libraryType = :libraryType')
                 ->setParameter('libraryType', $search->getType());
+
+        if (null !== $search->getStatus())
+            $query->andWhere('li.status = :status')
+                ->setParameter('status', $search->getStatus());
 
         if ($search->getLocation() instanceof Space)
             $query->andWhere('li.space = :space')
                 ->setParameter('space', $search->getLocation());
 
         if ($search->getPerson() instanceof Person)
-            $query->andWhere('li.ownership = :person OR li')
+            $query->andWhere('li.ownership = :person')
                 ->setParameter('person', $search->getPerson());
-
+dump($query);
         return $query->orderBy('li.identifier','ASC')->getQuery()
             ->getResult();
     }

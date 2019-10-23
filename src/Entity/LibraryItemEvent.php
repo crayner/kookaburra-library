@@ -14,12 +14,14 @@ namespace Kookaburra\Library\Entity;
 
 use App\Entity\Person;
 use Doctrine\ORM\Mapping as ORM;
+use Kookaburra\UserAdmin\Util\UserHelper;
 
 /**
  * Class LibraryItemEvent
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryItemEventRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="LibraryItemEvent")
+ * @ORM\HasLifecycleCallbacks()
  */
 class LibraryItemEvent
 {
@@ -76,14 +78,14 @@ class LibraryItemEvent
     private $outPerson;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(name="timestampOut", type="datetime", nullable=true, options={"comment": "The time the event was recorded"})
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="timestampOut", type="datetime_immutable", nullable=true, options={"comment": "The time the event was recorded"})
      */
     private $timestampOut;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(name="returnExpected", type="date", nullable=true, options={"comment": "The time when the event expires."})
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="returnExpected", type="date_immutable", nullable=true, options={"comment": "The time when the event expires."})
      */
     private $returnExpected;
 
@@ -106,8 +108,8 @@ class LibraryItemEvent
     private $returnActionPerson;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(name="timestampReturn", type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="timestampReturn", type="datetime_immutable", nullable=true)
      */
     private $timestampReturn;
 
@@ -117,6 +119,21 @@ class LibraryItemEvent
      * @ORM\JoinColumn(name="gibbonPersonIDIn", referencedColumnName="gibbonPersonID", nullable=true)
      */
     private $inPerson;
+
+    /**
+     * LibraryItemEvent constructor.
+     * @param LibraryItem|null $item
+     */
+    public function __construct(?LibraryItem $item)
+    {
+        if ($item instanceof LibraryItem) {
+            $this->setLibraryItem($item)
+                ->setStatus($item->getStatus())
+                ->setReturnExpected($item->getReturnExpected())
+                ->setResponsibleForStatus($item->getResponsibleForStatus())
+            ;
+        }
+    }
 
     /**
      * @return int|null
@@ -227,36 +244,40 @@ class LibraryItemEvent
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getTimestampOut(): ?\DateTime
+    public function getTimestampOut(): ?\DateTimeImmutable
     {
         return $this->timestampOut;
     }
 
     /**
-     * @param \DateTime|null $timestampOut
+     * TimestampOut.
+     *
+     * @param \DateTimeImmutable|null $timestampOut
      * @return LibraryItemEvent
      */
-    public function setTimestampOut(?\DateTime $timestampOut): LibraryItemEvent
+    public function setTimestampOut(?\DateTimeImmutable $timestampOut): LibraryItemEvent
     {
         $this->timestampOut = $timestampOut;
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getReturnExpected(): ?\DateTime
+    public function getReturnExpected(): ?\DateTimeImmutable
     {
         return $this->returnExpected;
     }
 
     /**
-     * @param \DateTime|null $returnExpected
+     * ReturnExpected.
+     *
+     * @param \DateTimeImmutable|null $returnExpected
      * @return LibraryItemEvent
      */
-    public function setReturnExpected(?\DateTime $returnExpected): LibraryItemEvent
+    public function setReturnExpected(?\DateTimeImmutable $returnExpected): LibraryItemEvent
     {
         $this->returnExpected = $returnExpected;
         return $this;
@@ -299,18 +320,20 @@ class LibraryItemEvent
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getTimestampReturn(): ?\DateTime
+    public function getTimestampReturn(): ?\DateTimeImmutable
     {
         return $this->timestampReturn;
     }
 
     /**
-     * @param \DateTime|null $timestampReturn
+     * TimestampReturn.
+     *
+     * @param \DateTimeImmutable|null $timestampReturn
      * @return LibraryItemEvent
      */
-    public function setTimestampReturn(?\DateTime $timestampReturn): LibraryItemEvent
+    public function setTimestampReturn(?\DateTimeImmutable $timestampReturn): LibraryItemEvent
     {
         $this->timestampReturn = $timestampReturn;
         return $this;
@@ -356,5 +379,17 @@ class LibraryItemEvent
     public static function getReturnActionList(): array
     {
         return self::$returnActionList;
+    }
+
+    /**
+     * createTimestampOutPerson
+     * @return LibraryItemEvent
+     * @throws \Exception
+     * @ORM\PrePersist()
+     */
+    public function createTimestampOutPerson()
+    {
+        return $this->setOutPerson(UserHelper::getCurrentUser())
+            ->setTimestampOut(new \DateTimeImmutable());
     }
 }

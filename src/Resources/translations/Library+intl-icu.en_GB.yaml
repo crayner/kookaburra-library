@@ -1,0 +1,245 @@
+Library: Library
+return_date_help: "{count, plural,
+                           one {The default return date is tomorrow.}
+                           other {The default return date is # days from today.}
+                       }"
+Fiction - Best Sellers: Fiction - Best Sellers
+Fiction - Classics: Fiction - Classics
+Fiction - Mystery: Fiction - Mystery
+Fiction - Series: Fiction - Series
+Fiction - Young Adult: Fiction - Young Adult
+Nonfiction: Nonfiction
+Nonfiction - College Prep: Nonfiction - College Prep
+Nonfiction - Graphic Novels: Nonfiction - Graphic Novels
+Nonfiction - Life Skills: Nonfiction - Life Skills
+Nonfiction - Reference: Nonfiction - Reference
+Borrower: Borrower
+Who is borrowing the library item?: Who is borrowing the library item?
+Expected Return Date: Expected Return Date
+Loan: Loan
+View Item: View Item
+Item Details: Item Details
+Borrowable: Borrowable
+Lending: Lending
+On Return: On Return
+What to do when item is next returned.: What to do when item is next returned.
+Make Available: Make Available
+Decommission: Decommission
+Reserve: Reserve
+Responsible User: Responsible User
+Who will be responsible for the future status?: Who will be responsible for the future status?
+' ' : ' '
+Date Out & In: Date Out & In
+Due Date: Due Date
+Return Action: Return Action
+Recorded By: Recorded By
+Actions: Actions
+Out: Out
+In: In
+Image File: Image File
+Image Link: Image Link
+Catalogue: Catalogue
+Browse The Library: Browse The Library
+Lending & Activity Log: Lending & Activity Log
+Manage Catalog: Manage Catalog
+Reports: Reports
+Catalogue Summary: Catalogue Summary
+Student Borrowing Record: Student Borrowing Record
+View Overdue Items: View Overdue Items
+Module Menu: Module Menu
+Available: Available
+Yes: Yes
+Edit: Edit
+Delete: Delete
+Duplicate: Duplicate
+SchoolID: SchoolID
+Name: Name
+Location: Location
+Ownership: Ownership
+Status: Status
+There are no records to display.: There are no records to display.
+"Records {start}-{end} of {total}": "Records {start}-{end} of {total}"
+First Page: First Page
+Previous Page: Previous Page
+Next Page: Next Page
+Last Page: Last Page
+Are you sure you want to delete this record?: Are you sure you want to delete this record?
+This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!: This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!
+Close: Close
+Search & Filter: Search & Filter
+ID/Name/Producer: ID/Name/Producer
+Item Type: Item Type
+Print Publication: Print Publication
+Computer: Computer
+Electronics: Electronics
+Other: Other
+Software: Software
+Audio/Visual Hardware: Audio/Visual Hardware
+Optical Media: Optical Media
+In Use: In Use
+Decommissioned: Decommissioned
+Lost: Lost
+On Loan: On Loan
+Repair: Repair
+Reserved: Reserved
+Owner/User: Owner/User
+Type Specific Fields: Type Specific Fields
+"For example, a computer's MAC address or a book's ISBN.": "For example, a computer's MAC address or a book's ISBN."
+Search: Search
+Clear Search: Clear Search
+View: View
+Add: Add
+Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.: Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.
+The specified record cannot be found.: The specified record cannot be found.
+Please select...: Please select...
+denotes a required field: denotes a required field
+Action: Action
+Close Message: Close Message
+Identifier: Identifier
+Author/Brand: Author/Brand
+Manage Catalogue: Manage Catalogue
+This item is not available to borrow.: This item is not available to borrow.
+No: No
+Fiction: Fiction
+Library Item Type: Library Item Type
+General Details: General Details
+Volume or Product name: Volume or Product name
+Image Type: Image Type
+Location Details: Location Details
+School: School
+Individual: Individual
+Which department is responsible for the item?: Which department is responsible for the item?
+Bookable As Facility?: Bookable As Facility?
+Can item be booked via Facility Booking in Timetable? Useful for laptop carts, etc.: Can item be booked via Facility Booking in Timetable? Useful for laptop carts, etc.
+Availability: Availability
+Plan Replacement?: Plan Replacement?
+Physical Condition: Physical Condition
+As New: As New
+Lightly Worn: Lightly Worn
+Moderately Worn: Moderately Worn
+Damaged: Damaged
+Unusable: Unusable
+Submit All: Submit All
+Specific Details: Specific Details
+Get Book Data From Google: Get Book Data From Google
+Art - Original: Art - Original
+Art - Reproduction: Art - Reproduction
+Book: Book
+Braille: Braille
+Cartographic material: Cartographic material
+Chart: Chart
+Diorama: Diorama
+Electronic Resource: Electronic Resource
+Filmstrip: Filmstrip
+Flash Card: Flash Card
+Game: Game
+Globe: Globe
+Journal: Journal
+Kit: Kit
+Large print: Large print
+Magazine: Magazine
+Manuscript: Manuscript
+Microform: Microform
+Microscope slide: Microscope slide
+Model: Model
+Motion Picture: Motion Picture
+Music: Music
+Picture: Picture
+Realia: Realia
+Resource: Resource
+Serial: Serial
+Slide: Slide
+Sound Recording: Sound Recording
+Technical Drawing: Technical Drawing
+Toy: Toy
+Transparency: Transparency
+Videorecording: Videorecording
+'Format: dd/mm/yyyy, mm/yyyy or yyyy.': 'Format: dd/mm/yyyy, mm/yyyy or yyyy.'
+General: General
+Specific: Specific
+Edit Item: Edit Item
+Add Item: Add Item
+Google Developers Developer Key: Google Project Developer Key
+SMTP Username: SMTP Username
+Username to use for SMTP authentication. Leave blank for no authentication.: Username to use for SMTP authentication. Leave blank for no authentication.
+SMTP Password: SMTP Password
+SMTP Host: SMTP Host
+Set the hostname of the mail server.: Set the hostname of the mail server.
+SMTP Port: SMTP Port
+Set the SMTP port number - likely to be 25, 465 or 587.: Set the SMTP port number - likely to be 25, 465 or 587.
+SMTP Encryption: SMTP Encryption
+Automatically sets the encryption based on the port, otherwise select one manually.: Automatically sets the encryption based on the port, otherwise select one manually.
+Password to use for SMTP authentication. Leave blank for no authentication.: Password to use for SMTP authentication. Leave blank for no authentication.
+"If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google's APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.": "If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google's APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}."
+Google OAuth Download File: Google OAuth Download File
+'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}'
+'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}'
+'Check for Installed Bundles': Check for Installed Bundles
+Load Demonstration Data: Load Demonstration Data
+'Item Identifier {identifier}': 'Item Identifier: {identifier}'
+Must be unique, or will lead to update not insert.: Must be unique, or will lead to update not insert.
+Who created the item?: Who created the item?
+Vendor: Vendor
+Who supplied the item?: Who supplied the item?
+Purchase Date: Purchase Date
+Invoice Number: Invoice Number
+Location Detail: Location Detail
+Shelf, cabinet, sector, etc: Shelf, cabinet, sector, etc
+Volume or product name.: Volume or product name.
+Ownership Type: Ownership Type
+Main User: Main User
+Username of person the device is assigned to.: Username of person the device is assigned to.
+Borrowable?: Borrowable?
+Is item available for loan?: Is item available for loan?
+Status?: Status?
+Replacement?: Replacement?
+Replacement Cost: Replacement Cost
+Replacement Year: Replacement Year
+Comments/Notes: Comments/Notes
+Format: Format
+Publisher: Publisher
+Name of the company who published the volume.: Name of the company who published the volume.
+Publication Date: Publication Date
+Country of Publication: Country of Publication
+Edition: Edition
+ISBN10: ISBN10
+10-digit unique ISBN number.: 10-digit unique ISBN number.
+ISBN13: ISBN13
+13-digit unique ISBN number.: 13-digit unique ISBN number.
+A brief blurb describing the volume.: A brief blurb describing the volume.
+Subjects: Subjects
+Comma separated list of subjects.: Comma separated list of subjects.
+Collection: Collection
+Control Number: Control Number
+Cataloging Authority: Cataloging Authority
+Reader Age (Youngest): Reader Age (Youngest)
+Age in years, youngest reading age recommendation.: Age in years, youngest reading age recommendation.
+Reader Age (Oldest): Reader Age (Oldest)
+Age in years, oldest reading age recommendation.: Age in years, oldest reading age recommendation.
+Page Count: Page Count
+The number of pages in the volume.: The number of pages in the volume.
+Height: Height
+The physical height of the volume, in cm.: The physical height of the volume, in cm.
+Width: Width
+The physical thickness of the volume, in cm.: The physical thickness of the volume, in cm.
+The primary language of the volume.: The primary language of the volume.
+Link to web-based information on the volume.: Link to web-based information on the volume.
+Issuing authority for Control Number.:  Issuing authority for Control Number.
+What kind of product is this?: What kind of product is this?
+Serial Number: Serial Number
+Model Name: Model Name
+Model ID: Model ID
+Accessories: Accessories
+Any chargers, remotes controls, etc?: Any chargers, remotes controls, etc?
+Warranty Number: Warranty Number
+Warranty Expiry: Warranty Expiry
+Repair Log/Notes: Repair Log/Notes
+Link: Link
+File: File
+Please Select...: Please Select...
+Department: Department
+Text: Text
+Description: Description
+The physical width of the volume, in cm.: The physical width of the volume, in cm.
+Thickness: Thickness
+Language: Language

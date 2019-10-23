@@ -89,7 +89,7 @@ class DuplicateCopyIdentifierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'messages',
+            'translation_domain' => 'Library',
             'data_class' => LibraryItem::class,
         ]);
         $resolver->setRequired([

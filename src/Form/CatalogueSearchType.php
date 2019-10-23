@@ -14,12 +14,15 @@ namespace Kookaburra\Library\Form;
 
 use App\Entity\Person;
 use App\Entity\Space;
+use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EnumType;
+use App\Provider\ProviderFactory;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\LibraryType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -48,6 +51,7 @@ class CatalogueSearchType extends AbstractType
             ->add('type', EnumType::class,
                 [
                     'label' => 'Item Type',
+                    'choice_list_prefix' => false,
                     'placeholder' => '',
                     'required' => false,
                 ]
@@ -73,21 +77,13 @@ class CatalogueSearchType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('person', EntityType::class,
+            ->add('person', ChoiceType::class,
                 [
                     'label' => 'Owner/User',
                     'required' => false,
-                    'class' => Person::class,
-                    'choice_label' => 'fullName',
                     'placeholder' => '',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('p')
-                            ->orderBy('p.surname', 'ASC')
-                            ->addOrderBy('p.firstName', 'ASC')
-                            ->where('p.status = :full')
-                            ->setParameter('full', 'Full')
-                        ;
-                    },
+                    'choices' => ProviderFactory::create(Person::class)->findAllFullList(),
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add('searchFields', TextType::class,
@@ -118,6 +114,9 @@ class CatalogueSearchType extends AbstractType
                 ]
             )
         ;
+
+        $builder->get('person')->addModelTransformer(new EntityToStringTransformer(ProviderFactory::getEntityManager(), ['class' => Person::class, 'multiple' => false]));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -125,6 +124,7 @@ class CatalogueSearchType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => CatalogueSearch::class,
+                'translation_domain' => 'Library',
             ]
         );
     }

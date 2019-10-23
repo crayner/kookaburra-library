@@ -31,6 +31,11 @@
             "/tests/"
         ]
     },
+    "scripts": {
+        "post-install-cmd": [
+            "php -r \"copy('vendor/kookaburra/src/Resources/config/dist/library.yaml', 'config/packages/kookaburra_library.yaml');\"",
+        ]
+    },
     "autoload-dev": {
         "psr-4": {
             "Kookaburra\\Library\\Tests\\": "tests/"

@@ -1,6 +1,7 @@
+{% trans_default_domain 'Library' %}
 {% extends 'kookaburra.html.twig' %}
 
-{% set module = {'baseURL': 'library', 'crumbs': [{uri: 'library__manage_catalogue', name: 'Library'},{uri: 'library__manage_catalogue', name: 'Manage Catalogue'}],  'title': item.id > 0 ? 'Edit Item' : 'Add Item' } %}
+{% set module = {'baseURL': 'library', 'crumbs': [{uri: 'library__manage_catalogue', name: 'Library'},{uri: 'library__manage_catalogue', name: 'Manage Catalogue'}],  'title': item.id > 0 ? 'Edit Item' : 'Add Item', domain: 'Library'} %}
 {% set breadcrumbs = 'new' %}
 {% set moduleName = 'Library' %}
 

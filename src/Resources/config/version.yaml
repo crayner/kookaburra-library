@@ -1,4 +1,5 @@
 version: 0.0.00
+name: Library
 module:
     name: Library
     description: 'Allows the management of a catalog from which items can be borrowed.'
@@ -136,4 +137,4 @@ module:
             permissions:
                 - Administrator
                 - 'Support Staff'
-installedOn: false
+

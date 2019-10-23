@@ -55,7 +55,10 @@ class LibraryController extends AbstractController
      */
     public function manageCatalogue(CataloguePagination $pagination, Request $request, LibraryManager $manager)
     {
-        $search = new CatalogueSearch();
+        if ($request->getMethod() !== 'POST' && $request->getSession()->has('libraryCatalogueSearch'))
+            $search = $request->getSession()->get('libraryCatalogueSearch');
+        $search = isset($search) ? $search : new CatalogueSearch();
+
         $form = $this->createForm(CatalogueSearchType::class, $search);
 
         $form->handleRequest($request);
@@ -65,16 +68,17 @@ class LibraryController extends AbstractController
             $form = $this->createForm(CatalogueSearchType::class, $search);
         }
 
-
         $provider = ProviderFactory::create(LibraryItem::class);
         $content = $provider->getCatalogueList($search);
         $pagination->setContent($content)->setPageMax(25)
             ->setPaginationScript();
 
+        $request->getSession()->set('libraryCatalogueSearch', $search);
         return $this->render('@KookaburraLibrary/manage_catalogue.html.twig',
             [
                 'content' => $content,
                 'form' => $form->createView(),
+                'count' => $provider->getRepository()->count([]),
             ]
         );
     }
@@ -82,16 +86,16 @@ class LibraryController extends AbstractController
     /**
      * deleteItem
      * @param LibraryItem $item
-     * @IsGranted("ROLE_ROUTE")
+     * @Security("is_granted('ROLE_ROUTE', ['library__manage_catalogue'])")
      * @Route("/delete/{item}/item/", name="delete_item")
      */
     public function deleteItem(LibraryItem $item)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->persist($item);
+        $em->remove($item);
         $em->flush();
         $this->addFlash('success', 'Your request was completed successfully.');
-        return $this->forward(LibraryController::class.'::manageCatalogue');
+        return $this->redirectToRoute('library__manage_catalogue');
     }
 
     /**
@@ -180,6 +184,7 @@ class LibraryController extends AbstractController
             ]
         );
 
+        TranslationsHelper::setDomain('Library');
         if ($request->getContentType() === 'json') {
             $errors = [];
             $status = 'success';
@@ -198,7 +203,7 @@ class LibraryController extends AbstractController
                 $em->flush();
 
                 $manager->singlePanel($form->createView());
-                $this->addFlash('success', TranslationsHelper::translate('Your request was completed successfully. # records were added.', ['count' => $copies]));
+                $this->addFlash('success', TranslationsHelper::translate('Your request was completed successfully. # records were added.', ['count' => $copies], ));
                 return new JsonResponse(
                     [
                         'form' => $manager->getFormFromContainer('formContent', 'single'),
@@ -241,6 +246,7 @@ class LibraryController extends AbstractController
         $item = ProviderFactory::getRepository(LibraryItem::class)->find($item) ?: new LibraryItem();
         $container = new Container();
         $container->setTarget('formContent')->setSelectedPanel($tabName)->setApplication('LibraryApp');
+        TranslationsHelper::setDomain('Library');
 
         $form = $this->createForm(EditType::class, $item,
             [
@@ -258,6 +264,7 @@ class LibraryController extends AbstractController
                 $status = 'error';
                 $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('Your request failed because your inputs were invalid.')];
             } else {
+
                 $item = $libraryManager->handleItem($item, $content);
                 $form = $this->createForm(EditType::class, $item,
                     [
@@ -268,16 +275,15 @@ class LibraryController extends AbstractController
 
             }
 
-            $panel = new Panel('Catalogue');
+            $panel = new Panel('Catalogue', 'Library');
+            $container->addForm('single', $form->createView())->addPanel($panel);
+
+            $panel = new Panel('General', 'Library');
             $container->addPanel($panel);
 
-            $panel = new Panel('General');
+            $panel = new Panel('Specific', 'Library');
             $container->addPanel($panel);
 
-            $panel = new Panel('Specific');
-            $container->addPanel($panel);
-
-            $container->addForm('single', $form->createView());
             $manager->addContainer($container)->buildContainers();
 
             return new JsonResponse(
@@ -289,13 +295,13 @@ class LibraryController extends AbstractController
                 200);
         }
 
-        $panel = new Panel('Catalogue');
+        $panel = new Panel('Catalogue', 'Library');
         $container->addForm('single', $form->createView())->addPanel($panel);
 
-        $panel = new Panel('General');
+        $panel = new Panel('General', 'Library');
         $container->addPanel($panel);
 
-        $panel = new Panel('Specific');
+        $panel = new Panel('Specific', 'Library');
         $container->addPanel($panel);
 
         $manager->addContainer($container)->buildContainers();

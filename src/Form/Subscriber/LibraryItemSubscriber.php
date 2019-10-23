@@ -15,13 +15,14 @@ namespace Kookaburra\Library\Form\Subscriber;
 use App\Entity\Department;
 use App\Entity\Space;
 use App\Form\Type\EnumType;
+use App\Form\Type\FilePathType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
-use Kookaburra\Library\Entity\LibraryType;
 use Kookaburra\Library\Manager\LibraryManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -81,13 +82,11 @@ class LibraryItemSubscriber implements EventSubscriberInterface
     public function preSubmit(PreSubmitEvent $event)
     {
         $data = $event->getData();
-        if ($data['library'] > 0 && $data['libraryType'] > 0) {
-            $type = null;
+        if ($data['library'] > 0 && in_array($data['itemType'], LibraryItem::getItemTypeList())) {
             if ($this->libraryManager->isGenerateIdentifier() && isset($data['identifier']) && '' === $data['identifier']) {
                 $item = new LibraryItem();
                 $library = ProviderFactory::getRepository(Library::class)->find($data['library']);
-                $type = ProviderFactory::getRepository(LibraryType::class)->find($data['libraryType']);
-                $item->setLibrary($library)->setLibraryType($type);
+                $item->setLibrary($library)->setitemType($data['itemType']);
                 $data['identifier'] = $this->libraryManager->newIdentifier($item)->getIdentifier();
             }
             $form = $event->getForm();
@@ -208,11 +207,34 @@ class LibraryItemSubscriber implements EventSubscriberInterface
                 [
                     'label' => 'Image Type',
                     'panel' => 'General',
-                    'placeholder' => '',
                     'choice_list_prefix' => false,
                     'required' => false,
+                    'on_change' => 'renderImageLocation',
                 ]
             )
+        ;
+        if ($this->getOptions()['data']->getImageType() === 'Link' || $this->getOptions()['data']->getImageType() === null) {
+            $form
+                ->add('imageLocation', UrlType::class,
+                    [
+                        'label' => 'Image Link',
+                        'panel' => 'General',
+                        'required' => false,
+                    ]
+                );
+        } else {
+            $form
+                ->add('imageLocation', FilePathType::class,
+                    [
+                        'label' => 'Image File',
+                        'panel' => 'General',
+                        'required' => false,
+                        'file_prefix' => 'library_',
+                    ]
+                );
+        }
+
+        $form
             ->add('space', EntityType::class,
                 [
                     'label' => 'Location',
@@ -311,6 +333,9 @@ class LibraryItemSubscriber implements EventSubscriberInterface
                 ]
             )
         ;
+
+        TranslationsHelper::addTranslation('Image File');
+        TranslationsHelper::addTranslation('Image Link');
     }
 
     /**
@@ -324,8 +349,6 @@ class LibraryItemSubscriber implements EventSubscriberInterface
 
         $data = $this->getData();
 
-        $libraryType = ProviderFactory::getRepository(LibraryType::class)->find($data['libraryType']);
-
         $form
             ->add('specific', HeaderType::class,
                 [
@@ -336,7 +359,7 @@ class LibraryItemSubscriber implements EventSubscriberInterface
                 ]
             )
         ;
-        if ($libraryType->getName() === 'Print Publication')
+        if ($data['itemType'] === 'Print Publication')
             $form
                 ->add('googleLoad', ButtonType::class,
                     [
@@ -347,7 +370,8 @@ class LibraryItemSubscriber implements EventSubscriberInterface
                 )
             ;
 
-        foreach($libraryType->getFields() as $q=>$field)
+        $q = 0;
+        foreach($this->libraryManager->getItemType($data['itemType'])['fields'] as $f=>$field)
         {
             $options = [];
             $options['constraints'] = [];
@@ -406,7 +430,7 @@ class LibraryItemSubscriber implements EventSubscriberInterface
             }
 
             $data['fields'] = $fields;
-
+            $q++;
         }
 
         $form
@@ -423,19 +447,21 @@ class LibraryItemSubscriber implements EventSubscriberInterface
 
     /**
      * getData
-     * @return LibraryType
+     * @return array
      */
     public function getData(): array
     {
         $data = [];
         if ($this->data instanceof LibraryItem) {
-            $data['libraryType'] = $this->data->getLibraryType()->getId();
+            $data['itemType'] = $this->data->getitemType();
             $fields = $this->data->getFields();
             reset($fields);
-            foreach($this->data->getLibraryType()->getFields() as $q=>$field) {
+            $q = 0;
+            foreach($this->libraryManager->getItemType($this->data->getitemType())['fields'] as $f=>$field) {
                 $w = current($fields);
                 $data['field' . $q] = $w;
                 next($fields);
+                $q++;
             }
             $this->data = $data;
         }

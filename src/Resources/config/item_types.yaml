@@ -69,7 +69,7 @@
             name: Collection
             description: ''
             type: Select
-            options: ',Fiction, Fiction - Best Sellers, Fiction - Classics, Fiction - Mystery, Fiction - Series, Fiction - Young Adult, Nonfiction, Nonfiction - College Prep, Nonfiction - Graphic Novels, Nonfiction - Life Skills, Nonfiction - Reference'
+            options: ',Fiction,Fiction - Best Sellers,Fiction - Classics,Fiction - Mystery,Fiction - Series,Fiction - Young Adult,Nonfiction,Nonfiction - College Prep,Nonfiction - Graphic Novels,Nonfiction - Life Skills,Nonfiction - Reference'
             default: ''
             required: false
         'Control Number':

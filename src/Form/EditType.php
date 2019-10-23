@@ -12,12 +12,12 @@
 
 namespace Kookaburra\Library\Form;
 
+use App\Form\Type\EnumType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
-use Kookaburra\Library\Entity\LibraryType;
 use Kookaburra\Library\Form\Subscriber\LibraryItemSubscriber;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -53,7 +53,7 @@ class EditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libraryItemType', HeaderType::class,
+            ->add('itemIdentifierLabel', HeaderType::class,
                 [
                     'label' => 'Library Item Type',
                     'help' => 'Item Identifier {identifier}',
@@ -77,18 +77,11 @@ class EditType extends AbstractType
                     'panel' => 'Catalogue',
                 ]
             )
-            ->add('libraryType', EntityType::class,
+            ->add('itemType', EnumType::class,
                 [
-                    'class' => LibraryType::class,
-                    'choice_label' => 'name',
                     'label' => 'Library Item Type',
                     'placeholder' => 'Please select...',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('lt')
-                            ->where('lt.active = :yes')
-                            ->orderBy('lt.name')
-                            ->setParameter('yes','Y');
-                    },
+                    'choice_list_prefix' => false,
                     'on_change' => 'selectLibraryAndType',
                     'panel' => 'Catalogue',
                 ]
@@ -105,7 +98,7 @@ class EditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'messages',
+            'translation_domain' => 'Library',
             'data_class' => LibraryItem::class,
             'allow_extra_fields' => true,
         ]);

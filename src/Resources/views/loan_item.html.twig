@@ -1,0 +1,93 @@
+{% trans_default_domain 'Library' %}
+{% extends 'kookaburra.html.twig' %}
+
+{% set module = {'baseURL': 'library', 'crumbs': [{uri: 'library__manage_catalogue', name: 'Library'},{uri: 'library__manage_catalogue', name: 'Manage Catalogue'}],  'title': 'View Item', 'domain': 'Library' } %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'Library' %}
+
+{% block content %}
+    <h3>{{ 'Item Details'|trans }}</h3>
+    <table class="smallIntBorder" cellspacing="0" style="width: 100%">
+        <tbody>
+        <tr>
+            <td style="width: 33%; vertical-align: top">
+                <span style="font-size: 115%; font-weight: bold">{{ 'Item Type'|trans }}</span>
+                <br>
+                <italic>{{ item.itemType|trans }}</italic>
+            </td>
+            <td style="width: 34%; vertical-align: top">
+                <span style="font-size: 115%; font-weight: bold">{{ 'Identifier'|trans }}</span>
+                <br>
+                <italic>{{ item.identifier }}</italic>
+            </td>
+            <td style="width: 34%; vertical-align: top">
+                <span style="font-size: 115%; font-weight: bold">{{ 'Name'|trans }}</span>
+                <br>
+                <italic>{{ item.name }}</italic>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 15px; vertical-align: top">
+                <span style="font-size: 115%; font-weight: bold">{{ 'Author/Brand'|trans }}</span>
+                <br>
+                <italic>{{ item.producer }}</italic>
+            </td>
+            <td style="padding-top: 15px; vertical-align: top">
+                <span style="font-size: 115%; font-weight: bold">{{'Status'|trans}}</span>
+                <br>
+                <italic>{{ item.status }}</italic>
+            </td>
+            <td style="padding-top: 15px; vertical-align: top">
+                <span style="font-size: 115%; font-weight: bold">{{'Borrowable'|trans}}</span>
+                <br>
+                <italic>{{ getYesNo(item.borrowable)|trans }}</italic>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    {% if item.status is same as('On Loan') %}
+        <table cellspacing="0" style="width: 100%">
+            <tbody>
+            <tr class="head">
+                <th style="text-align: center; min-width: 90px">{{'User'|trans}}</th>
+                <th>{{'Status'|trans}}<br>
+                    <span style="font-size: 85%; font-style: italic">{{'Date Out & In'|trans}}</span>
+                    <br>
+                </th>
+                <th>{{"Due Date"|trans}}</th>
+                <th>{{'Return Action'|trans}}</th>
+                <th>{{'Recorded By'|trans}}</th>
+                <th style="width: 110px">{{"Actions"|trans}}</th>
+            </tr>
+            <tr class="even">
+                <td style="text-align: center">
+                    {% include 'components/person_photo.html.twig' with {size: 75, person: item.responsibleForStatus, class: 'inline-block shadow bg-white border border-gray-600 w-20 lg:w-24 p-1'} %}
+                    <div style="margin-top: 3px; font-weight: bold">{{ item.responsibleForStatus.formatName({reverse: false, preferredName: true, informal: true}) }}</div>
+                </td>
+                <td>{{ item.status|trans }}<br>
+                    <span style="font-size: 85%; font-style: italic">{{ item.timestampStatus|date('d M/Y') }} - {{ item.returnExpected|date('d M/Y') }}</span>
+                </td>
+                <td>
+                    {% if item.returnExpected is not same as(null) %}
+                        {{ item.returnExpected|date('D jS M') }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if item.personReturnAction is not same as(null) %}
+                        {{ item.returnAction|trans }}<br/>{{ 'by' }} {{ item.personReturnAction.formatName({reverse: false, preferredName: true, informal: true}) }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ 'Out'|trans }}: {{ item.statusRecorder.formatName({reverse: false, preferredName: true, informal: true}) }}</td>
+                <td>
+                    <a href="{{ path('library__return_item', {item: item.id }) }}" title="{{ 'Return Item'|trans }}"><span class="fas fa-undo fa-fw fa-1-5x text-gray-700"></span></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        {% dump(item.events) %}
+    {% endif %}
+
+    <div id="formContent"></div>
+{% endblock content %}

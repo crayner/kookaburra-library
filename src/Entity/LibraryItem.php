@@ -22,6 +22,7 @@ use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Doctrine\ORM\Mapping as ORM;
@@ -95,8 +96,8 @@ class LibraryItem implements EntityInterface
     private $fields = [];
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="date",name="purchaseDate",nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="date_immutable",name="purchaseDate",nullable=true)
      */
     private $purchaseDate;
 
@@ -121,13 +122,12 @@ class LibraryItem implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(name="imageLocation",options={"comment": "URL or local FS path of image."},nullable=true)
-     * @Assert\Url()
      */
     private $imageLocation;
 
     /**
      * @var string|null
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $comment;
 
@@ -140,7 +140,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(name="locationDetail")
+     * @ORM\Column(name="locationDetail", nullable=true)
      */
     private $locationDetail;
 
@@ -247,14 +247,14 @@ class LibraryItem implements EntityInterface
     private $statusRecorder;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(name="timestampStatus", type="datetime", options={"comment": "The time the status was recorded"}, nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="timestampStatus", type="datetime_immutable", options={"comment": "The time the status was recorded"}, nullable=true)
      */
     private $timestampStatus;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(name="returnExpected", type="date", options={"comment": "The time when the event expires."}, nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="returnExpected", type="date_immutable", options={"comment": "The time when the event expires."}, nullable=true)
      */
     private $returnExpected;
 
@@ -278,16 +278,33 @@ class LibraryItem implements EntityInterface
     private $personReturnAction;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     private $audit;
 
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="Kookaburra\Library\Entity\LibraryItemEvent", mappedBy="libraryItem")
+     * @ORM\OrderBy({"timestampOut" = "DESC"})
      */
     private $events;
 
+    /**
+     * @var Person|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="gibbonPersonID")
+     */
+    private $createdBy;
+
+    /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable", name="created_on")
+     */
+    private $createdOn;
+
+    /**
+     * LibraryItem constructor.
+     */
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -413,18 +430,18 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getPurchaseDate(): ?\DateTime
+    public function getPurchaseDate(): ?\DateTimeImmutable
     {
         return $this->purchaseDate;
     }
 
     /**
-     * @param \DateTime|null $purchaseDate
+     * @param \DateTimeImmutable|null $purchaseDate
      * @return LibraryItem
      */
-    public function setPurchaseDate(?\DateTime $purchaseDate): LibraryItem
+    public function setPurchaseDate(?\DateTimeImmutable $purchaseDate): LibraryItem
     {
         $this->purchaseDate = $purchaseDate;
         return $this;
@@ -683,11 +700,20 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return string|null
+     * isBorrowable
+     * @return bool
      */
-    public function getBorrowable(): ?string
+    public function isBorrowable(): bool
     {
-        return $this->borrowable;
+        return $this->getBorrowable() === 'Y';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBorrowable(): string
+    {
+        return $this->borrowable = self::checkBoolean($this->borrowable);
     }
 
     /**
@@ -755,36 +781,36 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getTimestampStatus(): ?\DateTime
+    public function getTimestampStatus(): ?\DateTimeImmutable
     {
         return $this->timestampStatus;
     }
 
     /**
-     * @param \DateTime|null $timestampStatus
+     * @param \DateTimeImmutable|null $timestampStatus
      * @return LibraryItem
      */
-    public function setTimestampStatus(?\DateTime $timestampStatus): LibraryItem
+    public function setTimestampStatus(?\DateTimeImmutable $timestampStatus): LibraryItem
     {
         $this->timestampStatus = $timestampStatus;
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getReturnExpected(): ?\DateTime
+    public function getReturnExpected(): ?\DateTimeImmutable
     {
         return $this->returnExpected;
     }
 
     /**
-     * @param \DateTime|null $returnExpected
+     * @param \DateTimeImmutable|null $returnExpected
      * @return LibraryItem
      */
-    public function setReturnExpected(?\DateTime $returnExpected): LibraryItem
+    public function setReturnExpected(?\DateTimeImmutable $returnExpected): LibraryItem
     {
         $this->returnExpected = $returnExpected;
         return $this;
@@ -876,8 +902,8 @@ class LibraryItem implements EntityInterface
         if (null === $this->getSpace() || '' === $this->getSpace())
             $this->setSpace($this->getLibrary()->getFacility());
         if (null === $this->getDepartment() || '' === $this->getDepartment())
-            $this->setSpace($this->getLibrary()->getDepartment());
-        return $this->setTimestampUpdate(new \DateTime())->setPersonUpdate(UserHelper::getCurrentUser());
+            $this->setDepartment($this->getLibrary()->getDepartment());
+        return $this;
     }
 
     /**
@@ -891,8 +917,8 @@ class LibraryItem implements EntityInterface
         if (null === $this->getSpace() || '' === $this->getSpace())
             $this->setSpace($this->getLibrary()->getFacility());
         if (null === $this->getDepartment() || '' === $this->getDepartment())
-            $this->setSpace($this->getLibrary()->getDepartment());
-       return $this->update()->setPersonCreator(UserHelper::getCurrentUser())->setTimestampCreator(new \DateTime());
+            $this->setDepartment($this->getLibrary()->getDepartment());
+       return $this->update()->setCreatedBy(UserHelper::getCurrentUser())->setCreatedOn(new \DateTimeImmutable());
     }
 
     /**
@@ -921,6 +947,9 @@ class LibraryItem implements EntityInterface
             'owner' => $this->getOwnershipType() === 'Individual' ? $this->getOwnership()->formatName(false): ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'organisationName'),
             'status' => TranslationsHelper::translate($this->getStatus()),
             'borrowable' => $this->getBorrowable() ? TranslationsHelper::translate('Yes') : TranslationsHelper::translate('No'),
+            'isAvailable' => $this->isAvailable(),
+            'isNotAvailable' => !$this->isAvailable(),
+            'onLoan' => $this->getStatus() === 'On Loan' && $this->isBorrowable(),
         ];
     }
 
@@ -966,9 +995,9 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getAudit(): ?\DateTime
+    public function getAudit(): ?\DateTimeImmutable
     {
         return $this->audit;
     }
@@ -976,10 +1005,10 @@ class LibraryItem implements EntityInterface
     /**
      * Audit.
      *
-     * @param \DateTime|null $audit
+     * @param \DateTimeImmutable|null $audit
      * @return LibraryItem
      */
-    public function setAudit(?\DateTime $audit): LibraryItem
+    public function setAudit(?\DateTimeImmutable $audit): LibraryItem
     {
         $this->audit = $audit;
         return $this;
@@ -988,9 +1017,26 @@ class LibraryItem implements EntityInterface
     /**
      * @return Collection
      */
-    public function getEvents(): Collection
+    public function getEvents(bool $sort = false): Collection
     {
-        return $this->events = $this->events ?: new ArrayCollection();
+        if (null === $this->events)
+            $this->events = new ArrayCollection();
+
+        if ($this->events instanceof PersistentCollection)
+            $this->events->initialize();
+
+        if ($sort && $this->events instanceof PersistentCollection) {
+            $iterator = $this->events->getIterator();
+            $iterator->uasort(
+                function ($a, $b) {
+                    return $a->getTimestampOut()->getTimestamp() > $b->getTimestampOut()->getTimestamp() ? -1 : 1;
+                }
+            );
+
+            $this->events = new ArrayCollection(iterator_to_array($iterator, false));
+        }
+
+        return $this->events;
     }
 
     /**
@@ -1003,5 +1049,67 @@ class LibraryItem implements EntityInterface
     {
         $this->events = $events ?: new ArrayCollection();
         return $this;
+    }
+
+    /**
+     * @return Person|null
+     */
+    public function getCreatedBy(): ?Person
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * CreatedBy.
+     *
+     * @param Person|null $createdBy
+     * @return LibraryItem
+     */
+    public function setCreatedBy(?Person $createdBy): LibraryItem
+    {
+        $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getCreatedOn(): \DateTimeImmutable
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * CreatedOn.
+     *
+     * @param \DateTimeImmutable $createdOn
+     * @return LibraryItem
+     */
+    public function setCreatedOn(\DateTimeImmutable $createdOn): LibraryItem
+    {
+        $this->createdOn = $createdOn;
+        return $this;
+    }
+
+    /**
+     * isAvailable
+     * @return bool
+     */
+    public function isAvailable(): bool
+    {
+        return $this->available = $this->getStatus() === 'Available' && $this->isBorrowable();
+    }
+
+    /**
+     * getLastEvent
+     * @return LibraryItemEvent|null
+     */
+    public function getLastEvent(): ?LibraryItemEvent
+    {
+        if ($this->getEvents(true)->count() >= 1)
+        {
+            return $this->getEvents()->first();
+        }
+        return null;
     }
 }
