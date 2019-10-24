@@ -117,6 +117,7 @@ class LibraryEventManager
         $em = ProviderFactory::getEntityManager();
         $em->persist($event);
         $em->flush();
+        $this->getItem()->setLastEvent($event);
     }
 
     /**

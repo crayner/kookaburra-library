@@ -12,6 +12,7 @@
 
 namespace Kookaburra\Library\Manager;
 
+use App\Entity\Notification;
 use App\Entity\Person;
 use App\Manager\MessageManager;
 use App\Provider\ProviderFactory;
@@ -59,14 +60,14 @@ class LibraryManager
     private $messageManager;
 
     /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-
-    /**
      * @var int
      */
     private $renewalMaximum;
+
+    /**
+     * @var LibraryEventManager
+     */
+    private $eventManager;
 
     /**
      * LibraryManager constructor.
@@ -384,7 +385,7 @@ class LibraryManager
         $em->persist($item);
         $em->flush();
         $this->getMessageManager()->add('success', 'Your request was completed successfully.');
-        new LibraryEventManager($item, 'loan');
+        $this->eventManager = new LibraryEventManager($item, 'loan');
         return $this;
     }
 
@@ -397,6 +398,10 @@ class LibraryManager
     {
         $em = ProviderFactory::getEntityManager();
         $em->persist($item);
+        $event = $item->getLastEvent();
+        $event->setReturnAction($item->getReturnAction())
+            ->setReturnActionPerson($item->getPersonReturnAction());
+        $em->persist($event);
         $em->flush();
         return $this;
     }
@@ -428,7 +433,7 @@ class LibraryManager
      */
     public function returnItem(LibraryItem $item)
     {
-        $event = $item->getEvents(true)->first();
+        $event = $item->getLastEvent();
 
         $item->setStatus('Available')
             ->setTimestampStatus(new \DateTimeImmutable('now'))
@@ -436,16 +441,67 @@ class LibraryManager
             ->setResponsibleForStatus(null)
         ;
 
-        if ($item->getReturnAction() !== null)
-        {
+        $em = ProviderFactory::getEntityManager();
 
+        if (!in_array($item->getReturnAction(), [null,'']))
+        {
+            $newEvent = new LibraryItemEvent($item);
+            $now = new \DateTimeImmutable();
+            switch ($item->getReturnAction()) {
+                case 'Make Available':
+                    $item->setStatus('Available');
+                    $newEvent = null;
+                    break;
+                case 'Decommission':
+                    break;
+                case 'Repair':
+                    $item->setStatus('Repair')
+                        ->setReturnAction(null)
+                        ->setResponsibleForStatus($item->getPersonReturnAction())
+                        ->setPersonReturnAction(null)
+                        ->setTimestampStatus($now)
+                        ->setReturnExpected(null)
+                        ->setStatusRecorder(UserHelper::getCurrentUser())
+                    ;
+                    $newEvent->setStatus('Repair')
+                        ->setType('Repair')
+                        ->setResponsibleForStatus($item->getResponsibleForStatus())
+                        ->setTimestampOut($now)
+                        ->setReturnExpected(null)
+                        ->setOutPerson($item->getStatusRecorder())
+                    ;
+                    break;
+                case 'Reserve':
+                    $item->setStatus('Reserved')
+                        ->setReturnAction(null)
+                        ->setResponsibleForStatus($item->getPersonReturnAction())
+                        ->setPersonReturnAction(null)
+                        ->setTimestampStatus($now)
+                        ->setReturnExpected(new \DateTimeImmutable('+ '.$this->getBorrowPeriod().'days'))
+                        ->setStatusRecorder(UserHelper::getCurrentUser())
+                    ;
+                    $newEvent->setStatus('Reserved')
+                        ->setType('Reserve')
+                        ->setResponsibleForStatus($item->getResponsibleForStatus())
+                        ->setTimestampOut($now)
+                        ->setReturnExpected($item->getReturnExpected())
+                        ->setOutPerson($item->getStatusRecorder())
+                    ;
+
+                    //  Set event in system for user that reserved.
+                    $notification = new Notification();
+
+                    break;
+            }
+
+            $item->setLastEvent($newEvent);
+            dd($item, $this);
         }
 
         $event->setInPerson($item->getStatusRecorder())
             ->setTimestampReturn($item->getTimestampStatus())
             ->setStatus($item->getStatus());
 
-        $em = ProviderFactory::getEntityManager();
         $em->persist($event);
         $em->persist($item);
         $em->flush();
@@ -459,12 +515,14 @@ class LibraryManager
     public function renewItem(LibraryItem $item)
     {
         if ($this->isItemAvailableForRenew($item)) {
-            $newReturnDate = $item->getReturnExpected()->add(new \DateInterval('P'.$this->getBorrowPeriod().'D'));
+            $newReturnDate = $item->getReturnExpected()
+                ->add(new \DateInterval('P'.$this->getBorrowPeriod().'D'));
             $item->setReturnExpected($newReturnDate);
             $lastEvent = $item->getLastEvent();
             $now = new \DateTimeImmutable();
             $lastEvent->setInPerson(UserHelper::getCurrentUser())
                 ->setTimestampReturn($now);
+
             $event = new LibraryItemEvent($item);
             $event->setType('Renew Loan')
                 ->setOutPerson($lastEvent->getInPerson())
@@ -477,7 +535,6 @@ class LibraryManager
             $em->persist($lastEvent);
             $em->persist($item);
             $em->flush();
-            dump($item,$lastEvent,$event);
         }
     }
 
@@ -495,8 +552,8 @@ class LibraryManager
             $this->getMessageManager()->add('error', 'The item is not available for renewal.');
             return false;
         }
-        if ($event->getReturnAction() !== null) {
-            $this->getMessageManager()->add('warning', 'The return of the item is required for "{action}"', ['{action}' => TranslationsHelper::translate($event->getReturnAction())]);
+        if (! in_array($item->getReturnAction(), ['',null])) {
+            $this->getMessageManager()->add('warning', 'The return of the item is required for "{action}"', ['{action}' => TranslationsHelper::translate($item->getReturnAction())]);
             return false;
         }
         if ($item->getDaysOnLoan() >= $this->getBorrowPeriod() * ($this->getRenewalMaximum() + 1)) {
@@ -504,5 +561,13 @@ class LibraryManager
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return LibraryEventManager
+     */
+    public function getEventManager(): LibraryEventManager
+    {
+        return $this->eventManager;
     }
 }

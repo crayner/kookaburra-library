@@ -297,7 +297,7 @@ class LibraryItemEvent
      */
     public function setReturnAction(?string $returnAction): LibraryItemEvent
     {
-        $this->returnAction = $returnAction;
+        $this->returnAction = in_array($returnAction, self::getReturnActionList()) ? $returnAction : null;
         return $this;
     }
 

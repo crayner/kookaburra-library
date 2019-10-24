@@ -268,7 +268,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var array
      */
-    private static $returnActionList = ['', 'Make Available','Decommission','Repair','Reserve'];
+    private static $returnActionList = ['Make Available','Decommission','Repair','Reserve'];
 
     /**
      * @var Person|null
@@ -835,12 +835,13 @@ class LibraryItem implements EntityInterface
     }
 
     /**
+     * setReturnAction
      * @param string|null $returnAction
      * @return LibraryItem
      */
     public function setReturnAction(?string $returnAction): LibraryItem
     {
-        $this->returnAction = in_array($returnAction, self::getReturnActionList()) ? $returnAction : '';
+        $this->returnAction = in_array($returnAction, self::getReturnActionList()) ? $returnAction : null;
         return $this;
     }
 
