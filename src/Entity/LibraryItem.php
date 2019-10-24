@@ -303,6 +303,11 @@ class LibraryItem implements EntityInterface
     private $createdOn;
 
     /**
+     * @var LibraryItemEvent|null
+     */
+    private $lastEvent;
+
+    /**
      * LibraryItem constructor.
      */
     public function __construct()
@@ -731,6 +736,8 @@ class LibraryItem implements EntityInterface
      */
     public function getStatus(): ?string
     {
+        if ($this->status === 'Available' && !$this->isBorrowable())
+            return 'Reserved';
         return $this->status;
     }
 
@@ -740,6 +747,9 @@ class LibraryItem implements EntityInterface
      */
     public function setStatus(?string $status): LibraryItem
     {
+        if ($status === 'Available' && !$this->isBorrowable())
+            $status = 'Reserved';
+
         $this->status = in_array($status, self::getStatusList()) ? $status : 'Available';
         return $this;
     }
@@ -946,7 +956,7 @@ class LibraryItem implements EntityInterface
             'locationDetail' => $this->getLocationDetail(),
             'owner' => $this->getOwnershipType() === 'Individual' ? $this->getOwnership()->formatName(false): ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'organisationName'),
             'status' => TranslationsHelper::translate($this->getStatus()),
-            'borrowable' => $this->getBorrowable() ? TranslationsHelper::translate('Yes') : TranslationsHelper::translate('No'),
+            'borrowable' => $this->isBorrowable() ? TranslationsHelper::translate('Yes') : TranslationsHelper::translate('No'),
             'isAvailable' => $this->isAvailable(),
             'isNotAvailable' => !$this->isAvailable(),
             'onLoan' => $this->getStatus() === 'On Loan' && $this->isBorrowable(),
@@ -1106,10 +1116,45 @@ class LibraryItem implements EntityInterface
      */
     public function getLastEvent(): ?LibraryItemEvent
     {
-        if ($this->getEvents(true)->count() >= 1)
+        if (null === $this->lastEvent && $this->getEvents(true)->count() >= 1)
         {
-            return $this->getEvents()->first();
+            $this->setLastEvent($this->getEvents()->first());
         }
-        return null;
+        return $this->lastEvent;
+    }
+
+    /**
+     * LastEvent.
+     *
+     * @param LibraryItemEvent|null $lastEvent
+     * @return LibraryItem
+     */
+    public function setLastEvent(?LibraryItemEvent $lastEvent): LibraryItem
+    {
+        $this->lastEvent = $lastEvent;
+        return $this;
+    }
+
+    /**
+     * getDaysOnLoan
+     * calculates the days since the Loan was made.
+     * if not returned, then the days is calculated to the returnExpected date,
+     * unless the date is now after the returnExpectedDate.
+     * @return int
+     * @throws \Exception
+     */
+    public function getDaysOnLoan(): int
+    {
+        if ($this->getStatus() !== 'On Loan')
+            return 0;
+
+        $start = new \DateTimeImmutable($this->getTimestampStatus()->format('Y-m-d 00:00:00'));
+        $last = $this->getReturnExpected();
+        $now = new \DateTimeImmutable(date('Y-m-d 00:00:00'));
+        if ($now > $this->getReturnExpected())
+            $last = $now;
+        $diff = $last->diff($start);
+
+        return $diff->days;
     }
 }

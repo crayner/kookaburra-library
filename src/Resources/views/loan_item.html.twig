@@ -82,6 +82,7 @@
                     {{ 'Out'|trans }}: {{ item.statusRecorder.formatName({reverse: false, preferredName: true, informal: true}) }}</td>
                 <td>
                     <a href="{{ path('library__return_item', {item: item.id }) }}" title="{{ 'Return Item'|trans }}"><span class="fas fa-undo fa-fw fa-1-5x text-gray-700"></span></a>
+                    <a href="{{ path('library__renew_item', {item: item.id }) }}" title="{{ 'Renew Item'|trans }}"><span class="fas fa-redo fa-fw fa-1-5x text-gray-700"></span></a>
                 </td>
             </tr>
             </tbody>

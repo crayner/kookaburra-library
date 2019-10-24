@@ -49,7 +49,7 @@ class LibraryItemEvent
     /**
      * @var array
      */
-    private static $typeList = ['Decommission','Loss','Loan','Repair','Reserve','Other'];
+    private static $typeList = ['Decommission','Loss','Loan','Repair','Reserve','Other','Renew Loan'];
 
     /**
      * @var string|null

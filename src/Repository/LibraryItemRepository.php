@@ -80,7 +80,7 @@ class LibraryItemRepository extends ServiceEntityRepository
         if ($search->getPerson() instanceof Person)
             $query->andWhere('li.ownership = :person')
                 ->setParameter('person', $search->getPerson());
-dump($query);
+
         return $query->orderBy('li.identifier','ASC')->getQuery()
             ->getResult();
     }

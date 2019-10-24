@@ -18,7 +18,7 @@ use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
-use Kookaburra\Library\Events\LibraryItemEvent;
+use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -449,5 +449,60 @@ class LibraryManager
         $em->persist($event);
         $em->persist($item);
         $em->flush();
+    }
+
+    /**
+     * renewItem
+     * @param LibraryItem $item
+     * @throws \Exception
+     */
+    public function renewItem(LibraryItem $item)
+    {
+        if ($this->isItemAvailableForRenew($item)) {
+            $newReturnDate = $item->getReturnExpected()->add(new \DateInterval('P'.$this->getBorrowPeriod().'D'));
+            $item->setReturnExpected($newReturnDate);
+            $lastEvent = $item->getLastEvent();
+            $now = new \DateTimeImmutable();
+            $lastEvent->setInPerson(UserHelper::getCurrentUser())
+                ->setTimestampReturn($now);
+            $event = new LibraryItemEvent($item);
+            $event->setType('Renew Loan')
+                ->setOutPerson($lastEvent->getInPerson())
+                ->setTimestampOut($now)
+            ;
+
+            $item->setLastEvent(null);
+            $em = ProviderFactory::getEntityManager();
+            $em->persist($event);
+            $em->persist($lastEvent);
+            $em->persist($item);
+            $em->flush();
+            dump($item,$lastEvent,$event);
+        }
+    }
+
+    /**
+     * isItemAvailableForRenew
+     * @param LibraryItem $item
+     * @return bool
+     * @throws \Exception
+     */
+    private function isItemAvailableForRenew(LibraryItem $item): bool
+    {
+        $event = $item->getLastEvent();
+        if ($event === null || $event->getTimestampReturn() !== null)
+        {
+            $this->getMessageManager()->add('error', 'The item is not available for renewal.');
+            return false;
+        }
+        if ($event->getReturnAction() !== null) {
+            $this->getMessageManager()->add('warning', 'The return of the item is required for "{action}"', ['{action}' => TranslationsHelper::translate($event->getReturnAction())]);
+            return false;
+        }
+        if ($item->getDaysOnLoan() >= $this->getBorrowPeriod() * ($this->getRenewalMaximum() + 1)) {
+            $this->getMessageManager()->add('warning', 'This item has already exceeded renewal allowances for this library.');
+            return false;
+        }
+        return true;
     }
 }

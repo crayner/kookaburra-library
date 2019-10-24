@@ -243,3 +243,9 @@ Description: Description
 The physical width of the volume, in cm.: The physical width of the volume, in cm.
 Thickness: Thickness
 Language: Language
+User: User
+Return Item: Return Item
+Renew Item: Renew Item
+'The item is not available for renewal.': The item is not available for renewal.
+'This item has already exceeded renewal allowances for this library.': This item has already exceeded renewal allowances for this library.
+'The return of the item is required for "{action}".': 'The return of the item is required for "{action}"'

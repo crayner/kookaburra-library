@@ -101,4 +101,22 @@ class LoanController extends AbstractController
 
         return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
     }
+
+    /**
+     * renew
+     * @param LibraryItem $item
+     * @param LibraryManager $manager
+     * @param TranslatorInterface $translator
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/renew/{item}/item/", name="renew_item")
+     * @Security("is_granted('ROLE_ROUTE', ['library__loan_item'])")
+     */
+    public function renew(LibraryItem $item, LibraryManager $manager, TranslatorInterface $translator, FlashBagInterface $flashBag)
+    {
+        $manager->renewItem($item);
+
+        $manager->getMessageManager()->pushToFlash($flashBag, $translator);
+
+        return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
+    }
 }
