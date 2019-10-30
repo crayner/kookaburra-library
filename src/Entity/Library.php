@@ -22,14 +22,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Library
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="Library",uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),@ORM\UniqueConstraint(name="abbr", columns={"abbr"})},indexes={@ORM\Index(name="facility", columns={"facility"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="Library",uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),@ORM\UniqueConstraint(name="abbr", columns={"abbr"})},indexes={@ORM\Index(name="facility", columns={"facility"}), @ORM\Index(name="department", columns="department") })
  */
 class Library implements EntityInterface
 {
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="smallint", columnDefinition="INT(3) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="smallint", columnDefinition="INT(3) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;

@@ -22,11 +22,9 @@ class Installation implements ModuleInstallationInterface
 {
     public function up()
     {
-
     }
 
     public function down()
     {
-
     }
 }

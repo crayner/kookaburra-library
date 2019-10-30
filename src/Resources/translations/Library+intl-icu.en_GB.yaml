@@ -247,5 +247,11 @@ User: User
 Return Item: Return Item
 Renew Item: Renew Item
 'The item is not available for renewal.': The item is not available for renewal.
-'This item has already exceeded renewal allowances for this library.': This item has already exceeded renewal allowances for this library.
+'This borrower has already exceeded renewal allowances for this library on this item.': This borrower has already exceeded renewal allowances for this library on this item.
 'The return of the item is required for "{action}".': 'The return of the item is required for "{action}"'
+'Reserved Item Available': Reserved Item Available
+reserve:
+    available: 'The item "{title}" you reserved is availalbe for collection.  It will be kept until "{keptTill}". The item will be returned to circulation after this date.'
+Start Loan: Start Loan
+'Return': Return
+'This item is not available to reserve.': This item is not available to reserve.

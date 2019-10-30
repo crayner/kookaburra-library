@@ -15,12 +15,14 @@ namespace Kookaburra\Library\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
-use App\Manager\MessageManager;
+use App\Entity\Person;
+use App\Entity\Space;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\Library\Entity\CatalogueSearch;
+use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\CatalogueSearchType;
 use Kookaburra\Library\Form\DuplicateCopyIdentifierType;
@@ -51,7 +53,8 @@ class LibraryController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/catalogue/manage/", name="manage_catalogue")
      * @Route("/catalogue/manage/", name="status")
-     * @IsGranted("ROLE_ROUTE")
+     * @Route("/", name="default")
+     * @Security("is_granted('ROLE_ROUTE', ['library__manage_catalogue'])")
      */
     public function manageCatalogue(CataloguePagination $pagination, Request $request, LibraryManager $manager)
     {
@@ -322,11 +325,48 @@ class LibraryController extends AbstractController
     public function demonstrationLoad()
     {
         $content = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/migration/demo/libraryDemo.yaml'));
+
         $em = ProviderFactory::getEntityManager();
+        $lib = new Library();
+        foreach($content['library'] as $name=>$value)
+        {
+            $name = 'set' . ucfirst($name);
+            $lib->$name($value);
+        }
         try {
             $em->beginTransaction();
-            foreach($content['demo'] as $sql)
-                $em->getConnection()->exec($sql);
+            $em->persist($lib);
+            foreach($content['item'] as $item) {
+                $libItem = new LibraryItem();
+                $libItem->setLibrary($lib);
+                foreach($item as $name=>$value)
+                {
+                    switch ($name) {
+                        case 'fields':
+                            $value = unserialize($value);
+                            break;
+                        case 'space':
+                            $value = ProviderFactory::getRepository(Space::class)->find($value);
+                            break;
+                        case 'createdBy':
+                            $value = ProviderFactory::getRepository(Person::class)->find($value);
+                            break;
+                        case 'statusRecorder':
+                            $value = ProviderFactory::getRepository(Person::class)->find($value);
+                            break;
+                        case 'createdOn':
+                            $value = new \DateTimeImmutable($value);
+                            break;
+                        case 'timestampStatus':
+                            $value = new \DateTimeImmutable($value);
+                            break;
+                    }
+                    $name = 'set' . ucfirst($name);
+                    $libItem->$name($value);
+                }
+                $em->persist($libItem);
+            }
+            $em->flush();
             $em->commit();
         } catch (PDOException $e) {
             $em->rollback();

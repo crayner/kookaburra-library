@@ -128,6 +128,7 @@ class CataloguePagination extends ReactPaginationManager
             ->setSpanClass('fas fa-trash-alt fa-fw fa-1-5x text-gray-700')
             ->setRoute('library__delete_item')
             ->setOnClick('areYouSure')
+            ->setDisplayWhen('isLostOrDecommissioned')
             ->setRouteParams(['item' => 'id']);
         $row->addAction($action);
 

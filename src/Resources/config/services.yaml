@@ -7,10 +7,14 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Kookaburra\Library\:
         resource: '../../../src/*'
-        exclude: '../../../src/{DependencyInjection,Resources,Tests}'
+        exclude: '../../../src/{DependencyInjection,Resources,Tests,Entity,Helper}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     Kookaburra\Library\Controller\:
         resource: '../../../src/Controller'
         tags: ['controller.service_arguments']
+
+    Kookaburra\Library\Listener\LibraryItemStatusChangeListener:
+        tags:
+            - { name: 'doctrine.event_subscriber' }

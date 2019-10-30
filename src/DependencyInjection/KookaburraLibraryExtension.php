@@ -53,7 +53,9 @@ class KookaburraLibraryExtension extends Extension
                 ->addMethodCall('mergeItemTypes', [$this->loadItemTypes(isset($config['item_types']) && is_array($config['item_types']) ? $config['item_types'] : [])])
                 ->addMethodCall('setMaximumCopies', [$config['maximum_copies']])
                 ->addMethodCall('setBorrowPeriod', [$config['borrow_period']])
+                ->addMethodCall('setReservePeriod', [$config['reserve_period']])
                 ->addMethodCall('setRenewalMaximum', [$config['renewal_maximum']])
+                ->addMethodCall('setLibraryAdministrator', [$config['library_administrator'], $config['library_administrator_email']])
             ;
         }
     }

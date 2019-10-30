@@ -35,13 +35,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LoanController extends AbstractController
 {
     /**
-     * item
+     * loan
      * @param LibraryItem $item
-     * @param Request $request
      * @param Sidebar $sidebar
      * @param ContainerManager $manager
      * @param LibraryManager $libraryManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param TranslatorInterface $translator
+     * @param FlashBagInterface $flashBag
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Gibbon\Exception
      * @Route("/loan/{item}/item/", name="loan_item")
      * @IsGranted("ROLE_ROUTE")
@@ -53,9 +55,8 @@ class LoanController extends AbstractController
 
         if ($item->getStatus() === 'Available' && $item->isBorrowable())
             $item->setReturnExpected(new \DateTimeImmutable(date('Y-m-d', strtotime('+'.$item->getLibrary()->getLendingPeriod($libraryManager->getBorrowPeriod()).' days' ))));
-        else
+        elseif ($item->getStatus() !== 'On Loan' || !$item->isBorrowable())
             $libraryManager->getMessageManager()->add('warning', 'This item is not available to borrow.', [], 'Library');
-
 
         if ($item->getStatus() === 'On Loan' && $item->getReturnExpected() < new \DateTimeImmutable(date('Y-m-d') . ' 00:00:00'))
         {
@@ -107,7 +108,9 @@ class LoanController extends AbstractController
      * @param LibraryItem $item
      * @param LibraryManager $manager
      * @param TranslatorInterface $translator
+     * @param FlashBagInterface $flashBag
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      * @Route("/renew/{item}/item/", name="renew_item")
      * @Security("is_granted('ROLE_ROUTE', ['library__loan_item'])")
      */
@@ -117,6 +120,20 @@ class LoanController extends AbstractController
 
         $manager->getMessageManager()->pushToFlash($flashBag, $translator);
 
+        return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
+    }
+
+    /**
+     * reserveToLoan
+     * @param LibraryItem $item
+     * @param LibraryManager $libraryManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/reserve/to/loan/{item}/item/", name="reserve_to_loan_item")
+     * @Security("is_granted('ROLE_ROUTE', ['library__loan_item'])")
+     */
+    public function reserveToLoan(LibraryItem $item, LibraryManager $libraryManager)
+    {
+        $libraryManager->reserveToLoanItem($item);
         return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
     }
 }

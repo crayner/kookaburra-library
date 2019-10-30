@@ -74,15 +74,51 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if item.personReturnAction is not same as(null) %}
-                        {{ item.returnAction|trans }}<br/>{{ 'by' }} {{ item.personReturnAction.formatName({reverse: false, preferredName: true, informal: true}) }}
+                    {% if item.returnAction is not same as(null) and item.returnAction.actionBy is not same as(null) %}
+                        {{ item.returnAction.returnAction|trans }}<br/>{{ 'by' }} {{ item.returnAction.actionBy.formatName({reverse: false, preferredName: true, informal: true}) }}
                     {% endif %}
                 </td>
                 <td>
                     {{ 'Out'|trans }}: {{ item.statusRecorder.formatName({reverse: false, preferredName: true, informal: true}) }}</td>
                 <td>
                     <a href="{{ path('library__return_item', {item: item.id }) }}" title="{{ 'Return Item'|trans }}"><span class="fas fa-undo fa-fw fa-1-5x text-gray-700"></span></a>
-                    <a href="{{ path('library__renew_item', {item: item.id }) }}" title="{{ 'Renew Item'|trans }}"><span class="fas fa-redo fa-fw fa-1-5x text-gray-700"></span></a>
+                    {% if item.returnAction is same as(null) %}
+                        <a href="{{ path('library__renew_item', {item: item.id }) }}" title="{{ 'Renew Item'|trans }}"><span class="fas fa-redo fa-fw fa-1-5x text-gray-700"></span></a>
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if item.status is same as('Reserved') and item.isBorrowable() is same as(true) and item.responsibleForStatus is not same as(null) %}
+        <table cellspacing="0" style="width: 100%">
+            <tbody>
+            <tr class="head">
+                <th style="text-align: center; min-width: 90px">{{'User'|trans}}</th>
+                <th>{{'Status'|trans}}<br>
+                    <span style="font-size: 85%; font-style: italic">{{'Date Out & In'|trans}}</span>
+                    <br>
+                </th>
+                <th>{{"Due Date"|trans}}</th>
+                <th style="width: 110px">{{"Actions"|trans}}</th>
+            </tr>
+            <tr class="even">
+                <td style="text-align: center">
+                    {% include 'components/person_photo.html.twig' with {size: 75, person: item.responsibleForStatus, class: 'inline-block shadow bg-white border border-gray-600 w-20 lg:w-24 p-1'} %}
+                    <div style="margin-top: 3px; font-weight: bold">{{ item.responsibleForStatus.formatName({reverse: false, preferredName: true, informal: true}) }}</div>
+                </td>
+                <td>{{ item.status|trans }}<br>
+                    <span style="font-size: 85%; font-style: italic">{{ item.timestampStatus|date('d M/Y') }} - {{ item.returnExpected|date('d M/Y') }}</span>
+                </td>
+                <td>
+                    {% if item.returnExpected is not same as(null) %}
+                        {{ item.returnExpected|date('D jS M') }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('library__return_item', {item: item.id }) }}" title="{{ 'Make Available'|trans }}"><span class="fas fa-undo fa-fw fa-1-5x text-gray-700"></span></a>
+                    <a href="{{ path('library__reserve_to_loan_item', {item: item.id }) }}" title="{{ 'Start Loan'|trans }}"><span class="fas fa-book-reader fa-fw fa-1-5x text-gray-700"></span></a>
                 </td>
             </tr>
             </tbody>

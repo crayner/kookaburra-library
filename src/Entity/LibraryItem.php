@@ -42,7 +42,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="integer", name="gibbonLibraryItemID", columnDefinition="INT(10) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="integer", name="gibbonLibraryItemID", columnDefinition="INT(10) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -259,23 +259,10 @@ class LibraryItem implements EntityInterface
     private $returnExpected;
 
     /**
-     * @var string|null
-     * @ORM\Column(name="returnAction", length=16, options={"comment": "What to do when the item is returned?"}, nullable=true)
-     * @Assert\Choice(callback="getReturnActionList")
+     * @var LibraryReturnAction
+     * @ORM\OneToOne(targetEntity="Kookaburra\Library\Entity\LibraryReturnAction", mappedBy="item", orphanRemoval=true, cascade={"persist"})
      */
     private $returnAction;
-
-    /**
-     * @var array
-     */
-    private static $returnActionList = ['Make Available','Decommission','Repair','Reserve'];
-
-    /**
-     * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDReturnAction", referencedColumnName="gibbonPersonID", nullable=true)
-     */
-    private $personReturnAction;
 
     /**
      * @var \DateTimeImmutable|null
@@ -827,43 +814,6 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return string|null
-     */
-    public function getReturnAction(): ?string
-    {
-        return $this->returnAction;
-    }
-
-    /**
-     * setReturnAction
-     * @param string|null $returnAction
-     * @return LibraryItem
-     */
-    public function setReturnAction(?string $returnAction): LibraryItem
-    {
-        $this->returnAction = in_array($returnAction, self::getReturnActionList()) ? $returnAction : null;
-        return $this;
-    }
-
-    /**
-     * @return Person|null
-     */
-    public function getPersonReturnAction(): ?Person
-    {
-        return $this->personReturnAction;
-    }
-
-    /**
-     * @param Person|null $personReturnAction
-     * @return LibraryItem
-     */
-    public function setPersonReturnAction(?Person $personReturnAction): LibraryItem
-    {
-        $this->personReturnAction = $personReturnAction;
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public static function getImageTypeList(): array
@@ -896,11 +846,33 @@ class LibraryItem implements EntityInterface
     }
 
     /**
+     * @return null|LibraryReturnAction
+     */
+    public function getReturnAction(): ?LibraryReturnAction
+    {
+        return $this->returnAction;
+    }
+
+    /**
      * @return array
      */
     public static function getReturnActionList(): array
     {
         return self::$returnActionList;
+    }
+
+    /**
+     * ReturnAction.
+     *
+     * @param null|LibraryReturnAction $returnAction
+     * @return LibraryItem
+     */
+    public function setReturnAction(?LibraryReturnAction $returnAction, bool $swap = true): LibraryItem
+    {
+        if($swap && $returnAction)
+            $returnAction->setItem($this, false);
+        $this->returnAction = $returnAction;
+        return $this;
     }
 
     /**
@@ -960,6 +932,7 @@ class LibraryItem implements EntityInterface
             'borrowable' => $this->isBorrowable() ? TranslationsHelper::translate('Yes') : TranslationsHelper::translate('No'),
             'isAvailable' => $this->isAvailable(),
             'isNotAvailable' => !$this->isAvailable(),
+            'isLostOrDecommissioned' => in_array($this->getStatus(), ['Lost', 'Decommissioned']),
             'onLoan' => $this->getStatus() === 'On Loan' && $this->isBorrowable(),
         ];
     }

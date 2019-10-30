@@ -18,7 +18,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\LibraryItem;
-use Kookaburra\Library\Entity\LibraryType;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

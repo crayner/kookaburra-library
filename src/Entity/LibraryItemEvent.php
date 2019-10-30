@@ -13,6 +13,7 @@
 namespace Kookaburra\Library\Entity;
 
 use App\Entity\Person;
+use App\Manager\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kookaburra\UserAdmin\Util\UserHelper;
 
@@ -23,12 +24,12 @@ use Kookaburra\UserAdmin\Util\UserHelper;
  * @ORM\Table(options={"auto_increment": 1}, name="LibraryItemEvent")
  * @ORM\HasLifecycleCallbacks()
  */
-class LibraryItemEvent
+class LibraryItemEvent implements EntityInterface
 {
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="bigint", name="gibbonLibraryItemEventID", columnDefinition="INT(14) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="bigint", name="gibbonLibraryItemEventID", columnDefinition="INT(14) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -60,7 +61,7 @@ class LibraryItemEvent
     /**
      * @var array
      */
-    private static $statusList = ['Available','Decommissioned','Lost','On Loan','Repair','Reserved','Returned'];
+    private static $statusList = ['Available','Decommissioned','Lost','On Loan','Repair','Reserved','Returned','In Use'];
 
     /**
      * @var Person|null
@@ -85,30 +86,6 @@ class LibraryItemEvent
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(name="returnExpected", type="date_immutable", nullable=true, options={"comment": "The time when the event expires."})
-     */
-    private $returnExpected;
-
-    /**
-     * @var string|null
-     * @ORM\Column(name="returnAction", length=16, nullable=true, options={"comment": "What to do when the item is returned?"})
-     */
-    private $returnAction;
-
-    /**
-     * @var array
-     */
-    private static $returnActionList = ['Make Available','Decommission','Repair','Reserve'];
-
-    /**
-     * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDReturnAction", referencedColumnName="gibbonPersonID", nullable=true)
-     */
-    private $returnActionPerson;
-
-    /**
-     * @var \DateTimeImmutable|null
      * @ORM\Column(name="timestampReturn", type="datetime_immutable", nullable=true)
      */
     private $timestampReturn;
@@ -129,7 +106,6 @@ class LibraryItemEvent
         if ($item instanceof LibraryItem) {
             $this->setLibraryItem($item)
                 ->setStatus($item->getStatus())
-                ->setReturnExpected($item->getReturnExpected())
                 ->setResponsibleForStatus($item->getResponsibleForStatus())
             ;
         }
@@ -266,62 +242,6 @@ class LibraryItemEvent
     /**
      * @return \DateTimeImmutable|null
      */
-    public function getReturnExpected(): ?\DateTimeImmutable
-    {
-        return $this->returnExpected;
-    }
-
-    /**
-     * ReturnExpected.
-     *
-     * @param \DateTimeImmutable|null $returnExpected
-     * @return LibraryItemEvent
-     */
-    public function setReturnExpected(?\DateTimeImmutable $returnExpected): LibraryItemEvent
-    {
-        $this->returnExpected = $returnExpected;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getReturnAction(): ?string
-    {
-        return $this->returnAction;
-    }
-
-    /**
-     * @param string|null $returnAction
-     * @return LibraryItemEvent
-     */
-    public function setReturnAction(?string $returnAction): LibraryItemEvent
-    {
-        $this->returnAction = in_array($returnAction, self::getReturnActionList()) ? $returnAction : null;
-        return $this;
-    }
-
-    /**
-     * @return Person|null
-     */
-    public function getReturnActionPerson(): ?Person
-    {
-        return $this->returnActionPerson;
-    }
-
-    /**
-     * @param Person|null $returnActionPerson
-     * @return LibraryItemEvent
-     */
-    public function setReturnActionPerson(?Person $returnActionPerson): LibraryItemEvent
-    {
-        $this->returnActionPerson = $returnActionPerson;
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeImmutable|null
-     */
     public function getTimestampReturn(): ?\DateTimeImmutable
     {
         return $this->timestampReturn;
@@ -371,14 +291,6 @@ class LibraryItemEvent
     public static function getStatusList(): array
     {
         return self::$statusList;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getReturnActionList(): array
-    {
-        return self::$returnActionList;
     }
 
     /**

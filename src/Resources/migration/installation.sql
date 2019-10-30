@@ -1,100 +1,34 @@
-CREATE TABLE gibbonLibrary (
-    id INT(3) UNSIGNED ZEROFILL AUTO_INCREMENT,
-    facility INT(10) UNSIGNED ZEROFILL,
-    department INT(4) UNSIGNED ZEROFILL,
-    name VARCHAR(50) NOT NULL COMMENT 'The library name should be unique.',
-    abbr VARCHAR(6) NOT NULL COMMENT 'The library Abbreviation should be unique.',
-    active TINYINT(1) NOT NULL,
-    lending_period SMALLINT NOT NULL COMMENT 'Lending period default for this library in days.',
-    INDEX IDX_A14FB50BCD1DE18A (department),
-    INDEX facility (facility),
-    UNIQUE INDEX name (name),
-    UNIQUE INDEX abbr (abbr),
-    PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB AUTO_INCREMENT = 1;
-CREATE TABLE `gibbonLibraryItem` (
-   `gibbonLibraryItemID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-   `library` int(3) UNSIGNED ZEROFILL DEFAULT NULL,
-   `created_by` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-   `item_type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name for book, model for computer, etc.',
-   `producer` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Author for book, manufacturer for computer, etc',
-   `vendor` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `fields` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-   `purchaseDate` date DEFAULT NULL COMMENT '	(DC2Type:date_immutable)',
-   `invoiceNumber` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `imageType` varchar(4) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Type of image. Image should be 240px x 240px, or smaller.',
-   `imageLocation` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'URL or local FS path of image.',
-   `comment` longtext COLLATE utf8_unicode_ci,
-   `locationDetail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `ownershipType` varchar(12) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'School',
-   `replacement` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-   `replacementCost` decimal(10,2) DEFAULT NULL,
-   `physicalCondition` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
-   `bookable` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-   `borrowable` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-   `status` varchar(16) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Available' COMMENT 'The current status of the item.',
-   `timestampStatus` datetime DEFAULT NULL COMMENT 'The time the status was recorded. 	(DC2Type:datetime_immutable)',
-   `returnExpected` date DEFAULT NULL COMMENT 'The time when the event expires. 	(DC2Type:date_immutable)',
-   `returnAction` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'What to do when the item is returned?',
-   `created_on` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
-   `gibbonSpaceID` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-   `gibbonPersonIDOwnership` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-   `gibbonDepartmentID` int(4) UNSIGNED ZEROFILL DEFAULT NULL,
-   `gibbonSchoolYearIDReplacement` int(3) UNSIGNED ZEROFILL DEFAULT NULL,
-   `gibbonPersonIDStatusResponsible` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-   `gibbonPersonIDStatusRecorder` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-   `gibbonPersonIDReturnAction` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-   PRIMARY KEY (`gibbonLibraryItemID`),
-   UNIQUE KEY `id` (`id`),
-   KEY `IDX_7D8DF16ED8D64BA0` (`gibbonSpaceID`),
-   KEY `IDX_7D8DF16EC4597887` (`gibbonPersonIDOwnership`),
-   KEY `IDX_7D8DF16E6DFE7E92` (`gibbonDepartmentID`),
-   KEY `IDX_7D8DF16E2797629C` (`gibbonSchoolYearIDReplacement`),
-   KEY `IDX_7D8DF16EE0330702` (`gibbonPersonIDStatusResponsible`),
-   KEY `IDX_7D8DF16ECCCD7B64` (`gibbonPersonIDStatusRecorder`),
-   KEY `IDX_7D8DF16EFA1AE1AB` (`gibbonPersonIDReturnAction`),
-   KEY `IDX_7D8DF16EDE12AB56` (`created_by`),
-   KEY `item_type` (`item_type`),
-   KEY `library` (`library`)
+CREATE TABLE gibbonLibrary (id INT(3) UNSIGNED ZEROFILL AUTO_INCREMENT, facility INT(10) UNSIGNED ZEROFILL, department INT(4) UNSIGNED ZEROFILL, name VARCHAR(50) NOT NULL COMMENT 'The library name should be unique.', abbr VARCHAR(6) NOT NULL COMMENT 'The library Abbreviation should be unique.', active TINYINT(1) NOT NULL, lending_period SMALLINT NOT NULL COMMENT 'Lending period default for this library in days.', INDEX facility (facility), INDEX department (department), UNIQUE INDEX name (name), UNIQUE INDEX abbr (abbr), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB AUTO_INCREMENT = 1;
+CREATE TABLE gibbonLibraryItem (gibbonLibraryItemID INT(10) UNSIGNED ZEROFILL AUTO_INCREMENT, library INT(3) UNSIGNED ZEROFILL, created_by INT(10) UNSIGNED ZEROFILL, item_type VARCHAR(32) NOT NULL, id VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL COMMENT 'Name for book, model for computer, etc.', producer VARCHAR(255) NOT NULL COMMENT 'Author for book, manufacturer for computer, etc', vendor VARCHAR(100) DEFAULT NULL, fields LONGTEXT NOT NULL COMMENT '(DC2Type:array)', purchaseDate DATE DEFAULT NULL COMMENT '(DC2Type:date_immutable)', invoiceNumber VARCHAR(50) DEFAULT NULL, imageType VARCHAR(4) NOT NULL COMMENT 'Type of image. Image should be 240px x 240px, or smaller.', imageLocation VARCHAR(255) DEFAULT NULL COMMENT 'URL or local FS path of image.', comment LONGTEXT DEFAULT NULL, locationDetail VARCHAR(255) DEFAULT NULL, ownershipType VARCHAR(12) DEFAULT 'School' NOT NULL, replacement VARCHAR(1) DEFAULT 'Y' NOT NULL, replacementCost NUMERIC(10, 2) DEFAULT NULL, physicalCondition VARCHAR(16) NOT NULL, bookable VARCHAR(1) DEFAULT 'N' NOT NULL, borrowable VARCHAR(1) DEFAULT 'Y' NOT NULL, status VARCHAR(16) DEFAULT 'Available' NOT NULL COMMENT 'The current status of the item.', timestampStatus DATETIME DEFAULT NULL COMMENT 'The time the status was recorded(DC2Type:datetime_immutable)', returnExpected DATE DEFAULT NULL COMMENT 'The time when the event expires.(DC2Type:date_immutable)', created_on DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)', gibbonSpaceID INT(10) UNSIGNED ZEROFILL, gibbonPersonIDOwnership INT(10) UNSIGNED ZEROFILL, gibbonDepartmentID INT(4) UNSIGNED ZEROFILL, gibbonSchoolYearIDReplacement INT(3) UNSIGNED ZEROFILL, gibbonPersonIDStatusResponsible INT(10) UNSIGNED ZEROFILL, gibbonPersonIDStatusRecorder INT(10) UNSIGNED ZEROFILL, INDEX IDX_7D8DF16ED8D64BA0 (gibbonSpaceID), INDEX IDX_7D8DF16EC4597887 (gibbonPersonIDOwnership), INDEX IDX_7D8DF16E6DFE7E92 (gibbonDepartmentID), INDEX IDX_7D8DF16E2797629C (gibbonSchoolYearIDReplacement), INDEX IDX_7D8DF16EE0330702 (gibbonPersonIDStatusResponsible), INDEX IDX_7D8DF16ECCCD7B64 (gibbonPersonIDStatusRecorder), INDEX IDX_7D8DF16EDE12AB56 (created_by), INDEX item_type (item_type), INDEX library (library), UNIQUE INDEX id (id), PRIMARY KEY(gibbonLibraryItemID)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB AUTO_INCREMENT = 1;
+CREATE TABLE gibbonLibraryItemEvent (gibbonLibraryItemEventID INT(14) UNSIGNED ZEROFILL AUTO_INCREMENT, type VARCHAR(12) DEFAULT 'Other' NOT NULL COMMENT 'This is maintained even after the item is returned, so we know what type of event it was.', status VARCHAR(16) DEFAULT 'Available' NOT NULL, timestampOut DATETIME DEFAULT NULL COMMENT 'The time the event was recorded(DC2Type:datetime_immutable)', timestampReturn DATETIME DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)', gibbonLibraryItemID INT(10) UNSIGNED ZEROFILL, gibbonPersonIDStatusResponsible INT(10) UNSIGNED ZEROFILL, gibbonPersonIDOut INT(10) UNSIGNED ZEROFILL, gibbonPersonIDIn INT(10) UNSIGNED ZEROFILL, INDEX IDX_91CB122520179A14 (gibbonLibraryItemID), INDEX IDX_91CB1225E0330702 (gibbonPersonIDStatusResponsible), INDEX IDX_91CB1225D2C06C05 (gibbonPersonIDOut), INDEX IDX_91CB12251EBCE61E (gibbonPersonIDIn), PRIMARY KEY(gibbonLibraryItemEventID)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB AUTO_INCREMENT = 1;
+CREATE TABLE `gibbonLibraryReturnAction` (
+     `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+     `item` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
+     `on_return_action` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'What to do when the item is returned?',
+     `action_by` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
+     `created_by` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
+     `created_on` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+     PRIMARY KEY (`id`),
+     UNIQUE KEY `UNIQ_C8FEAEE11F1B251E` (`item`),
+     KEY `IDX_C8FEAEE11DC04527` (`action_by`),
+     KEY `IDX_C8FEAEE1DE12AB56` (`created_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT = 1;
-CREATE TABLE `gibbonLibraryItemEvent` (
-    `gibbonLibraryItemEventID` int(14) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-    `type` varchar(12) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Other' COMMENT 'This is maintained even after the item is returned, so we know what type of event it was.',
-    `status` varchar(16) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Available',
-    `timestampOut` datetime DEFAULT NULL COMMENT 'The time the event was recorded (DC2Type:datetime_immutable)',
-    `returnExpected` date DEFAULT NULL COMMENT 'The time when the event expires. (DC2Type:date_immutable)',
-    `returnAction` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'What to do when the item is returned? (DC2Type:datetime_immutable)',
-    `timestampReturn` datetime DEFAULT NULL,
-    `gibbonLibraryItemID` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-    `gibbonPersonIDStatusResponsible` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-    `gibbonPersonIDOut` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-    `gibbonPersonIDReturnAction` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-    `gibbonPersonIDIn` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
-    PRIMARY KEY (`gibbonLibraryItemEventID`),
-    KEY `IDX_91CB122520179A14` (`gibbonLibraryItemID`),
-    KEY `IDX_91CB1225E0330702` (`gibbonPersonIDStatusResponsible`),
-    KEY `IDX_91CB1225D2C06C05` (`gibbonPersonIDOut`),
-    KEY `IDX_91CB1225FA1AE1AB` (`gibbonPersonIDReturnAction`),
-    KEY `IDX_91CB12251EBCE61E` (`gibbonPersonIDIn`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT = 1;
-ALTER TABLE gibbonLibrary
-    ADD CONSTRAINT FK_A14FB50B105994B2 FOREIGN KEY (facility) REFERENCES gibbonSpace (gibbonSpaceID),
-    ADD CONSTRAINT FK_A14FB50BCD1DE18A FOREIGN KEY (department) REFERENCES gibbonDepartment (gibbonDepartmentID);
-ALTER TABLE `gibbonLibraryItem`
-    ADD CONSTRAINT `FK_7D8DF16E2797629C` FOREIGN KEY (`gibbonSchoolYearIDReplacement`) REFERENCES `gibbonschoolyear` (`gibbonSchoolYearID`),
-    ADD CONSTRAINT `FK_7D8DF16E6DFE7E92` FOREIGN KEY (`gibbonDepartmentID`) REFERENCES `gibbondepartment` (`gibbonDepartmentID`),
-    ADD CONSTRAINT `FK_7D8DF16EA18098BC` FOREIGN KEY (`library`) REFERENCES `gibbonlibrary` (`id`),
-    ADD CONSTRAINT `FK_7D8DF16EC4597887` FOREIGN KEY (`gibbonPersonIDOwnership`) REFERENCES `gibbonperson` (`gibbonPersonID`),
-    ADD CONSTRAINT `FK_7D8DF16ECCCD7B64` FOREIGN KEY (`gibbonPersonIDStatusRecorder`) REFERENCES `gibbonperson` (`gibbonPersonID`),
-    ADD CONSTRAINT `FK_7D8DF16ED8D64BA0` FOREIGN KEY (`gibbonSpaceID`) REFERENCES `gibbonspace` (`gibbonSpaceID`),
-    ADD CONSTRAINT `FK_7D8DF16EDE12AB56` FOREIGN KEY (`created_by`) REFERENCES `gibbonperson` (`gibbonPersonID`),
-    ADD CONSTRAINT `FK_7D8DF16EE0330702` FOREIGN KEY (`gibbonPersonIDStatusResponsible`) REFERENCES `gibbonperson` (`gibbonPersonID`),
-    ADD CONSTRAINT `FK_7D8DF16EFA1AE1AB` FOREIGN KEY (`gibbonPersonIDReturnAction`) REFERENCES `gibbonperson` (`gibbonPersonID`);
-ALTER TABLE `gibbonLibraryItemEvent`
-    ADD CONSTRAINT `FK_91CB12251EBCE61E` FOREIGN KEY (`gibbonPersonIDIn`) REFERENCES `gibbonperson` (`gibbonPersonID`),
-    ADD CONSTRAINT `FK_91CB122520179A14` FOREIGN KEY (`gibbonLibraryItemID`) REFERENCES `gibbonlibraryitem` (`gibbonLibraryItemID`),
-    ADD CONSTRAINT `FK_91CB1225D2C06C05` FOREIGN KEY (`gibbonPersonIDOut`) REFERENCES `gibbonperson` (`gibbonPersonID`),
-    ADD CONSTRAINT `FK_91CB1225E0330702` FOREIGN KEY (`gibbonPersonIDStatusResponsible`) REFERENCES `gibbonperson` (`gibbonPersonID`),
-    ADD CONSTRAINT `FK_91CB1225FA1AE1AB` FOREIGN KEY (`gibbonPersonIDReturnAction`) REFERENCES `gibbonperson` (`gibbonPersonID`);
+
+
+ALTER TABLE gibbonLibrary ADD CONSTRAINT FK_A14FB50B105994B2 FOREIGN KEY (facility) REFERENCES gibbonSpace (gibbonSpaceID);
+ALTER TABLE gibbonLibrary ADD CONSTRAINT FK_A14FB50BCD1DE18A FOREIGN KEY (department) REFERENCES gibbonDepartment (gibbonDepartmentID);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16EA18098BC FOREIGN KEY (library) REFERENCES gibbonLibrary (id);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16ED8D64BA0 FOREIGN KEY (gibbonSpaceID) REFERENCES gibbonSpace (gibbonSpaceID);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16EC4597887 FOREIGN KEY (gibbonPersonIDOwnership) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16E6DFE7E92 FOREIGN KEY (gibbonDepartmentID) REFERENCES gibbonDepartment (gibbonDepartmentID);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16E2797629C FOREIGN KEY (gibbonSchoolYearIDReplacement) REFERENCES gibbonSchoolYear (gibbonSchoolYearID);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16EE0330702 FOREIGN KEY (gibbonPersonIDStatusResponsible) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16ECCCD7B64 FOREIGN KEY (gibbonPersonIDStatusRecorder) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryItem ADD CONSTRAINT FK_7D8DF16EDE12AB56 FOREIGN KEY (created_by) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryItemEvent ADD CONSTRAINT FK_91CB122520179A14 FOREIGN KEY (gibbonLibraryItemID) REFERENCES gibbonLibraryItem (gibbonLibraryItemID);
+ALTER TABLE gibbonLibraryItemEvent ADD CONSTRAINT FK_91CB1225E0330702 FOREIGN KEY (gibbonPersonIDStatusResponsible) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryItemEvent ADD CONSTRAINT FK_91CB1225D2C06C05 FOREIGN KEY (gibbonPersonIDOut) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryItemEvent ADD CONSTRAINT FK_91CB12251EBCE61E FOREIGN KEY (gibbonPersonIDIn) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryReturnAction ADD CONSTRAINT FK_C8FEAEE11F1B251E FOREIGN KEY (item) REFERENCES gibbonLibraryItem (gibbonLibraryItemID);
+ALTER TABLE gibbonLibraryReturnAction ADD CONSTRAINT FK_C8FEAEE11DC04527 FOREIGN KEY (action_by) REFERENCES gibbonPerson (gibbonPersonID);
+ALTER TABLE gibbonLibraryReturnAction ADD CONSTRAINT FK_C8FEAEE1DE12AB56 FOREIGN KEY (created_by) REFERENCES gibbonPerson (gibbonPersonID);

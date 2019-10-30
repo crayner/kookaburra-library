@@ -46,7 +46,6 @@ class ItemActionType extends AbstractType
         $this->libraryManager = $libraryManager;
     }
 
-
     /**
      * buildForm
      * @param FormBuilderInterface $builder
@@ -86,35 +85,7 @@ class ItemActionType extends AbstractType
             ;
             $builder->get('responsibleForStatus')->addModelTransformer(new EntityToStringTransformer(ProviderFactory::getEntityManager(), ['class' => Person::class, 'multiple' => false]));
         }
-
-        $builder
-            ->add('onReturnHeader', HeaderType::class,
-                [
-                    'label' => 'On Return',
-                ]
-            )->add('returnAction', EnumType::class,
-                [
-                    'label' => 'Action',
-                    'help' => 'What to do when item is next returned.',
-                    'placeholder' => ' ',
-                    'choice_list_prefix' => false,
-                ]
-            )->add('personReturnAction', ChoiceType::class,
-                [
-                    'label' => 'Responsible User',
-                    'choices' => $this->libraryManager->getBorrowerList(),
-                    'placeholder' => ' ',
-                    'choice_translation_domain' => false,
-                    'help' => 'Who will be responsible for the future status?'
-                ]
-            )->add('return', SubmitType::class,
-                [
-                    'label' => 'On Return',
-                ]
-            )
-        ;
-        $builder->get('personReturnAction')->addModelTransformer(new EntityToStringTransformer(ProviderFactory::getEntityManager(), ['class' => Person::class, 'multiple' => false]));
-
+        $builder->add('returnAction', ReturnActionType::class, []);
     }
 
     /**

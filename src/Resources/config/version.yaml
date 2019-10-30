@@ -2,7 +2,7 @@ version: 0.0.00
 name: Library
 module:
     name: Library
-    description: 'Allows the management of a catalog from which items can be borrowed.'
+    description: 'Allows the management of a catalogue from which items can be borrowed.'
     entryURL: manage_catalogue
     type: Additional
     active: 'Y'
@@ -15,8 +15,8 @@ module:
             name: 'Manage Catalog'
             precedence: 0
             category: Catalogue
-            description: 'Control all items in the school library catalog'
-            URLList: 'manage_catalogue, library_lending_item.php,library_lending_item_signout.php,library_lending_item_return.php,library_lending_item_edit.php,library_lending_item_renew.php'
+            description: 'Control all items in the school library catalogue'
+            URLList: 'manage_catalogue,loan_item,library_lending_item_edit.php'
             entryURL: manage_catalogue
             entrySidebar: 'Y'
             menuShow: 'Y'
@@ -36,7 +36,7 @@ module:
             precedence: 0
             category: Catalogue
             description: 'Manage lending, returns, reservations, repairs, decommissioning, etc.'
-            URLList: 'manage_catalogue, library_lending_item.php,library_lending_item_signout.php,library_lending_item_return.php,library_lending_item_edit.php,library_lending_item_renew.php'
+            URLList: 'manage_catalogue,loan_item,library_lending_item_edit.php'
             entryURL: manage_catalogue
             entrySidebar: 'Y'
             menuShow: 'Y'
@@ -136,5 +136,17 @@ module:
             categoryPermissionOther: 'N'
             permissions:
                 - Administrator
-                - 'Support Staff'
-
+                - Support Staff
+events:
+    'Overdue Loan Items':
+        name: Overdue Loan Items
+        action: 'Lending & Activity Log'
+        type: CLI
+        scopes: ['All']
+        active: 'Y'
+    'Reserved Item Available':
+        name: Reserved Item Available
+        action: 'Lending & Activity Log'
+        type: Additional
+        scopes: ['All']
+        active: 'Y'

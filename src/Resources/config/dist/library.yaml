@@ -6,6 +6,8 @@ kookaburra_library:
     maximum_copies: 20
     # Default borrowing period.  This is overridden by individual library settings.
     borrow_period: 7
+    # Default reserve period.
+    reserve_period: 7
     # how many times can the item be renewed.
     renewal_maximum: 1
     # We try our best to include all possible item types, but you can add your own here.  See the help for format instructions.
@@ -14,3 +16,7 @@ kookaburra_library:
     allowed_borrowers:
         - 'Staff'
         - 'Students'
+    # The username of the library Administrator
+    library_administrator: null
+    # The email of the library administrator
+    library_administrator_email: null
