@@ -54,8 +54,8 @@ class LoanController extends AbstractController
             $sidebar->addExtra('image', ['asset' => GlobalHelper::localAssetorURL($item->getImageLocation()), 'class' => 'user max200']);
 
         if ($item->getStatus() === 'Available' && $item->isBorrowable())
-            $item->setReturnExpected(new \DateTimeImmutable(date('Y-m-d', strtotime('+'.$item->getLibrary()->getLendingPeriod($libraryManager->getBorrowPeriod()).' days' ))));
-        elseif ($item->getStatus() !== 'On Loan' || !$item->isBorrowable())
+            $item->setReturnExpected(new \DateTimeImmutable(date('Y-m-d', strtotime('+'.$item->getLibrary()->getLendingPeriod($libraryManager->getBorrowPeriod($item)).' days' ))));
+        elseif (!in_array($item->getStatus(), ['On Loan', 'Reserved']) || !$item->isBorrowable())
             $libraryManager->getMessageManager()->add('warning', 'This item is not available to borrow.', [], 'Library');
 
         if ($item->getStatus() === 'On Loan' && $item->getReturnExpected() < new \DateTimeImmutable(date('Y-m-d') . ' 00:00:00'))
@@ -135,5 +135,25 @@ class LoanController extends AbstractController
     {
         $libraryManager->reserveToLoanItem($item);
         return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
+    }
+
+    /**
+     * test
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/test/")
+     */
+    public function test()
+    {
+        return $this->render('@KookaburraSystemAdmin/email/notification.html.twig',
+            [
+                'title'  => 'Notification test Message',
+                'body'   => 'This is a test for the message stuff',
+                'button' => [
+                    'route'  => 'notification_action',
+                    'routeOptions' => ['notification' => 23],
+                    'text' => 'View Details',
+                ],
+            ]
+        );
     }
 }

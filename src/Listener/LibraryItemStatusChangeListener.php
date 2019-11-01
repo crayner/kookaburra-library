@@ -122,6 +122,9 @@ class LibraryItemStatusChangeListener implements EventSubscriber
             case 'Available':
                 $this->toAvailable();
                 break;
+            case 'Reserved':
+                $this->toReserved();
+                break;
             default:
                 dump('On Loan => ' . $toStatus);
         }
@@ -207,7 +210,6 @@ class LibraryItemStatusChangeListener implements EventSubscriber
      */
     private function toAvailable()
     {
-        dump($this,$this->closeLastEvent());
         if (($event = $this->closeLastEvent()) !== null) {
             $now = new \DateTimeImmutable();
             $event->setStatus('Available')
@@ -339,6 +341,28 @@ class LibraryItemStatusChangeListener implements EventSubscriber
         $event = new LibraryItemEvent($this->entity);
         $event->setStatus('Lost')
             ->setType('Loss')
+            ->setOutPerson(UserHelper::getCurrentUser())
+            ->setResponsibleForStatus($this->entity->getResponsibleForStatus())
+            ->setTimestampOut(new \DateTimeImmutable());
+        $this->em->persist($event);
+        $this->em->flush();
+    }
+
+    /**
+     * toLost
+     * @throws \Exception
+     */
+    private function toReserved()
+    {
+        if (($event = $this->closeLastEvent()) !== null) {
+            $event->setStatus('Reserved')
+                ->setInPerson(UserHelper::getCurrentUser())
+                ->setTimestampReturn(new \DateTimeImmutable());
+            $this->em->persist($event);
+        }
+        $event = new LibraryItemEvent($this->entity);
+        $event->setStatus('Reserved')
+            ->setType('Reserve')
             ->setOutPerson(UserHelper::getCurrentUser())
             ->setResponsibleForStatus($this->entity->getResponsibleForStatus())
             ->setTimestampOut(new \DateTimeImmutable());

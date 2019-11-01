@@ -52,7 +52,7 @@ class RenewItem implements LibraryInterface
     {
         if ($this->isItemAvailableForRenew($item)) {
             $newReturnDate = $item->getReturnExpected()
-                ->add(new \DateInterval('P'.$this->getBorrowPeriod().'D'));
+                ->add(new \DateInterval('P'.$this->getBorrowPeriod($item).'D'));
             $item->setReturnExpected($newReturnDate);
             $lastEvent = $item->getLastEvent();
             $now = new \DateTimeImmutable();
@@ -91,7 +91,9 @@ class RenewItem implements LibraryInterface
             $this->getMessageManager()->add('warning', 'The return of the item is required for "{action}"', ['{action}' => TranslationsHelper::translate($item->getReturnAction()->getReturnAction())]);
             return false;
         }
-        if ($item->getDaysOnLoan() >= $this->getBorrowPeriod() * ($this->getRenewalMaximum() + 1)) {
+
+        dump($item->getDaysOnLoan(),$this->getBorrowPeriod($item),$this->getRenewalMaximum());
+        if ($item->getDaysOnLoan() >= $this->getBorrowPeriod($item) * ($this->getRenewalMaximum() + 1)) {
             $this->getMessageManager()->add('warning', 'This borrower has already exceeded renewal allowances for this library on this item.');
             return false;
         }

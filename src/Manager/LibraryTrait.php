@@ -14,6 +14,8 @@ namespace Kookaburra\Library\Manager;
 
 use App\Entity\Person;
 use App\Manager\MessageManager;
+use Kookaburra\Library\Entity\LibraryItem;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Trait LibraryTrait
@@ -24,9 +26,9 @@ trait LibraryTrait
     /**
      * @return int
      */
-    public function getBorrowPeriod(): int
+    public function getBorrowPeriod(LibraryItem $item): int
     {
-        return $this->getLibraryManager()->getBorrowPeriod();
+        return $this->getLibraryManager()->getBorrowPeriod($item);
     }
 
     /**
@@ -61,5 +63,14 @@ trait LibraryTrait
     public function getRenewalMaximum(): int
     {
         return $this->getLibraryManager()->getRenewalMaximum();
+    }
+
+    /**
+     * getRouter
+     * @return RouterInterface
+     */
+    public function getRouter(): RouterInterface
+    {
+        return $this->getLibraryManager()->getRouter();
     }
 }

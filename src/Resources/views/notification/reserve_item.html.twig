@@ -1,2 +1,2 @@
 {% trans_default_domain translation_domain %}
-<p>{{ 'reserve.available'|trans({'{title}': item.name, '{keptTill}': keptTill|date('D jS/M Y')}) }}</p>
+<p><strong>{{ name }}:</strong> {{ 'reserve.available'|trans({'{title}': item.name, '{keptTill}': keptTill|date('D jS/M Y')}) }}</p>

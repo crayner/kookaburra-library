@@ -19,8 +19,9 @@ use Kookaburra\Library\Manager\LibraryInterface;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\Library\Manager\LibraryTrait;
 use Kookaburra\UserAdmin\Util\UserHelper;
+use Symfony\Component\Mailer\Transport;
 
-class ReturnAction implements LibraryInterface
+class ReturnItem implements LibraryInterface
 {
     use LibraryTrait;
 
@@ -30,7 +31,7 @@ class ReturnAction implements LibraryInterface
     private $libraryManager;
 
     /**
-     * ReturnAction constructor.
+     * ReturnItem constructor.
      * @param LibraryManager $libraryManager
      */
     public function __construct(LibraryManager $libraryManager)
@@ -91,7 +92,7 @@ class ReturnAction implements LibraryInterface
      * @param LibraryItem $item
      * @return LibraryManager
      */
-    public function returnAction(LibraryItem $item): ReturnAction
+    public function returnAction(LibraryItem $item): ReturnItem
     {
         if ($item->getStatus() !== 'On Loan' && $item->getReturnAction())
             return $this->returnActionNow($item);
@@ -108,10 +109,10 @@ class ReturnAction implements LibraryInterface
     /**
      * returnActionNow
      * @param LibraryItem $item
-     * @return ReturnAction
+     * @return ReturnItem
      * @throws \Exception
      */
-    private function returnActionNow(LibraryItem $item): ReturnAction
+    private function returnActionNow(LibraryItem $item): ReturnItem
     {
         $action = $item->getReturnAction();
         if (!$action->getActionBy() instanceof Person && $action->getReturnAction() !== 'Make Available') {

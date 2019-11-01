@@ -21,9 +21,9 @@ use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Helper\LoanItem;
 use Kookaburra\Library\Helper\RenewItem;
-use Kookaburra\Library\Helper\ReturnAction;
+use Kookaburra\Library\Helper\ReturnItem;
 use Kookaburra\SystemAdmin\Notification\EventBuilderProvider;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class LibraryManager
@@ -77,7 +77,7 @@ class LibraryManager
     private $libraryAdministrator;
 
     /**
-     * @var ReturnAction
+     * @var ReturnItem
      */
     private $returnAction;
 
@@ -92,15 +92,21 @@ class LibraryManager
     private $loanItem;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * LibraryManager constructor.
      * @param MessageManager $messageManager
      * @param EventBuilderProvider $provider  Initiate event provider
      */
-    public function __construct(MessageManager $messageManager, EventBuilderProvider $provider)
+    public function __construct(MessageManager $messageManager, EventBuilderProvider $provider, RouterInterface $router)
     {
         $this->messageManager = $messageManager;
         $this->getMessageManager()->setDomain('Library');
         TranslationsHelper::setDomain('Library');
+        $this->router = $router;
     }
 
     /**
@@ -348,11 +354,13 @@ class LibraryManager
     }
 
     /**
+     * getBorrowPeriod
+     * @param LibraryItem $item
      * @return int
      */
-    public function getBorrowPeriod(): int
+    public function getBorrowPeriod(LibraryItem $item): int
     {
-        return $this->borrowPeriod;
+        return intval($item->getLibrary()->getLendingPeriod()) > 0 ? $item->getLibrary()->getLendingPeriod() : $this->borrowPeriod;
     }
 
     /**
@@ -509,13 +517,13 @@ class LibraryManager
 
     /**
      * getReturnAction
-     * @return ReturnAction
+     * @return ReturnItem
      */
-    private function getReturnAction(): ReturnAction
+    private function getReturnAction(): ReturnItem
     {
         if (null === $this->returnAction)
         {
-            $this->returnAction = new ReturnAction($this);
+            $this->returnAction = new ReturnItem($this);
         }
         return $this->returnAction;
     }
@@ -544,5 +552,13 @@ class LibraryManager
             $this->renewItem = new RenewItem($this);
         }
         return $this->renewItem;
+    }
+
+    /**
+     * @return RouterInterface
+     */
+    public function getRouter(): RouterInterface
+    {
+        return $this->router;
     }
 }

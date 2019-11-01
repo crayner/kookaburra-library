@@ -20,6 +20,7 @@ use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\Library\Manager\LibraryTrait;
 use Kookaburra\SystemAdmin\Notification\EventBuilderProvider;
 use Kookaburra\UserAdmin\Util\UserHelper;
+use Symfony\Component\Routing\Router;
 
 /**
  * Class ReserveItem
@@ -37,6 +38,9 @@ class ReserveItem implements LibraryInterface
     /**
      * ReserveItem constructor.
      * @param LibraryItem $item
+     * @param LibraryManager $manager
+     * @param bool $justReturned
+     * @throws \Exception
      */
     public function __construct(LibraryItem $item, LibraryManager $manager, bool $justReturned = false)
     {
@@ -57,8 +61,8 @@ class ReserveItem implements LibraryInterface
 
             $notification->addRecipient($item->getResponsibleForStatus())
                 ->setText('@KookaburraLibrary/notification/reserve_item.html.twig')
-                ->setTextParams(['item' => $item, 'keptTill' => new \DateTimeImmutable('+' . $this->getReservePeriod() . ' days')])
-                ->setActionLink(null)
+                ->setTextParams(['item' => $item, 'keptTill' => new \DateTimeImmutable('+' . $this->getReservePeriod() . ' days'), 'name' => $item->getResponsibleForStatus()->formatName()])
+                ->setActionLink($this->getRouter()->generate('library__loan_item', ['item' => $item->getId()], Router::ABSOLUTE_URL))
                 ->queueNotifications('Library')
                 ->setOption('fromName', $this->getLibraryAdministrator()->formatName())
                 ->setOption('fromAddress', $this->getLibraryAdministrator()->getEmail());

@@ -862,7 +862,7 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * ReturnAction.
+     * ReturnItem.
      *
      * @param null|LibraryReturnAction $returnAction
      * @return LibraryItem

@@ -126,7 +126,7 @@ class LibraryReturnAction implements EntityInterface
     }
 
     /**
-     * ReturnAction.
+     * ReturnItem.
      *
      * @param string|null $returnAction
      * @return LibraryReturnAction

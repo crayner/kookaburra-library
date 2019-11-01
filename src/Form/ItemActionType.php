@@ -74,7 +74,7 @@ class ItemActionType extends AbstractType
                         'label' => 'Expected Return Date',
                         'help' => 'return_date_help',
                         'widget' => 'text',
-                        'help_attr' => ['count' => $options['data']->getLibrary()->getLendingPeriod($this->libraryManager->getBorrowPeriod())],
+                        'help_attr' => ['count' => $options['data']->getLibrary()->getLendingPeriod($this->libraryManager->getBorrowPeriod($item))],
 
                     ]
                 )->add('loan', SubmitType::class,
