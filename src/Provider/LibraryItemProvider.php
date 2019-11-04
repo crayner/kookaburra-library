@@ -37,4 +37,15 @@ class LibraryItemProvider implements EntityProviderInterface
     {
         return $this->getRepository()->findBySearch($search);
     }
+
+    /**
+     * getCatalogueList
+     * @param CatalogueSearch $search
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getBrowserList(CatalogueSearch $search)
+    {
+        return $this->getRepository()->findBySearch($search);
+    }
 }

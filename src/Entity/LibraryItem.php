@@ -19,6 +19,7 @@ use App\Entity\Space;
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
 use App\Provider\ProviderFactory;
+use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -934,6 +935,7 @@ class LibraryItem implements EntityInterface
             'isNotAvailable' => !$this->isAvailable(),
             'isLostOrDecommissioned' => in_array($this->getStatus(), ['Lost', 'Decommissioned']),
             'onLoan' => $this->getStatus() === 'On Loan' && $this->isBorrowable(),
+            'imageLocation' => ImageHelper::getAbsoluteImageURL($this->getImageType(), $this->getImageLocation()),
         ];
     }
 

@@ -28,6 +28,16 @@ class CatalogueSearch
     private $search = '';
 
     /**
+     * @var string
+     */
+    private $title = '';
+
+    /**
+     * @var string
+     */
+    private $producer = '';
+
+    /**
      * @var string|null
      */
     private $type;
@@ -53,6 +63,16 @@ class CatalogueSearch
     private $searchFields = '';
 
     /**
+     * @var null|string
+     */
+    private $imageLocation;
+
+    /**
+     * @var null|string
+     */
+    private $imageType;
+
+    /**
      * @return string
      */
     public function getSearch(): string
@@ -69,6 +89,46 @@ class CatalogueSearch
     public function setSearch(?string $search): CatalogueSearch
     {
         $this->search = $search ?: '';
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Title.
+     *
+     * @param string $title
+     * @return CatalogueSearch
+     */
+    public function setTitle(string $title): CatalogueSearch
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProducer(): string
+    {
+        return $this->producer;
+    }
+
+    /**
+     * Producer.
+     *
+     * @param string $producer
+     * @return CatalogueSearch
+     */
+    public function setProducer(string $producer): CatalogueSearch
+    {
+        $this->producer = $producer;
         return $this;
     }
 
@@ -189,5 +249,46 @@ class CatalogueSearch
     public static function getStatusList(): array
     {
         return LibraryItem::getStatusList();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageLocation(): ?string
+    {
+
+        return $this->imageLocation;
+    }
+
+    /**
+     * ImageLocation.
+     *
+     * @param string|null $imageLocation
+     * @return CatalogueSearch
+     */
+    public function setImageLocation(?string $imageLocation): CatalogueSearch
+    {
+        $this->imageLocation = $imageLocation;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageType(): ?string
+    {
+        return $this->imageType;
+    }
+
+    /**
+     * ImageType.
+     *
+     * @param string|null $imageType
+     * @return CatalogueSearch
+     */
+    public function setImageType(?string $imageType): CatalogueSearch
+    {
+        $this->imageType = $imageType;
+        return $this;
     }
 }

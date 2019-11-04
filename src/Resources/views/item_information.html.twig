@@ -1,0 +1,21 @@
+{% trans_default_domain 'Library' %}
+<table style="width: 100%">
+    <tbody>
+        {% for name,field in item.fields %}
+            {% if field is not same as('') %}
+            <tr>
+                <td style="vertical-align: top; padding: 5px; min-width: 120px;">
+                    <strong>{{ name|trans }}</strong>
+                </td>
+                {% if name is same as('Link') %}
+                    <td style="vertical-align: top; padding: 5px 12px;"><a href="{{ field }}" target="_blank">{{ field }}</a></td>
+                {% elseif name is same as('Language') %}
+                    <td style="vertical-align: top; padding: 5px 12px;">{{ getLanguageName(field) }}</td>
+                {% else %}
+                    <td style="vertical-align: top; padding: 5px 12px;">{{ field }}</td>
+                {% endif %}
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>

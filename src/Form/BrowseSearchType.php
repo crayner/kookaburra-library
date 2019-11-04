@@ -19,19 +19,17 @@ use App\Form\Type\EnumType;
 use App\Provider\ProviderFactory;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\CatalogueSearch;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class CatalogueSearchType
- * @package Kookaburra\Form
+ * Class BrowseSearchType
+ * @package Kookaburra\Library\Form
  */
-class CatalogueSearchType extends AbstractType
+class BrowseSearchType extends AbstractType
 {
     /**
      * buildForm
@@ -41,48 +39,16 @@ class CatalogueSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('search', TextType::class,
+            ->add('title', TextType::class,
                 [
-                    'label' => 'ID/Name/Producer',
+                    'label' => 'Title',
                     'required' => false,
                 ]
             )
-            ->add('type', EnumType::class,
+            ->add('producer', TextType::class,
                 [
-                    'label' => 'Item Type',
-                    'choice_list_prefix' => false,
-                    'placeholder' => '',
+                    'label' => 'Author/Producer',
                     'required' => false,
-                ]
-            )
-            ->add('location', EntityType::class,
-                [
-                    'label' => 'Location',
-                    'class' => Space::class,
-                    'required' => false,
-                    'choice_label' => 'name',
-                    'placeholder' => '',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('s')
-                            ->orderBy('s.name', 'ASC');
-                    },
-                ]
-            )
-            ->add('status', EnumType::class,
-                [
-                    'label' => 'Status',
-                    'placeholder' => '',
-                    'choice_list_prefix' => false,
-                    'required' => false,
-                ]
-            )
-            ->add('person', ChoiceType::class,
-                [
-                    'label' => 'Owner/User',
-                    'required' => false,
-                    'placeholder' => '',
-                    'choices' => ProviderFactory::create(Person::class)->findAllFullList(),
-                    'choice_translation_domain' => false,
                 ]
             )
             ->add('searchFields', TextType::class,
@@ -113,11 +79,12 @@ class CatalogueSearchType extends AbstractType
                 ]
             )
         ;
-
-        $builder->get('person')->addModelTransformer(new EntityToStringTransformer(ProviderFactory::getEntityManager(), ['class' => Person::class, 'multiple' => false]));
-
     }
 
+    /**
+     * configureOptions
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

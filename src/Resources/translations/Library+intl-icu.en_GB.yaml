@@ -255,3 +255,9 @@ reserve:
 Start Loan: Start Loan
 'Return': Return
 'This item is not available to reserve.': This item is not available to reserve.
+Browse the Library: Browse the Library
+Library Item Details: 'Library Item Details - {name}'
+View Description: View Description
+ID: Id
+Title: Title
+Author/Producer: Author/Producer
