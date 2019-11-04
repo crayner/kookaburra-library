@@ -12,12 +12,15 @@
 
 namespace Kookaburra\Library\Controller;
 
+use App\Form\Entity\SearchAny;
+use App\Form\SearchAnyType;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\LibraryItem;
-use Kookaburra\Library\Form\BrowseSearchType;
+use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Manager\BrowsePagination;
+use Kookaburra\Library\Manager\LibraryHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,22 +38,25 @@ class BrowseController extends AbstractController
     /**
      * browse
      * @param Request $request
+     * @param BrowsePagination $pagination
+     * @param LibraryHelper $helper
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/browse/", name="browse")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function browse(Request $request, BrowsePagination $pagination)
+    public function browse(Request $request, BrowsePagination $pagination, LibraryHelper $helper)
     {
         if ($request->getMethod() !== 'POST' && $request->getSession()->has('libraryBrowseSearch'))
             $search = $request->getSession()->get('libraryBrowseSearch');
-        $search = isset($search) ? $search : new CatalogueSearch();
+        $search = isset($search) ? $search : new SearchAny();
 
-        $form = $this->createForm(BrowseSearchType::class, $search);
+        $form = $this->createForm(SearchAnyType::class, $search);
 
         $form->handleRequest($request);
 
         if ($form->get('clear')->isClicked()) {
-            $search = new CatalogueSearch();
-            $form = $this->createForm(BrowseSearchType::class, $search);
+            $search = new SearchAny();
+            $form = $this->createForm(SearchAnyType::class, $search);
         }
 
         $provider = ProviderFactory::create(LibraryItem::class);
@@ -63,6 +69,8 @@ class BrowseController extends AbstractController
         return $this->render('@KookaburraLibrary/browse.html.twig',
             [
                 'form' => $form->createView(),
+                'top5' => ProviderFactory::getRepository(LibraryItemEvent::class)->findMonthlyTop5Loan(),
+                'newTitles' => ProviderFactory::getRepository(LibraryItem::class)->findLatestCreated(),
             ]
         );
     }

@@ -14,10 +14,13 @@ namespace Kookaburra\Library\Repository;
 
 use App\Entity\Person;
 use App\Entity\Space;
+use App\Form\Entity\SearchAny;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Kookaburra\Library\Entity\CatalogueSearch;
+use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
+use Kookaburra\Library\Manager\LibraryHelper;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -82,5 +85,48 @@ class LibraryItemRepository extends ServiceEntityRepository
 
         return $query->orderBy('li.identifier','ASC')->getQuery()
             ->getResult();
+    }
+
+    /**
+     * findLatestCreated
+     * @param Library|null $library
+     * @return array
+     */
+    public function findLatestCreated(?Library $library = null): array
+    {
+        $library = $library ?: LibraryHelper::getCurrentLibrary();
+        return $this->createQueryBuilder('li')
+            ->select(['li.name', 'li.producer'])
+            ->where('li.library = :library')
+            ->andWhere('li.borrowable = :yes')
+            ->orderBy('li.createdOn', 'DESC')
+            ->setMaxResults(5)
+            ->setParameter('library', $library)
+            ->setParameter('yes', 'Y')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * findByFullSearch
+     * @param SearchAny $search
+     * @return array
+     */
+    public function findByFullSearch(SearchAny $search): array
+    {
+        $metaData  = $this->getEntityManager()->getClassMetadata(LibraryItem::class);
+
+        $alias = "li";
+
+        $qb = $this->createQueryBuilder($alias);
+
+        foreach ($metaData->getFieldNames() as $name) {
+            $meta = $metaData->getFieldMapping($name);
+            if (in_array($meta['type'], ['string', 'text','array', 'datetime_immutable', 'date_immutable', 'integer', 'decimal'])){
+                $qb->orWhere($qb->expr()->like($alias . '.' . $name, ":search" ));
+            }
+        }
+        $qb->setParameter('search', '%'.$search->getSearch().'%');
+        return $qb->getQuery()->getResult();
     }
 }

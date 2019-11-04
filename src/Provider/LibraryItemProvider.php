@@ -12,6 +12,7 @@
 
 namespace Kookaburra\Library\Provider;
 
+use App\Form\Entity\SearchAny;
 use App\Manager\Traits\EntityTrait;
 use App\Provider\EntityProviderInterface;
 use Kookaburra\Library\Entity\CatalogueSearch;
@@ -39,13 +40,13 @@ class LibraryItemProvider implements EntityProviderInterface
     }
 
     /**
-     * getCatalogueList
-     * @param CatalogueSearch $search
+     * getBrowserList
+     * @param SearchAny $search
      * @return mixed
      * @throws \Exception
      */
-    public function getBrowserList(CatalogueSearch $search)
+    public function getBrowserList(SearchAny $search)
     {
-        return $this->getRepository()->findBySearch($search);
+        return $this->getRepository()->findByFullSearch($search);
     }
 }

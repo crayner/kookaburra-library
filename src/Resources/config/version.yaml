@@ -11,32 +11,12 @@ module:
     author: 'Craig Rayner'
     url: 'https://www.craigrayner.com'
     actions:
-        'Manage Catalog':
-            name: 'Manage Catalog'
+        'Manage Catalogue':
+            name: 'Manage Catalogue'
             precedence: 0
             category: Catalogue
             description: 'Control all items in the school library catalogue'
-            URLList: 'manage_catalogue,loan_item,library_lending_item_edit.php'
-            entryURL: manage_catalogue
-            entrySidebar: 'Y'
-            menuShow: 'Y'
-            defaultPermissionAdmin: 'Y'
-            defaultPermissionTeacher: 'N'
-            defaultPermissionStudent: 'N'
-            defaultPermissionParent: 'N'
-            defaultPermissionSupport: 'N'
-            categoryPermissionStaff: 'Y'
-            categoryPermissionStudent: 'N'
-            categoryPermissionParent: 'N'
-            categoryPermissionOther: 'N'
-            permissions:
-                - Administrator
-        'Lending & Activity Log':
-            name: 'Lending & Activity Log'
-            precedence: 0
-            category: Catalogue
-            description: 'Manage lending, returns, reservations, repairs, decommissioning, etc.'
-            URLList: 'manage_catalogue,loan_item,library_lending_item_edit.php'
+            URLList: 'manage_catalogue,edit'
             entryURL: manage_catalogue
             entrySidebar: 'Y'
             menuShow: 'Y'
@@ -140,13 +120,13 @@ module:
 events:
     'Overdue Loan Items':
         name: Overdue Loan Items
-        action: 'Lending & Activity Log'
+        action: 'Manage Catalogue'
         type: CLI
         scopes: ['All']
         active: 'Y'
     'Reserved Item Available':
         name: Reserved Item Available
-        action: 'Lending & Activity Log'
+        action: 'Manage Catalogue'
         type: Additional
         scopes: ['All']
         active: 'Y'

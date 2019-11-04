@@ -13,7 +13,9 @@
 namespace Kookaburra\Library\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItemEvent;
+use Kookaburra\Library\Manager\LibraryHelper;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -29,5 +31,27 @@ class LibraryItemEventRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, LibraryItemEvent::class);
+    }
+
+    /**
+     * findMonthlyTop5Loan
+     * @return array
+     * @throws \Exception
+     */
+    public function findMonthlyTop5Loan(?Library $library = null): array
+    {
+        $library = $library ?: LibraryHelper::getCurrentLibrary();
+        return $this->createQueryBuilder('lie')
+            ->where('lie.timestampOut > :theMonth')
+            ->andWhere('lie.type = :loan')
+            ->andWhere('li.library = :library')
+            ->setParameters(['loan' => 'Loan', 'theMonth' => new \DateTimeImmutable('-1 Month'), 'library' => $library])
+            ->groupBy('lie.libraryItem')
+            ->join('lie.libraryItem', 'li')
+            ->select(['li.name AS name', 'COUNT(lie.id) AS loans', 'li.producer AS producer'])
+            ->orderBy('loans', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
     }
 }

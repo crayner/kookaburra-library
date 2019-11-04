@@ -10,12 +10,35 @@
 {% set moduleName = 'Library' %}
 
 {% block content %}
+    <table class="noIntBorder borderGrey mb-1" cellspacing="0" style="width: 100%; background-color: rgba(255,255,255,0.8); margin-top: 30px">
+        <tbody>
+        <tr>
+            <td style="width: 10px">
+            </td>
+            <td style="width: 50%; padding-top: 5px; text-align: center; vertical-align: top">
+                <div style="color: #CC0000; margin-bottom: -2px; font-weight: bold; font-size: 135%">{{ 'Monthly Top 5'|trans }}</div>
+                {% for item in top5 %}
+                <div style="margin-top: 6px; font-weight: bold">{{ loop.index }}. {{ item.name }}</div>
+                <div style="font-style: italic; font-size: 85%">{{ 'by'|trans }} {{ item.producer }}</div>
+                {% endfor %}
+            </td>
+            <td style="width: 50%; padding-top: 5px; text-align: center; vertical-align: top">
+                <div style="color: #CC0000; margin-bottom: -5px; font-weight: bold; font-size: 135%">{{ 'New Titles'|trans }}</div>
+                {% for item in newTitles %}
+                    <div style="margin-top: 6px; font-weight: bold">{{ loop.index }}. {{ item.name }}</div>
+                    <div style="font-style: italic; font-size: 85%">{{ 'by'|trans }} {{ item.producer }}</div>
+                {% endfor %}
+            </td>
+            <td style="width: 5px">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
     {{ form_start(form) }}
     <table class="noIntBorder fullWidth relative">
         <tbody>
-            {{ form_row(form.title) }}
-            {{ form_row(form.producer) }}
-            {{ form_row(form.searchFields) }}
+            {{ form_row(form.search) }}
             <tr id="" class="flex flex-col sm:flex-row justify-between content-center p-0">
                 <td class="flex-grow justify-center px-2 border-b-0 sm:border-b border-t-0 right" colspan="2">
                     <div>
@@ -27,7 +50,5 @@
         </tbody>
     </table>
     {{ form_end(form) }}
-<!--    <h3>{{ 'View'|trans }}<a title="{{ 'Add'|trans }}" style="float:right; font-size: 1.25rem" onclick="window.open('{{ path('library__edit', {item: 0}) }}','_self')"><span class="fas fa-plus-circle fa-fw text-gray-700"></span></a>
-    </h3> -->
     <section id="paginationContent"></section>
 {% endblock content %}
