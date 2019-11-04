@@ -251,7 +251,7 @@ Renew Item: Renew Item
 'The return of the item is required for "{action}".': 'The return of the item is required for "{action}"'
 'Reserved Item Available': Reserved Item Available
 reserve:
-    available: 'The item "{title}" you reserved is availalbe for collection.  It will be kept until "{keptTill}". The item will be returned to circulation after this date.'
+    available: 'The item "{title}" you reserved is available for collection.  It will be kept until "{keptTill}". The item will be returned to circulation after this date.'
 Start Loan: Start Loan
 'Return': Return
 'This item is not available to reserve.': This item is not available to reserve.

@@ -15,6 +15,7 @@ namespace Kookaburra\Library\Entity;
 use App\Entity\Department;
 use App\Entity\Person;
 use App\Entity\SchoolYear;
+use App\Entity\Setting;
 use App\Entity\Space;
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
@@ -936,6 +937,7 @@ class LibraryItem implements EntityInterface
             'isLostOrDecommissioned' => in_array($this->getStatus(), ['Lost', 'Decommissioned']),
             'onLoan' => $this->getStatus() === 'On Loan' && $this->isBorrowable(),
             'imageLocation' => ImageHelper::getAbsoluteImageURL($this->getImageType(), $this->getImageLocation()),
+            'fullString' => $this->toFullString()
         ];
     }
 
@@ -1132,5 +1134,29 @@ class LibraryItem implements EntityInterface
         $diff = $last->diff($start);
 
         return $diff->days;
+    }
+
+    private $fullString;
+    /**
+     * toFullString
+     * @return string
+     */
+    public function toFullString(): string
+    {
+        if (null === $this->fullString)
+        {
+            $result = $this->getName();
+            $result .= $this->getIdentifier();
+            $result .= $this->getItemType();
+            $result .= $this->getComment();
+            $result .= implode('', array_values($this->getFields()));
+            $result .= $this->getProducer();
+            $result .= $this->getSpace()->getName();
+            $result .= $this->getLocationDetail();
+            $result .= $this->getStatus();
+
+            $this->fullString = $result;
+        }
+        return $this->fullString;
     }
 }
