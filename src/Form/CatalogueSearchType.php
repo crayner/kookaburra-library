@@ -19,6 +19,7 @@ use App\Form\Type\EnumType;
 use App\Provider\ProviderFactory;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\CatalogueSearch;
+use Kookaburra\Library\Entity\Library;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -41,6 +42,24 @@ class CatalogueSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('library', EntityType::class,
+                [
+                    'label' => 'Library',
+                    'required' => false,
+                    'help' => 'Clear this value to show all items from all libraries.',
+                    'placeholder' => ' ',
+                    'class' => Library::class,
+                    'data' => $options['data']->getLibrary() instanceof Library ? $options['data']->getLibrary()->getId() : null,
+                    'choice_label' => 'name',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('l')
+                            ->where('l.active = :true')
+                            ->setParameter('true', true)
+                            ->orderBy('l.name')
+                        ;
+                    },
+                ]
+            )
             ->add('search', TextType::class,
                 [
                     'label' => 'ID/Name/Producer',
@@ -51,7 +70,7 @@ class CatalogueSearchType extends AbstractType
                 [
                     'label' => 'Item Type',
                     'choice_list_prefix' => false,
-                    'placeholder' => '',
+                    'placeholder' => ' ',
                     'required' => false,
                 ]
             )

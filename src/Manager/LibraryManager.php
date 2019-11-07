@@ -16,6 +16,7 @@ use App\Entity\Person;
 use App\Entity\Setting;
 use App\Manager\MessageManager;
 use App\Provider\ProviderFactory;
+use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
@@ -164,6 +165,8 @@ class LibraryManager
      */
     public function newIdentifier(LibraryItem $item): LibraryItem
     {
+        if (!in_array($item->getIdentifier(), [null,'']) || $item->getLibrary() === null)
+            return $item;
         $key = uniqid($item->getLibrary()->getAbbr().'-');
         $ok = false;
         do {
@@ -197,27 +200,10 @@ class LibraryManager
 
         $item->setFields($this->buildFields($item, $content));
 
-        if ($content['imageType'] === 'File' && strpos($content['imageLocation'], 'data:image') === 0)
+        if ($content['imageType'] === 'File' && is_string($content['imageLocation']) && strpos($content['imageLocation'], 'data:image') === 0)
         {
-            $image = explode(',', $content['imageLocation']);
-            $fileContent = base64_decode($image[1]);
-            $fileName = uniqid('library_', true);
-            $type = explode(';', $image[0]);
-            $type = str_replace('data:image/', '', $type[0]);
-            $path = realpath(__DIR__ . '/../../../../../public/uploads');
-            if (!is_dir($path . '/library'))
-                mkdir($path . '/library', '0755', true);
-            $path = realpath(__DIR__ . '/../../../../../public/uploads/library');
-            switch($type) {
-                case 'jpeg':
-                    $filePath = $path . '/' . $fileName . '.jpeg';
-                    file_put_contents($filePath, $fileContent);
-                    break;
-                default:
-                    dump($type . ' is not handled.');
-            }
-            $content['imageLocation'] = $filePath;
-            $item->setImageLocation($filePath);
+            $content['imageLocation'] = ImageHelper::convertJsonToImage($content['imageLocation'], 'library_', 'Library');
+            $item->setImageLocation($content['imageLocation']);
         }
 
         $em = ProviderFactory::getEntityManager();

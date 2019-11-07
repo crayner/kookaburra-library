@@ -10,7 +10,8 @@
 {% set moduleName = 'Library' %}
 
 {% block content %}
-    <table class="noIntBorder borderGrey mb-1" cellspacing="0" style="width: 100%; background-color: rgba(255,255,255,0.8); margin-top: 30px">
+    <div style="width: 95%; border: 1px solid #444; min-height: 450px; ; background: url('{{ asset(getRelativeImageURL(library.bgImage)) }}') {{ library.bgColour }} repeat-y;  padding: 5rem;">
+    <table class="noIntBorder borderGrey mb-1" style="width: 100%; background-color: rgba(255,255,255,0.6); margin-top: 30px">
         <tbody>
         <tr>
             <td style="width: 10px">
@@ -36,7 +37,7 @@
     </table>
 
     {{ form_start(form) }}
-    <table class="noIntBorder fullWidth relative">
+    <table class="noIntBorder borderGrey mb-1" style="width: 100%; background-color: rgba(255,255,255,0.6); margin-top: 30px">
         <tbody>
             {{ form_row(form.search) }}
             <tr id="" class="flex flex-col sm:flex-row justify-between content-center p-0">
@@ -51,4 +52,5 @@
     </table>
     {{ form_end(form) }}
     <section id="paginationContent"></section>
+    </div>
 {% endblock content %}

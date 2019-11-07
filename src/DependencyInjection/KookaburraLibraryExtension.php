@@ -11,6 +11,7 @@
  */
 namespace Kookaburra\Library\DependencyInjection;
 
+use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\LibraryManager;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

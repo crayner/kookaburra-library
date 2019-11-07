@@ -83,6 +83,10 @@ class LibraryItemRepository extends ServiceEntityRepository
             $query->andWhere('li.ownership = :person')
                 ->setParameter('person', $search->getPerson());
 
+        if ($search->getLibrary() instanceof Library)
+            $query->andWhere('li.library = :library')
+                ->setParameter('library', $search->getLibrary());
+
         return $query->orderBy('li.identifier','ASC')->getQuery()
             ->getResult();
     }
@@ -122,11 +126,16 @@ class LibraryItemRepository extends ServiceEntityRepository
 
         foreach ($metaData->getFieldNames() as $name) {
             $meta = $metaData->getFieldMapping($name);
-            if (in_array($meta['type'], ['string', 'text','array', 'datetime_immutable', 'date_immutable', 'integer', 'decimal'])){
+            if (in_array($meta['type'], ['string','text', 'array', 'simple_array', 'datetime_immutable', 'date_immutable', 'integer', 'decimal'])){
                 $qb->orWhere($qb->expr()->like($alias . '.' . $name, ":search" ));
             }
         }
         $qb->setParameter('search', '%'.$search->getSearch().'%');
+        if (LibraryHelper::getCurrentLibrary() instanceof Library) {
+            $qb->andWhere($alias . '.library = :library')
+                ->setParameter('library', LibraryHelper::getCurrentLibrary());
+        }
+
         return $qb->getQuery()->getResult();
     }
 }

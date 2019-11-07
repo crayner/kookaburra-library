@@ -74,7 +74,7 @@ class LoanItem implements LibraryInterface
         $em = ProviderFactory::getEntityManager();
         $em->persist($item);
         $em->flush();
-        $this->getMessageManager()->add('success', 'Your request was completed successfully.');
+        $this->getMessageManager()->add('success', 'return.success.0', [], 'messages');
         return $this;
     }
 

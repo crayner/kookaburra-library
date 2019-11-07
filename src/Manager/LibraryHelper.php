@@ -45,25 +45,42 @@ class LibraryHelper
     }
 
     /**
+     * @param SessionInterface $session
+     */
+    public static function setSession(SessionInterface $session): void
+    {
+        self::$session = $session;
+    }
+
+    /**
+     * @var null|Library
+     */
+    private static $currentLibrary;
+
+    /**
      * getCurrentLibrary
      * @return Library|null
      */
     public static function getCurrentLibrary(): ?Library
     {
-        if (self::getSession()->has('current_library'))
-            return self::getSession()->get('current_library');
+        if (null !== self::$currentLibrary)
+            return self::$currentLibrary;
+        if (self::getSession()->has('current_library')) {
+            return self::$currentLibrary = ProviderFactory::getRepository(Library::class)->find(self::getSession()->get('current_library')->getId());
+        }
         $result = ProviderFactory::getRepository(Library::class)->findBy([], ['id' => 'ASC']);
         if (count($result) > 0)
             self::setCurrentLibrary($result[0]);
-        return $result[0];
+        return self::$currentLibrary = $result[0];
     }
 
     /**
-     * getCurrentLibrary
-     * @return void
+     * setCurrentLibrary
+     * @param null|Library $library
      */
-    public static function setCurrentLibrary(Library $library)
+    public static function setCurrentLibrary(?Library $library)
     {
+        self::$currentLibrary = $library;
         self::getSession()->set('current_library', $library);
     }
 }

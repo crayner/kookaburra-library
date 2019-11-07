@@ -14,6 +14,7 @@ namespace Kookaburra\Library\Entity;
 
 use App\Entity\Person;
 use App\Entity\Space;
+use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\LibraryManager;
 
 /**
@@ -71,6 +72,20 @@ class CatalogueSearch
      * @var null|string
      */
     private $imageType;
+
+    /**
+     * @var Library|null
+     */
+    private $library;
+
+    /**
+     * CatalogueSearch constructor.
+     */
+    public function __construct()
+    {
+        $this->library = LibraryHelper::getCurrentLibrary();
+    }
+
 
     /**
      * @return string
@@ -289,6 +304,26 @@ class CatalogueSearch
     public function setImageType(?string $imageType): CatalogueSearch
     {
         $this->imageType = $imageType;
+        return $this;
+    }
+
+    /**
+     * @return Library|null
+     */
+    public function getLibrary(): ?Library
+    {
+        return $this->library;
+    }
+
+    /**
+     * Library.
+     *
+     * @param Library|null $library
+     * @return CatalogueSearch
+     */
+    public function setLibrary(?Library $library): CatalogueSearch
+    {
+        $this->library = $library;
         return $this;
     }
 }

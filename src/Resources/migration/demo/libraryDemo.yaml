@@ -19,7 +19,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=iaVLeokzxFIC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F FOR)"
         ownershipType: ""
         replacement: "N"
@@ -43,7 +43,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=jbZgQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F FIT)"
         ownershipType: ""
         replacement: "N"
@@ -67,7 +67,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=noSCftZGbPMC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Play (812.54 ALB)"
         ownershipType: ""
         replacement: "N"
@@ -84,13 +84,13 @@ item:
         identifier: 03518
         name: "Animal Farm"
         producer: "George Orwell, Russell Baker, Christopher Montague Woodhouse"
-        fields: "a:20:{s:6:"Format";s:4:"Book";s:9:"Publisher";s:26:"Univ. Press of Mississippi";s:16:"Publication Date";s:10:"01/01/1996";s:22:"Country of Publication";s:0:"";s:7:"Edition";s:0:"";s:6:"ISBN10";s:10:"0451526341";s:6:"ISBN13";s:13:"9780451526342";s:11:"Description";s:109:"A satire on totalitarianism in which farm animals overthrow their human owner and set up their own government";s:8:"Subjects";s:0:"";s:10:"Collection";s:18:"Fiction - Classics";s:14:"Control Number";s:0:"";s:20:"Cataloging Authority";s:0:"";s:21:"Reader Age (Youngest)";s:0:"";s:19:"Reader Age (Oldest)";s:0:"";s:10:"Page Count";s:3:"140";s:6:"Height";s:0:"";s:5:"Width";s:0:"";s:9:"Thickness";s:0:"";s:8:"Language";s:2:"en";s:4:"Link";s:90:"https://books.google.com.au/books?id=SGAZdjNfruYC&dq=isbn:9780451526342&hl=&source=gbs_api";}"
+        fields: "a:20:{s:6:\"Format\";s:4:\"Book\";s:9:\"Publisher\";s:26:\"Univ. Press of Mississippi\";s:16:\"Publication Date\";s:10:\"01/01/1996\";s:22:\"Country of Publication\";s:0:\"\";s:7:\"Edition\";s:0:\"\";s:6:\"ISBN10\";s:10:\"0451526341\";s:6:\"ISBN13\";s:13:\"9780451526342\";s:11:\"Description\";s:109:\"A satire on totalitarianism in which farm animals overthrow their human owner and set up their own government\";s:8:\"Subjects\";s:0:\"\";s:10:\"Collection\";s:18:\"Fiction - Classics\";s:14:\"Control Number\";s:0:\"\";s:20:\"Cataloging Authority\";s:0:\"\";s:21:\"Reader Age (Youngest)\";s:0:\"\";s:19:\"Reader Age (Oldest)\";s:0:\"\";s:10:\"Page Count\";s:3:\"140\";s:6:\"Height\";s:0:\"\";s:5:\"Width\";s:0:\"\";s:9:\"Thickness\";s:0:\"\";s:8:\"Language\";s:2:\"en\";s:4:\"Link\";s:90:\"https://books.google.com.au/books?id=SGAZdjNfruYC&dq=isbn:9780451526342&hl=&source=gbs_api\";}"
         vendor: ""
         invoiceNumber: ""
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=SGAZdjNfruYC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Class Read 3"
         ownershipType: ""
         replacement: "N"
@@ -114,7 +114,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=A1hgPQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F HAS)"
         ownershipType: ""
         replacement: "N"
@@ -132,13 +132,13 @@ item:
         identifier: 06904
         name: "Pride and Prejudice"
         producer: "Jane Austen, Meg Cabot"
-        fields: "a:20:{s:6:"Format";s:4:"Book";s:9:"Publisher";s:18:"Bloomsbury Pub Ltd";s:16:"Publication Date";s:10:"05/03/2007";s:22:"Country of Publication";s:0:"";s:7:"Edition";s:0:"";s:6:"ISBN10";s:10:"0747587485";s:6:"ISBN13";s:13:"9780747587484";s:11:"Description";s:127:"Elizabeth Bennet's chances of happiness are endangered by the foibles of human nature in this classic nineteenth-century novel.";s:8:"Subjects";s:0:"";s:10:"Collection";s:18:"Fiction - Classics";s:14:"Control Number";s:0:"";s:20:"Cataloging Authority";s:0:"";s:21:"Reader Age (Youngest)";s:0:"";s:19:"Reader Age (Oldest)";s:0:"";s:10:"Page Count";s:3:"352";s:6:"Height";s:0:"";s:5:"Width";s:0:"";s:9:"Thickness";s:0:"";s:8:"Language";s:2:"en";s:4:"Link";s:84:"https://www.booktopia.com.au/pride-and-prejudice-jane-austen/book/9780747587484.html";}"
+        fields: "a:20:{s:6:\"Format\";s:4:\"Book\";s:9:\"Publisher\";s:18:\"Bloomsbury Pub Ltd\";s:16:\"Publication Date\";s:10:\"05/03/2007\";s:22:\"Country of Publication\";s:0:\"\";s:7:\"Edition\";s:0:\"\";s:6:\"ISBN10\";s:10:\"0747587485\";s:6:\"ISBN13\";s:13:\"9780747587484\";s:11:\"Description\";s:127:\"Elizabeth Bennet's chances of happiness are endangered by the foibles of human nature in this classic nineteenth-century novel.\";s:8:\"Subjects\";s:0:\"\";s:10:\"Collection\";s:18:\"Fiction - Classics\";s:14:\"Control Number\";s:0:\"\";s:20:\"Cataloging Authority\";s:0:\"\";s:21:\"Reader Age (Youngest)\";s:0:\"\";s:19:\"Reader Age (Oldest)\";s:0:\"\";s:10:\"Page Count\";s:3:\"352\";s:6:\"Height\";s:0:\"\";s:5:\"Width\";s:0:\"\";s:9:\"Thickness\";s:0:\"\";s:8:\"Language\";s:2:\"en\";s:4:\"Link\";s:84:\"https://www.booktopia.com.au/pride-and-prejudice-jane-austen/book/9780747587484.html\";}"
         vendor: ""
         invoiceNumber: ""
         imageType: "Link"
         imageLocation: "https://www.booktopia.com.au/http_coversbooktopiacomau/big/9780747587484/0000/pride-and-prejudice.jpg"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F AUS)"
         ownershipType: ""
         replacement: "N"
@@ -162,7 +162,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=rK34BBMEnoAC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F STE)"
         ownershipType: ""
         replacement: "N"
@@ -186,7 +186,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=gxKcPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F GRI)"
         ownershipType: ""
         replacement: "N"
@@ -210,7 +210,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=SluXuAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F BRO)"
         ownershipType: ""
         replacement: "N"
@@ -233,7 +233,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=z2uMAAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F CAR)"
         ownershipType: ""
         replacement: "N"
@@ -256,7 +256,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=UupQPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: 00013
+        space: Library
         locationDetail: "Classics (F BRO)"
         ownershipType: ""
         replacement: "N"

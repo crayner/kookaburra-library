@@ -15,12 +15,13 @@ namespace Kookaburra\Library\Controller;
 use App\Form\Entity\SearchAny;
 use App\Form\SearchAnyType;
 use App\Provider\ProviderFactory;
+use App\Twig\ModuleMenu;
 use App\Util\TranslationsHelper;
-use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Manager\BrowsePagination;
 use Kookaburra\Library\Manager\LibraryHelper;
+use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +36,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BrowseController extends AbstractController
 {
+    use LibraryControllerTrait;
+
     /**
      * browse
      * @param Request $request
@@ -44,8 +47,11 @@ class BrowseController extends AbstractController
      * @Route("/browse/", name="browse")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function browse(Request $request, BrowsePagination $pagination, LibraryHelper $helper)
+    public function browse(Request $request, BrowsePagination $pagination, ModuleMenu $menu, LibraryHelper $helper)
     {
+        // Hide the menu.
+        $menu->setShowSidebar(false);
+
         if ($request->getMethod() !== 'POST' && $request->getSession()->has('libraryBrowseSearch'))
             $search = $request->getSession()->get('libraryBrowseSearch');
         $search = isset($search) ? $search : new SearchAny();
@@ -71,6 +77,7 @@ class BrowseController extends AbstractController
                 'form' => $form->createView(),
                 'top5' => ProviderFactory::getRepository(LibraryItemEvent::class)->findMonthlyTop5Loan(),
                 'newTitles' => ProviderFactory::getRepository(LibraryItem::class)->findLatestCreated(),
+                'library' => $helper::getCurrentLibrary(),
             ]
         );
     }

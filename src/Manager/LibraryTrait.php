@@ -18,7 +18,7 @@ use Kookaburra\Library\Entity\LibraryItem;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Trait LibraryTrait
+ * Traits LibraryTrait
  * @package Kookaburra\Library\Manager
  */
 trait LibraryTrait

@@ -14,23 +14,22 @@ namespace Kookaburra\Library\Form\Subscriber;
 
 use App\Entity\Department;
 use App\Entity\Space;
+use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;
 use App\Form\Type\FilePathType;
 use App\Form\Type\HeaderType;
+use App\Form\Type\ReactDateType;
 use App\Form\Type\ToggleType;
-use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Manager\LibraryManager;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Event\PostSetDataEvent;
+use Symfony\Component\Form\Event\PreSetDataEvent;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -70,8 +69,7 @@ class LibraryItemSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::PRE_SUBMIT => 'preSubmit',
-            FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::PRE_SET_DATA => 'preSetData',
         ];
     }
 
@@ -79,16 +77,14 @@ class LibraryItemSubscriber implements EventSubscriberInterface
      * buildForm
      * @param PreSubmitEvent $event
      */
-    public function preSubmit(PreSubmitEvent $event)
+    public function preSetData(PreSetDataEvent $event)
     {
         $data = $event->getData();
-        if ($data['library'] > 0 && in_array($data['itemType'], LibraryItem::getItemTypeList())) {
-            if ($this->libraryManager->isGenerateIdentifier() && isset($data['identifier']) && '' === $data['identifier']) {
-                $item = new LibraryItem();
-                $library = ProviderFactory::getRepository(Library::class)->find($data['library']);
-                $item->setLibrary($library)->setitemType($data['itemType']);
-                $data['identifier'] = $this->libraryManager->newIdentifier($item)->getIdentifier();
+        if ($data->getLibrary() instanceof Library && in_array($data->getItemType(), LibraryItem::getItemTypeList())) {
+            if ($this->libraryManager->isGenerateIdentifier()) {
+                $data->setIdentifier($this->libraryManager->newIdentifier($data)->getIdentifier());
             }
+
             $form = $event->getForm();
             $this->setData($data);
             $this->buildForm($form);
@@ -96,7 +92,6 @@ class LibraryItemSubscriber implements EventSubscriberInterface
         }
 
         $event->setData($data);
-
     }
 
     /**
@@ -118,22 +113,6 @@ class LibraryItemSubscriber implements EventSubscriberInterface
     {
         $this->options = $options;
         return $this;
-    }
-
-    /**
-     * postSetData
-     * @param PostSetDataEvent $event
-     */
-    public function postSetData(PostSetDataEvent $event)
-    {
-        if ($event->getData() instanceof LibraryItem && $event->getData()->getId() > 0)
-        {
-            $form = $event->getForm();
-            $this->buildForm($form);
-            $this->setData($event->getData());
-            $this->buildFields($form,$event->getData());
-        }
-
     }
 
     /**
@@ -190,10 +169,12 @@ class LibraryItemSubscriber implements EventSubscriberInterface
                     'required' => false,
                 ]
             )
-            ->add('purchaseDate', DateType::class,
+            ->add('purchaseDate', ReactDateType::class,
                 [
                     'label' => 'Purchase Date',
                     'panel' => 'General',
+                    'input' => 'datetime_immutable',
+                    'widget' => 'single_text',
                 ]
             )
             ->add('invoiceNumber', TextType::class,

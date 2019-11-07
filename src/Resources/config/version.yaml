@@ -15,8 +15,8 @@ module:
             name: 'Manage Catalogue'
             precedence: 0
             category: Catalogue
-            description: 'Control all items in the school library catalogue'
-            URLList: 'manage_catalogue,edit'
+            description: Control all items in the school library catalogue
+            URLList: manage_catalogue,edit,item_loan
             entryURL: manage_catalogue
             entrySidebar: 'Y'
             menuShow: 'Y'
@@ -35,9 +35,9 @@ module:
             name: 'Browse The Library'
             precedence: 0
             category: Catalogue
-            description: 'Search and view all borrowable items maintained by the library.'
-            URLList: library_browse.php
-            entryURL: library_browse.php
+            description: Search and view all borrowable items maintained by the library.
+            URLList: browse
+            entryURL: browse
             entrySidebar: 'N'
             menuShow: 'Y'
             defaultPermissionAdmin: 'Y'

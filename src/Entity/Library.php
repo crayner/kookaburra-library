@@ -15,7 +15,9 @@ namespace Kookaburra\Library\Entity;
 use App\Entity\Department;
 use App\Entity\Space;
 use App\Manager\EntityInterface;
+use App\Validator as Validator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,12 +39,16 @@ class Library implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=50, options={"comment": "The library name should be unique."},unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 50)
      */
     private $name;
 
     /**
      * @var string|null
      * @ORM\Column(length=6, options={"comment": "The library Abbreviation should be unique."},unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 6)
      */
     private $abbr;
 
@@ -71,7 +77,23 @@ class Library implements EntityInterface
      * @ORM\Column(type="smallint",options={"comment": "Lending period default for this library in days."})
      * @Assert\Range(min=1,max=365)
      */
-    private $lendingPeriod;
+    private $lendingPeriod = 14;
+
+    /**
+     * @var string
+     * @ORM\Column(length=32, options={"default": "white"}, name="bg_colour")
+     * @Validator\Colour()
+     */
+    private $bgColour = 'white';
+
+    /**
+     * @var File|null
+     * @ORM\Column(length=191, name="bg_image", nullable=true)
+     * @Assert\Length(
+     *     max = 1250000
+     * )
+     */
+    private $bgImage;
 
     /**
      * @return int|null
@@ -174,9 +196,9 @@ class Library implements EntityInterface
     }
 
     /**
-     * @return ?int
+     * @return null|int
      */
-    public function getLendingPeriod(?int $default = null): ?int
+    public function getLendingPeriod(?int $default = 14): ?int
     {
         return $this->lendingPeriod ?: $default;
     }
@@ -210,6 +232,47 @@ class Library implements EntityInterface
     public function setDepartment(?Department $department): Library
     {
         $this->department = $department;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBgColour(): string
+    {
+        return $this->bgColour;
+    }
+
+    /**
+     * BgColour.
+     *
+     * @param string $bgColour
+     * @return Library
+     */
+    public function setBgColour(string $bgColour): Library
+    {
+        $this->bgColour = $bgColour;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getBgImage(): ?string
+    {
+        dump($this);
+        return $this->bgImage;
+    }
+
+    /**
+     * BgImage.
+     *
+     * @param null|string $bgImage
+     * @return Library
+     */
+    public function setBgImage(?string $bgImage): Library
+    {
+        $this->bgImage = $bgImage;
         return $this;
     }
 }

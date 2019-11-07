@@ -18,6 +18,7 @@ use App\Util\GlobalHelper;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\ItemActionType;
 use Kookaburra\Library\Manager\LibraryManager;
+use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class LoanController extends AbstractController
 {
+    use LibraryControllerTrait;
+
     /**
      * loan
      * @param LibraryItem $item
@@ -135,25 +138,5 @@ class LoanController extends AbstractController
     {
         $libraryManager->reserveToLoanItem($item);
         return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
-    }
-
-    /**
-     * test
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/test/")
-     */
-    public function test()
-    {
-        return $this->render('@KookaburraSystemAdmin/email/notification.html.twig',
-            [
-                'title'  => 'Notification test Message',
-                'body'   => 'This is a test for the message stuff',
-                'button' => [
-                    'route'  => 'notification_action',
-                    'routeOptions' => ['notification' => 23],
-                    'text' => 'View Details',
-                ],
-            ]
-        );
     }
 }

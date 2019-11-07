@@ -12,6 +12,7 @@
 
 namespace Kookaburra\Library\Form;
 
+use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
@@ -19,7 +20,6 @@ use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\Subscriber\LibraryItemSubscriber;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -67,6 +67,7 @@ class EditType extends AbstractType
                     'choice_label' => 'name',
                     'label' => 'Library',
                     'placeholder' => 'Please select...',
+                    //'data' => $options['data']->getLibrary() !== null ? $options['data']->getLibrary()->getId() : null,
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('l')
                             ->where('l.active = :true')
@@ -81,6 +82,7 @@ class EditType extends AbstractType
                 [
                     'label' => 'Library Item Type',
                     'placeholder' => 'Please select...',
+                    'data' => $options['data']->getItemType(),
                     'choice_list_prefix' => false,
                     'on_change' => 'selectLibraryAndType',
                     'panel' => 'Catalogue',

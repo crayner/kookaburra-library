@@ -15,7 +15,6 @@ namespace Kookaburra\Library\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
-use App\Entity\Person;
 use App\Entity\Space;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
@@ -30,6 +29,8 @@ use Kookaburra\Library\Form\DuplicateItemType;
 use Kookaburra\Library\Form\EditType;
 use Kookaburra\Library\Manager\CataloguePagination;
 use Kookaburra\Library\Manager\LibraryManager;
+use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
+use Kookaburra\UserAdmin\Util\UserHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,12 +40,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class LibraryController
+ * Class CatalogueController
  * @package Kookaburra\Library\Controller
  * @Route("/library", name="library__")
  */
-class LibraryController extends AbstractController
+class CatalogueController extends AbstractController
 {
+    use LibraryControllerTrait;
+
     /**
      * manageCatalogue
      * @param CataloguePagination $pagination
@@ -97,7 +100,7 @@ class LibraryController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($item);
         $em->flush();
-        $this->addFlash('success', 'Your request was completed successfully.');
+        $this->addFlash('success', ['id' => 'return.success.0', 'domain' => 'messages']);
         return $this->redirectToRoute('library__manage_catalogue');
     }
 
@@ -151,7 +154,7 @@ class LibraryController extends AbstractController
                 }
                 $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your request was completed successfully. # records were added.', ['count' => $form->get('copies')->getData()])];
             } else {
-                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('Your request failed because your inputs were invalid.')];
+                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
                 $status = 'error';
             }
 
@@ -217,7 +220,7 @@ class LibraryController extends AbstractController
                     200);
             } else {
                 $manager->singlePanel($form->createView());
-                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('Your request failed because your inputs were invalid.')];
+                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
                 return new JsonResponse(
                     [
                         'form' => $manager->getFormFromContainer('formContent', 'single'),
@@ -247,6 +250,13 @@ class LibraryController extends AbstractController
     public function edit(Request $request, ContainerManager $manager, LibraryManager $libraryManager, int $item = 0, string $tabName = 'Catalogue')
     {
         $item = ProviderFactory::getRepository(LibraryItem::class)->find($item) ?: new LibraryItem();
+
+        if ($request->getContentType() === 'json' && $request->getMethod() === 'POST' && $item->getId() === 0) {
+            $content = json_decode($request->getContent(), true);
+            $item->setLibrary(ProviderFactory::getRepository(Library::class)->find($content['library']))
+                ->setItemType($content['itemType']);
+        }
+        $manager->setShowSubmitButton(true);
         $container = new Container();
         $container->setTarget('formContent')->setSelectedPanel($tabName)->setApplication('LibraryApp');
         TranslationsHelper::setDomain('Library');
@@ -261,21 +271,40 @@ class LibraryController extends AbstractController
             $errors = [];
             $status = 'success';
             $content = json_decode($request->getContent(), true);
+            $submit = $content['submit_clicked'];
+            unset($content['submit_clicked']);
+            $item->setLibrary(ProviderFactory::getRepository(Library::class)->find($content['library']));
             $form->submit($content);
 
-            if (!$form->isValid()) {
+            if (!$form->isValid() && $submit !== 'library_type_select') {
                 $status = 'error';
-                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('Your request failed because your inputs were invalid.')];
-            } else {
-
+                $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
+            } elseif ($form->isValid()) {
                 $item = $libraryManager->handleItem($item, $content);
                 $form = $this->createForm(EditType::class, $item,
                     [
                         'action' => $this->generateUrl('library__edit', ['item' => $item->getId() ?: 0]),
                     ]
                 );
-                $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your request was completed successfully.')];
-
+                $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('return.success.0', [], 'messages')];
+            } elseif ($submit === 'library_type_select' && $item->getId() === 0) {
+                $form = $this->createForm(EditType::class, $item,
+                    [
+                        'action' => $this->generateUrl('library__edit', ['item' => $item->getId() ?: 0]),
+                    ]
+                );
+            } elseif ($submit === 'library_type_select' && $item->getId() > 0) {
+                $item = ProviderFactory::getRepository(LibraryItem::class)->find($item->getId());
+                $em = $this->getDoctrine()->getManager();
+                $em->refresh($item);
+                $item->setItemType($content['itemType'])->setLibrary(ProviderFactory::getRepository(Library::class)->find($content['library']));
+                $em->persist($item);
+                $em->flush();
+                $form = $this->createForm(EditType::class, $item,
+                    [
+                        'action' => $this->generateUrl('library__edit', ['item' => $item->getId() ?: 0]),
+                    ]
+                );
             }
 
             $panel = new Panel('Catalogue', 'Library');
@@ -319,6 +348,7 @@ class LibraryController extends AbstractController
     /**
      * demonstrationLoad
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      * @IsGranted("ROLE_SYSTEM_ADMIN")
      * @Route("/demonstartion/", name="demonstration")
      */
@@ -346,13 +376,13 @@ class LibraryController extends AbstractController
                             $value = unserialize($value);
                             break;
                         case 'space':
-                            $value = ProviderFactory::getRepository(Space::class)->find($value);
+                            $value = ProviderFactory::getRepository(Space::class)->findByName($value);
                             break;
                         case 'createdBy':
-                            $value = ProviderFactory::getRepository(Person::class)->find($value);
+                            $value = UserHelper::getCurrentUser();
                             break;
                         case 'statusRecorder':
-                            $value = ProviderFactory::getRepository(Person::class)->find($value);
+                            $value = UserHelper::getCurrentUser();
                             break;
                         case 'createdOn':
                             $value = new \DateTimeImmutable($value);
