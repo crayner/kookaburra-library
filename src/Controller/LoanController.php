@@ -13,7 +13,7 @@
 namespace Kookaburra\Library\Controller;
 
 use App\Container\ContainerManager;
-use App\Twig\Sidebar;
+use App\Twig\SidebarContent;
 use App\Util\GlobalHelper;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\ItemActionType;
@@ -40,7 +40,7 @@ class LoanController extends AbstractController
     /**
      * loan
      * @param LibraryItem $item
-     * @param Sidebar $sidebar
+     * @param SidebarContent $sidebar
      * @param ContainerManager $manager
      * @param LibraryManager $libraryManager
      * @param Request $request
@@ -51,7 +51,7 @@ class LoanController extends AbstractController
      * @Route("/loan/{item}/item/", name="loan_item")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function loan(LibraryItem $item, Sidebar $sidebar, ContainerManager $manager, LibraryManager $libraryManager, Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag)
+    public function loan(LibraryItem $item, SidebarContent $sidebar, ContainerManager $manager, LibraryManager $libraryManager, Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag)
     {
         if (null !== $item->getImageLocation())
             $sidebar->addExtra('image', ['asset' => GlobalHelper::localAssetorURL($item->getImageLocation()), 'class' => 'user max200']);
