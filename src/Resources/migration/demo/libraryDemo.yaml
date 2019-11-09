@@ -4,7 +4,6 @@
 library:
     name: General Library
     abbr: GEN
-    facility: ~
     active: true
     lendingPeriod: 14
 item:
@@ -27,7 +26,6 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-
         createdBy: 0000000823
         createdOn: "2012-10-04 16:04:08"
         statusRecorder: 0000000823
@@ -51,7 +49,6 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-
         createdBy: 0000000823
         createdOn: "2012-10-04 16:13:57"
         statusRecorder: 0000000823
@@ -98,7 +95,6 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-
         createdBy: 0000000823
         createdOn: "2012-10-05 08:14:04"
         statusRecorder: 0000000689
@@ -122,7 +118,6 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-
         createdBy: 0000000823
         createdOn: "2012-10-05 08:16:23"
         statusRecorder: 0000000823
@@ -146,7 +141,6 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-
         createdBy: 0000000823
         createdOn: "2012-10-05 08:18:51"
         statusRecorder: 0000000823
@@ -170,7 +164,6 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-
         createdBy: 0000000823
         createdOn: "2012-10-05 08:20:18"
         statusRecorder: 0000000823
@@ -194,7 +187,6 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-
         createdBy: 0000000823
         createdOn: "2012-10-05 08:23:52"
         statusRecorder: 0000000823

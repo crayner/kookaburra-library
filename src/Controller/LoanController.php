@@ -13,6 +13,7 @@
 namespace Kookaburra\Library\Controller;
 
 use App\Container\ContainerManager;
+use App\Twig\Sidebar\Photo;
 use App\Twig\SidebarContent;
 use App\Util\GlobalHelper;
 use Kookaburra\Library\Entity\LibraryItem;
@@ -53,8 +54,9 @@ class LoanController extends AbstractController
      */
     public function loan(LibraryItem $item, SidebarContent $sidebar, ContainerManager $manager, LibraryManager $libraryManager, Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag)
     {
-        if (null !== $item->getImageLocation())
-            $sidebar->addExtra('image', ['asset' => GlobalHelper::localAssetorURL($item->getImageLocation()), 'class' => 'user max200']);
+        $photo = new Photo($item, 'getImageLocation', '240', 'user');
+        $photo->setTransDomain('Library')->setTitle('Cover Photo');
+        $sidebar->addContent($photo);
 
         if ($item->getStatus() === 'Available' && $item->isBorrowable())
             $item->setReturnExpected(new \DateTimeImmutable(date('Y-m-d', strtotime('+'.$item->getLibrary()->getLendingPeriod($libraryManager->getBorrowPeriod($item)).' days' ))));

@@ -71,7 +71,7 @@ class LibraryHelper
         $result = ProviderFactory::getRepository(Library::class)->findBy([], ['id' => 'ASC']);
         if (count($result) > 0)
             self::setCurrentLibrary($result[0]);
-        return self::$currentLibrary = $result[0];
+        return self::$currentLibrary = $result ? $result[0] : null;
     }
 
     /**

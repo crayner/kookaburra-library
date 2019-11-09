@@ -21,3 +21,5 @@ ALTER TABLE gibbonLibraryItemEvent ADD CONSTRAINT FK_91CB12251EBCE61E FOREIGN KE
 ALTER TABLE gibbonLibraryReturnAction ADD CONSTRAINT FK_C8FEAEE11F1B251E FOREIGN KEY (item) REFERENCES gibbonLibraryItem (gibbonLibraryItemID);
 ALTER TABLE gibbonLibraryReturnAction ADD CONSTRAINT FK_C8FEAEE11DC04527 FOREIGN KEY (action_by) REFERENCES gibbonPerson (gibbonPersonID);
 ALTER TABLE gibbonLibraryReturnAction ADD CONSTRAINT FK_C8FEAEE1DE12AB56 FOREIGN KEY (created_by) REFERENCES gibbonPerson (gibbonPersonID);
+
+INSERT INTO `gibbonLibrary` (`active`, `name`, `abbr`, `lending_period`) VALUES (1, 'General Library', 'GEN', 14);

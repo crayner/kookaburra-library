@@ -40,7 +40,8 @@ trait LibraryControllerTrait
     protected function render(string $view, array $parameters = [], Response $response = null): Response
     {
         $library = LibraryHelper::getCurrentLibrary();
-        $this->addFlash('info', TranslationsHelper::translate('The current library is the \'{name}\'', ['{name}' => $library->getName()], 'Library'));
+        if ($library)
+            $this->addFlash('info', TranslationsHelper::translate('The current library is the \'{name}\'', ['{name}' => $library->getName()], 'Library'));
         return parent::render($view, $parameters, $response);
     }
 }

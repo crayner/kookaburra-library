@@ -12,6 +12,7 @@
 
 namespace Kookaburra\Library\Form;
 
+use App\Form\Type\EnumType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ParagraphType;
 use App\Form\Type\ReactFormType;
@@ -57,19 +58,14 @@ class DuplicateItemType extends AbstractType
                     'help' => $this->libraryManager->isGenerateIdentifier() ? 'The system will create unique identifiers for each new item.' : 'Manual entry of item identifiers is required.',
                 ]
             )
-            ->add('libraryType', EntityType::class,
+            ->add('itemType', EnumType::class,
                 [
-                    'class' => LibraryType::class,
-                    'label' => 'Item Type',
-                    'choice_label' => 'name',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('lt')
-                            ->orderBy('lt.name');
-                    },
-                    'attr' => [
-                        'disabled' => 'disabled',
-                    ],
-                    'required' => false,
+                    'label' => 'Library Item Type',
+                    'placeholder' => 'Please select...',
+                    'data' => $options['data']->getItemType(),
+                    'choice_list_prefix' => false,
+                    'on_change' => 'selectLibraryAndType',
+                    'panel' => 'Catalogue',
                 ]
             )
             ->add('name', TextType::class,

@@ -16,7 +16,7 @@ module:
             precedence: 0
             category: Catalogue
             description: Control all items in the school library catalogue
-            URLList: manage_catalogue,edit,item_loan
+            URLList: manage_catalogue,edit,loan_item,duplicate_item
             entryURL: manage_catalogue
             entrySidebar: 'Y'
             menuShow: 'Y'

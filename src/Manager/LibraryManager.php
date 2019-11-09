@@ -163,9 +163,9 @@ class LibraryManager
      * @param LibraryItem $item
      * @return LibraryItem
      */
-    public function newIdentifier(LibraryItem $item): LibraryItem
+    public function newIdentifier(LibraryItem $item, bool $changeID = false): LibraryItem
     {
-        if (!in_array($item->getIdentifier(), [null,'']) || $item->getLibrary() === null)
+        if((!in_array($item->getIdentifier(), [null,'']) || $item->getLibrary() === null) && !$changeID)
             return $item;
         $key = uniqid($item->getLibrary()->getAbbr().'-');
         $ok = false;

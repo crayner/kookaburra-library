@@ -260,7 +260,6 @@ class Library implements EntityInterface
      */
     public function getBgImage(): ?string
     {
-        dump($this);
         return $this->bgImage;
     }
 

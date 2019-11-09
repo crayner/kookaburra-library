@@ -17,6 +17,8 @@ use App\Container\ContainerManager;
 use App\Container\Panel;
 use App\Entity\Space;
 use App\Provider\ProviderFactory;
+use App\Twig\Sidebar\Photo;
+use App\Twig\SidebarContent;
 use App\Util\TranslationsHelper;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\PDOException;
@@ -114,8 +116,11 @@ class CatalogueController extends AbstractController
      * @IsGranted("ROLE_ROUTE")
      * @Route("/duplicate/{item}/item/", name="duplicate_item")
      */
-    public function duplicateItem(LibraryItem $item, Request $request, ContainerManager $manager, LibraryManager $libraryManager)
+    public function duplicateItem(LibraryItem $item, Request $request, ContainerManager $manager, LibraryManager $libraryManager, SidebarContent $sidebar)
     {
+        $photo = new Photo($item, 'getImageLocation', '240', 'user');
+        $photo->setTransDomain('Library')->setTitle('Cover Photo');
+        $sidebar->addContent($photo);
         $form = $this->createForm(DuplicateItemType::class, $item,
             [
                 'action' => $this->generateUrl('library__duplicate_item', ['item' => $item->getId()]),
@@ -136,7 +141,8 @@ class CatalogueController extends AbstractController
                     for($x=1; $x<=$copies; $x++)
                     {
                         $newItem = clone $item;
-                        $libraryManager->newIdentifier($newItem);
+                        $newItem->setIdentifier(null);
+                        $libraryManager->newIdentifier($newItem, true);
                         $em->persist($newItem);
                     }
                     $em->flush();
@@ -181,8 +187,11 @@ class CatalogueController extends AbstractController
      * @Security("is_granted('ROLE_ROUTE', ['library__duplicate_item'])")
      * @Route("/duplicate/{item}/item/{copies}/copies/", name="duplicate_item_copies")
      */
-    public function duplicateIdentifiers(Request $request, LibraryItem $item, int $copies, ContainerManager $manager)
+    public function duplicateIdentifiers(Request $request, LibraryItem $item, int $copies, ContainerManager $manager, SidebarContent $sidebar)
     {
+        $photo = new Photo($item, 'getImageLocation', '240', 'user');
+        $photo->setTransDomain('Library')->setTitle('Cover Photo');
+        $sidebar->addContent($photo);
         $form = $this->createForm(DuplicateCopyIdentifierType::class, $item,
             [
                 'copies' => $copies,
@@ -247,9 +256,13 @@ class CatalogueController extends AbstractController
      * @Route("/{item}/edit/{tabName}", name="edit")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function edit(Request $request, ContainerManager $manager, LibraryManager $libraryManager, int $item = 0, string $tabName = 'Catalogue')
+    public function edit(Request $request, ContainerManager $manager, LibraryManager $libraryManager, SidebarContent $sidebar, int $item = 0, string $tabName = 'Catalogue')
     {
         $item = ProviderFactory::getRepository(LibraryItem::class)->find($item) ?: new LibraryItem();
+        $photo = new Photo($item, 'getImageLocation', '240', 'user');
+        $photo->setTransDomain('Library')->setTitle('Cover Photo');
+        $sidebar->addContent($photo);
+
 
         if ($request->getContentType() === 'json' && $request->getMethod() === 'POST' && $item->getId() === 0) {
             $content = json_decode($request->getContent(), true);
@@ -357,12 +370,14 @@ class CatalogueController extends AbstractController
         $content = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/migration/demo/libraryDemo.yaml'));
 
         $em = ProviderFactory::getEntityManager();
-        $lib = new Library();
+        $lib = ProviderFactory::getRepository(Library::class)->find(1) ?: new Library();
         foreach($content['library'] as $name=>$value)
         {
             $name = 'set' . ucfirst($name);
             $lib->$name($value);
         }
+
+        $space = null;
         try {
             $em->beginTransaction();
             $em->persist($lib);
@@ -376,7 +391,16 @@ class CatalogueController extends AbstractController
                             $value = unserialize($value);
                             break;
                         case 'space':
-                            $value = ProviderFactory::getRepository(Space::class)->findByName($value);
+                            $space = $space ?: ProviderFactory::getRepository(Space::class)->findOneBy(['name' => 'Library', 'type' => 'Library']);
+                            if (null === $space) {
+                                $space = ProviderFactory::getRepository(Space::class)->findOneByType('Library');
+                                if (null === $space) {
+                                    $space = new Space();
+                                    $space->setName('Library')->setType('Library');
+                                    $em->persist($space);
+                                }
+                            }
+                            $value = $space;
                             break;
                         case 'createdBy':
                             $value = UserHelper::getCurrentUser();

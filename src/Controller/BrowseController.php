@@ -16,6 +16,7 @@ use App\Form\Entity\SearchAny;
 use App\Form\SearchAnyType;
 use App\Provider\ProviderFactory;
 use App\Twig\ModuleMenu;
+use App\Twig\SidebarContent;
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Entity\LibraryItemEvent;
@@ -47,11 +48,11 @@ class BrowseController extends AbstractController
      * @Route("/browse/", name="browse")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function browse(Request $request, BrowsePagination $pagination, ModuleMenu $menu, LibraryHelper $helper)
+    public function browse(Request $request, BrowsePagination $pagination, SidebarContent $sidebar, LibraryHelper $helper)
     {
         // Hide the menu.
-        $menu->setShowSidebar(false);
-
+        $sidebar->setNoSidebar(true);
+dd($sidebar);
         if ($request->getMethod() !== 'POST' && $request->getSession()->has('libraryBrowseSearch'))
             $search = $request->getSession()->get('libraryBrowseSearch');
         $search = isset($search) ? $search : new SearchAny();
