@@ -51,8 +51,8 @@ class BrowseController extends AbstractController
     public function browse(Request $request, BrowsePagination $pagination, SidebarContent $sidebar, LibraryHelper $helper)
     {
         // Hide the menu.
-        $sidebar->setNoSidebar(true);
-dd($sidebar);
+        $sidebar->setNoSidebar(true)->setMinimised(true);
+
         if ($request->getMethod() !== 'POST' && $request->getSession()->has('libraryBrowseSearch'))
             $search = $request->getSession()->get('libraryBrowseSearch');
         $search = isset($search) ? $search : new SearchAny();

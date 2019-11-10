@@ -10,7 +10,7 @@
 {% set moduleName = 'Library' %}
 
 {% block content %}
-    <div style="width: 95%; border: 1px solid #444; min-height: 450px; ; background: url('{{ asset(getRelativeImageURL(library.bgImage)) }}') {{ library.bgColour }} repeat-y;  padding: 5rem;">
+    <div style="width: 95%; border: 1px solid #444; min-height: 450px; ; background: url('{{ asset(getRelativeImageURL(library.bgImage)) }}') {{ library.bgColour }} no-repeat; background-size: contain; padding: 5rem;">
     <table class="noIntBorder borderGrey mb-1" style="width: 100%; background-color: rgba(255,255,255,0.6); margin-top: 30px">
         <tbody>
         <tr>

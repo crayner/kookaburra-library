@@ -117,6 +117,27 @@ module:
             permissions:
                 - Administrator
                 - Support Staff
+        'Library Settings':
+            name: 'Library Settings'
+            precedence: 0
+            category: Settings
+            description: 'Change the core settings of a library.'
+            URLList: settings
+            entryURL: settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'Y'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+                - Support Staff
 events:
     'Overdue Loan Items':
         name: Overdue Loan Items
