@@ -270,3 +270,11 @@ Settings: Settings
 Library Settings: Library Settings
 "The current library is the '{name}'": "The current library is the '{name}'"
 'Clear this value to show all items from all libraries.': 'Clear this value to show all items from all libraries.'
+'Export Summary': 'Export Summary'
+School ID: School ID
+Name Producer: Name Producer
+Type: Type
+Ownership User/Owner: Ownership User/Owner
+Status Borrowable: Status Borrowable
+Purchase Date Vendor: Purchase Date Vendor
+Details: Details

@@ -15,7 +15,6 @@ namespace Kookaburra\Library\Controller;
 use App\Container\ContainerManager;
 use App\Twig\Sidebar\Photo;
 use App\Twig\SidebarContent;
-use App\Util\GlobalHelper;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\ItemActionType;
 use Kookaburra\Library\Manager\LibraryManager;

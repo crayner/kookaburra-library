@@ -96,27 +96,6 @@ module:
             permissions:
                 - Administrator
                 - Teacher
-        'Catalogue Summary':
-            name: 'Catalogue Summary'
-            precedence: 0
-            category: Reports
-            description: 'Provides an summary overview of items in the catalog.'
-            URLList: report_catalogSummary.php
-            entryURL: report_catalogSummary.php
-            entrySidebar: 'Y'
-            menuShow: 'Y'
-            defaultPermissionAdmin: 'Y'
-            defaultPermissionTeacher: 'N'
-            defaultPermissionStudent: 'N'
-            defaultPermissionParent: 'N'
-            defaultPermissionSupport: 'Y'
-            categoryPermissionStaff: 'Y'
-            categoryPermissionStudent: 'Y'
-            categoryPermissionParent: 'Y'
-            categoryPermissionOther: 'N'
-            permissions:
-                - Administrator
-                - Support Staff
         'Library Settings':
             name: 'Library Settings'
             precedence: 0

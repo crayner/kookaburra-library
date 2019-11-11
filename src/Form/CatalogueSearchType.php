@@ -45,10 +45,10 @@ class CatalogueSearchType extends AbstractType
             ->add('library', EntityType::class,
                 [
                     'label' => 'Library',
-                    'required' => false,
+                    'required' => true,
                     'help' => 'Clear this value to show all items from all libraries.',
-                    'placeholder' => ' ',
                     'class' => Library::class,
+                    'placeholder' => false,
                     'data' => $options['data']->getLibrary() instanceof Library ? $options['data']->getLibrary()->getId() : null,
                     'choice_label' => 'name',
                     'query_builder' => function(EntityRepository $er) {
@@ -109,6 +109,16 @@ class CatalogueSearchType extends AbstractType
                     'label' => 'Type Specific Fields',
                     'required' => false,
                     'help' => "For example, a computer's MAC address or a book's ISBN.",
+                ]
+            )
+            ->add('export', SubmitType::class,
+                [
+                    'label' => '<span class="fas fa-file-export fa-fw"></span>',
+                    'attr' => [
+                        'style' => 'float: right;',
+                        'title' => 'Export Summary',
+                        'class' => 'btn-gibbon',
+                    ],
                 ]
             )
             ->add('clear', SubmitType::class,

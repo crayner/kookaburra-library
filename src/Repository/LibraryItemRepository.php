@@ -59,13 +59,20 @@ class LibraryItemRepository extends ServiceEntityRepository
      * @param CatalogueSearch $search
      * @return mixed
      */
-    public function findBySearch(CatalogueSearch $search)
+    public function findBySearch(CatalogueSearch $search, bool $asArray = false)
     {
         $query = $this->createQueryBuilder('li')
             ->where('li.identifier LIKE :search OR li.name LIKE :search OR li.producer LIKE :search')
             ->setParameter('search', '%'.$search->getSearch().'%')
             ->andWhere('(li.fields LIKE :searchField)')
             ->setParameter('searchField', '%'.$search->getSearchFields().'%');
+
+        if ($asArray) {
+            $query->leftJoin('li.library', 'l')
+                ->leftJoin('li.space', 's')
+                ->leftJoin('li.ownership', 'o')
+                ->select(['l AS Library', 'li As LibraryItem', 's AS Space', 'o as Owner']);
+        }
 
         if (null !== $search->getType())
             $query->andWhere('li.libraryType = :libraryType')

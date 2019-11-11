@@ -30,6 +30,7 @@ use Kookaburra\Library\Form\DuplicateCopyIdentifierType;
 use Kookaburra\Library\Form\DuplicateItemType;
 use Kookaburra\Library\Form\EditType;
 use Kookaburra\Library\Manager\CataloguePagination;
+use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
 use Kookaburra\UserAdmin\Util\UserHelper;
@@ -59,13 +60,14 @@ class CatalogueController extends AbstractController
      * @Route("/catalogue/manage/", name="manage_catalogue")
      * @Route("/catalogue/manage/", name="status")
      * @Route("/", name="default")
-     * @Security("is_granted('ROLE_ROUTE', ['library__manage_catalogue'])")
+     * @IsGranted("ROLE_ROUTE")
      */
     public function manageCatalogue(CataloguePagination $pagination, Request $request, LibraryManager $manager)
     {
         if ($request->getMethod() !== 'POST' && $request->getSession()->has('libraryCatalogueSearch'))
             $search = $request->getSession()->get('libraryCatalogueSearch');
         $search = isset($search) ? $search : new CatalogueSearch();
+        $search->setLibrary($search->getLibrary() ?: LibraryHelper::getCurrentLibrary());
 
         $form = $this->createForm(CatalogueSearchType::class, $search);
 
@@ -74,6 +76,10 @@ class CatalogueController extends AbstractController
         if ($form->get('clear')->isClicked()) {
             $search = new CatalogueSearch();
             $form = $this->createForm(CatalogueSearchType::class, $search);
+        }
+
+        if ($form->get('export')->isClicked()) {
+            return $this->forward(ReportController::class.'::catalogueSummary');
         }
 
         $provider = ProviderFactory::create(LibraryItem::class);
