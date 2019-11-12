@@ -1159,4 +1159,23 @@ class LibraryItem implements EntityInterface
         }
         return $this->fullString;
     }
+
+    /**
+     * countOverdueDays
+     * @return int
+     * @throws \Exception
+     */
+    public function countOverdueDays(): int
+    {
+        if ($this->getStatus() === 'On Loan') {
+            if ($this->getReturnExpected() < new \DateTimeImmutable())
+            {
+                $diff = $this->getReturnExpected()->diff(new \DateTimeImmutable());
+                dump($diff);
+                return intval($diff->days);
+            }
+            return 0;
+        }
+        return 0;
+    }
 }

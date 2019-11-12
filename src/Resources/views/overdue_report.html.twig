@@ -1,0 +1,53 @@
+{% trans_default_domain 'Library' %}
+{% extends 'kookaburra.html.twig' %}
+
+{% form_theme form
+    'form/kookaburra_form.html.twig'
+%}
+
+{% block content %}
+    <h3>{{ 'Filter'|trans }}</h3>
+    {{ form_start(form) }}
+    <table class="noIntBorder fullWidth relative">
+        <tbody>
+            {{ form_row(form.status) }}
+        </tbody>
+    </table>
+
+    {{ form_end(form) }}
+
+    <h3>{{ 'Report Data'|trans }}</h3>
+    <table class="striped" style="width: 100%">
+        <thead>
+            <tr class="head">
+                <th>{{ 'Borrowing User'|trans }}</th>
+                <th>{{ 'Email'|trans({},'messages') }}</th>
+                <th>{{ 'Item'|trans }}<br><span style="font-size: 85%; font-style: italic">{{ 'Author/Producer'|trans }}</span></th>
+                <th class="text-center">{{ 'Due Date'|trans }}</th>
+                <th class="text-center">{{ 'Days Overdue'|trans }}</th>
+                <th style="width: 50px">{{'Actions'|trans({},'messages') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if overdue|length is same as(0) %}
+            <tr><td colspan="6" class="secondary">{{ 'There are no records to display.'|trans({}, 'messages') }}</td></tr>
+        {% else %}
+            {% for item in overdue %}
+                {% dump(item) %}
+                <tr>
+                    <td>{{ item.responsibleForStatus.formatName }}</td>
+                    <td>{{ item.responsibleForStatus.email }}</td>
+                    <td>{{ item.name }}<br><span style="font-size: 85%; font-style: italic">{{ item.producer }}</span></td>
+                    <td class="text-center">{{ item.returnExpected|date('D jS M/Y') }}</td>
+                    <td class="text-center">{{ item.countOverdueDays }}</td>
+                    <td>
+                        <a href="{{ path('library__edit', {item: item.id}) }}" class="thickbox p-3 sm:p-0" title="Edit"><span class="far fa-edit fa-fw fa-1-5x text-gray-700"></span></a>
+                        <a href="{{ path('library__return_item', {item: item.id}) }}" class="thickbox p-3 sm:p-0" title="Return"><span class="fas fa-undo fa-fw fa-1-5x text-gray-700"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
+{% endblock content %}

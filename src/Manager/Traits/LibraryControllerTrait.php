@@ -15,7 +15,7 @@ namespace Kookaburra\Library\Manager\Traits;
 
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Manager\LibraryHelper;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Trait LibraryControllerTrait
@@ -26,22 +26,10 @@ trait LibraryControllerTrait
     /**
      * LibraryControllerTrait constructor.
      */
-    public function __construct(LibraryHelper $helper)
-    {
-    }
-
-    /**
-     * render
-     * @param string $view
-     * @param array $parameters
-     * @param Response|null $response
-     * @return Response
-     */
-    protected function render(string $view, array $parameters = [], Response $response = null): Response
+    public function __construct(LibraryHelper $helper, SessionInterface $session)
     {
         $library = LibraryHelper::getCurrentLibrary();
         if ($library)
-            $this->addFlash('info', TranslationsHelper::translate('The current library is the \'{name}\'', ['{name}' => $library->getName()], 'Library'));
-        return parent::render($view, $parameters, $response);
+            $session->getBag('flashes')->add('info', TranslationsHelper::translate("The current library is the '{name}'", ['{name}' => $library->getName()], 'Library'));
     }
 }

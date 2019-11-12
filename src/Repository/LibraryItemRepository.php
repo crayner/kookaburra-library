@@ -18,6 +18,7 @@ use App\Form\Entity\SearchAny;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Kookaburra\Library\Entity\CatalogueSearch;
+use Kookaburra\Library\Entity\IgnoreStatus;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Manager\LibraryHelper;
@@ -144,5 +145,37 @@ class LibraryItemRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * findOverdue
+     * @param IgnoreStatus $status
+     * @return array
+     * @throws \Exception
+     */
+    public function findOverdue(IgnoreStatus $status): array
+    {
+        $library = LibraryHelper::getCurrentLibrary();
+        $today = new \DateTimeImmutable(date('Y-m-d'));
+
+        $query = $this->createQueryBuilder('li')
+            ->select(['p','li'])
+            ->join('li.responsibleForStatus', 'p')
+            ->where('li.status = :status')
+            ->setParameter('status', 'On Loan')
+            ->andWhere('li.borrowable = :true')
+            ->setParameter('true', 'Y')
+            ->andWhere('li.returnExpected < :today')
+            ->setParameter('today', $today)
+            ->orderBy('p.surname', 'ASC')
+            ->addOrderBy('p.preferredName', 'ASC')
+        ;
+
+        if (!$status->isStatus())
+            $query->andWhere('p.status = :full')
+                ->setParameter('full', 'Full');
+
+        return $query->getQuery()
+            ->getResult();
     }
 }

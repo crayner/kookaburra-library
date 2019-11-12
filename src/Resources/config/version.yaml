@@ -60,8 +60,8 @@ module:
             precedence: 0
             category: Reports
             description: 'View items which are on loan and have exceeded their due date.'
-            URLList: report_viewOverdueItems.php
-            entryURL: report_viewOverdueItems.php
+            URLList: overdue_item_report
+            entryURL: overdue_item_report
             entrySidebar: 'Y'
             menuShow: 'Y'
             defaultPermissionAdmin: 'Y'

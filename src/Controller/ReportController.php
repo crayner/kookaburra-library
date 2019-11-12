@@ -17,12 +17,15 @@ use App\Manager\ExcelManager;
 use App\Provider\ProviderFactory;
 use Kookaburra\Library\Entity\BorrowerSearch;
 use Kookaburra\Library\Entity\CatalogueSearch;
+use Kookaburra\Library\Entity\IgnoreStatus;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Form\BorrowerSearchType;
 use Kookaburra\Library\Form\CatalogueSearchType;
+use Kookaburra\Library\Form\UserStatusType;
 use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,6 +63,7 @@ class ReportController extends AbstractController
      * borrowingRecord
      * @param Person $person
      * @Route("/report/borrowing/record/", name="report_borrow_record")
+     * @IsGranted("ROLE_ROUTE")
      */
     public function borrowingRecord(Request $request)
     {
@@ -86,6 +90,29 @@ class ReportController extends AbstractController
                 'form' => $form->createView(),
                 'events' => $events,
                 'today' => new \DateTimeImmutable(),
+            ]
+        );
+    }
+
+    /**
+     * overdueReport
+     * @Route("/overdue/report/", name="overdue_item_report")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function overdueReport(Request $request)
+    {
+        $status = new IgnoreStatus();
+
+        $form = $this->createForm(UserStatusType::class, $status, ['action' => $this->generateUrl('library__overdue_item_report')]);
+
+        $form->handleRequest($request);
+
+        $overdue = ProviderFactory::getRepository(LibraryItem::class)->findOverdue($status);
+
+        return $this->render('@KookaburraLibrary/overdue_report.html.twig',
+            [
+                'form' => $form->createView(),
+                'overdue' => $overdue,
             ]
         );
     }
