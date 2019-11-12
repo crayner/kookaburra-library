@@ -13,6 +13,7 @@
 namespace Kookaburra\Library\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Kookaburra\Library\Entity\BorrowerSearch;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Manager\LibraryHelper;
@@ -51,6 +52,24 @@ class LibraryItemEventRepository extends ServiceEntityRepository
             ->select(['li.name AS name', 'COUNT(lie.id) AS loans', 'li.producer AS producer'])
             ->orderBy('loans', 'DESC')
             ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * findBorrowerRecords
+     * @param BorrowerSearch $search
+     * @return array
+     */
+    public function findBorrowerRecords(BorrowerSearch $search): array
+    {
+        return $this->createQueryBuilder('lie')
+            ->where('li.library = :library')
+            ->andWhere("lie.responsibleForStatus = :person")
+            ->join('lie.libraryItem', 'li')
+            ->setParameter('person', $search->getPerson())
+            ->setParameter('library', $search->getLibrary())
+            ->orderBy('lie.timestampOut', 'DESC')
             ->getQuery()
             ->getResult();
     }

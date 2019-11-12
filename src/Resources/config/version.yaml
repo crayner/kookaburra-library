@@ -75,20 +75,20 @@ module:
             categoryPermissionOther: 'N'
             permissions:
                 - Administrator
-        'Student Borrowing Record':
-            name: 'Student Borrowing Record'
+        'Borrowing Record':
+            name: 'Borrowing Record'
             precedence: 0
             category: Reports
-            description: 'View items borrowed by an individual student.'
-            URLList: report_studentBorrowingRecord.php
-            entryURL: report_studentBorrowingRecord.php
+            description: 'View items borrowed by an individual.'
+            URLList: report_borrow_record
+            entryURL: report_borrow_record
             entrySidebar: 'Y'
             menuShow: 'Y'
             defaultPermissionAdmin: 'Y'
             defaultPermissionTeacher: 'Y'
             defaultPermissionStudent: 'N'
             defaultPermissionParent: 'N'
-            defaultPermissionSupport: 'N'
+            defaultPermissionSupport: 'Y'
             categoryPermissionStaff: 'Y'
             categoryPermissionStudent: 'N'
             categoryPermissionParent: 'N'
@@ -96,6 +96,7 @@ module:
             permissions:
                 - Administrator
                 - Teacher
+                - 'Support Staff'
         'Library Settings':
             name: 'Library Settings'
             precedence: 0
@@ -116,7 +117,7 @@ module:
             categoryPermissionOther: 'N'
             permissions:
                 - Administrator
-                - Support Staff
+                - 'Support Staff'
 events:
     'Overdue Loan Items':
         name: Overdue Loan Items

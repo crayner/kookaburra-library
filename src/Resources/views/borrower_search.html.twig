@@ -1,0 +1,108 @@
+{% trans_default_domain 'Library' %}
+{% extends 'kookaburra.html.twig' %}
+
+{% form_theme form
+    'form/kookaburra_form.html.twig'
+%}
+
+{% block content %}
+    <h3>{{ 'Choose Individual'|trans }}</h3>
+    {{ form_start(form) }}
+        <table class="noIntBorder fullWidth relative">
+            <tbody>
+                {{ form_row(form.library) }}
+                {{ form_row(form.person) }}
+                {{ form_row(form.clear) }}
+            </tbody>
+        </table>
+    {{ form_end(form) }}
+    {% if events|length > 0 %}
+        <h3>{{ 'Report Data'|trans }}</h3>
+        <table class="mini" style="width: 100%">
+            <tbody>
+            <tr class="head">
+                <th style="text-align: center">
+                </th>
+                <th>{{"Name"|trans}}<br />
+                    <span style="font-size: 85%; font-style: italic">{{'Author/Producer'|trans}}</span>
+                </th>
+                <th>{{'Identifier'|trans}}</th>
+                <th>{{'Location'|trans}}</th>
+                <th>{{'Borrow Date'|trans}}<br />
+                    <span style="font-size: 85%; font-style: italic">{{'Return Date'|trans}}</span>
+                </th>
+                <th>{{'Actions'|trans}}</th>
+            </tr>
+            {% for event in events %}
+            <tr class="even" style="opacity: 1.0">
+                <td style="width: 260px">
+                    {% include 'components/photo.html.twig' with {photo: displayImage(event.libraryItem, 'getImageLocation', '240', 'user') } %}
+                </td>
+                <td style="width: 130px">
+                    <strong>{{ event.libraryItem.name }}</strong>
+                    <br />
+                    <span style="font-size: 85%; font-style: italic">{{ event.libraryItem.producer }}</span>
+                </td>
+                <td style="width: 130px">
+                    <strong>{{ event.libraryItem.identifier }}</strong>
+                    <br />
+                </td>
+                <td style="width: 130px">
+                    <strong>{{ event.libraryItem.space.name }}</strong>
+                    <br />
+                    <span style="font-size: 85%; font-style: italic">{{ event.libraryItem.locationDetail }}</span>
+                </td>
+                <td style="width: 130px">{{ event.timestampOut|date('D jS M/Y') }}<br />
+                    {% set returnDetails = event.status|trans %}
+                    {% if event.getTimestampReturn is same as(null) %}
+                        {% if event.libraryItem.getReturnExpected|date('Ymd') < today|date('Ymd') %}
+                            {% set returnDetails = '<span class="text-red-400">' ~ 'Overdue'|trans ~ '</span>' %}
+                        {% endif %}
+                    {% else %}
+                        {% set returnDetails = event.timestampReturn|date('D jS M/Y') %}
+                    {% endif %}
+                    <span style="font-size: 85%; font-style: italic">{{ returnDetails|raw }}</span>
+                </td>
+                <td>
+                    <a title="View Description" id="show_hide-{{ loop.index0 }}" onclick="false" href="#" >
+                        <span class="fas fa-info fa-fw fa-1-5x text-gray-700" title="{{ 'Show Details'|trans }}"></span>
+                    </a>
+                    <script type="text/javascript">
+                        document.getElementById("show_hide-{{ loop.index0 }}").addEventListener("click", showHide{{ loop.index0 }})
+                        function showHide{{ loop.index0 }}(e) {
+                            e.preventDefault();
+                            var element = document.getElementById("fields-{{ loop.index0 }}")
+                            element.classList.toggle('hidden'); // or whatever your active class is
+                        }
+                    </script>
+                </td>
+            </tr>
+            <tr class="description-{{ loop.index0 }} hidden" id="fields-{{ loop.index0 }}" style="background-color: white;">
+                <td colspan="6">
+                    <table style="width: 100%">
+                        <tbody>
+                            {% for name,value in event.libraryItem.fields %}
+                                {% if value is not same as('') %}
+                                <tr>
+                                    <td style="vertical-align: top; width: 200px">
+                                        <strong>{{ name|trans }}</strong>
+                                    </td>
+                                    <td style="vertical-align: top">
+                                        {% if value|slice(0,4) is same as('http') %}
+                                            <a href="{{ value }}" target="__blank" title="{{ name|trans }}">{{ value }}</a>
+                                        {% else %}
+                                            {{ value }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock content %}

@@ -18,6 +18,7 @@ use App\Form\Type\EnumType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
 use App\Provider\ProviderFactory;
+use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Manager\LibraryManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -75,7 +76,6 @@ class ItemActionType extends AbstractType
                         'help' => 'return_date_help',
                         'widget' => 'text',
                         'help_attr' => ['count' => $options['data']->getLibrary()->getLendingPeriod($this->libraryManager->getBorrowPeriod($item))],
-
                     ]
                 )->add('loan', SubmitType::class,
                     [
@@ -105,7 +105,8 @@ class ItemActionType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'translation_domain' => 'Library'
+                'translation_domain' => 'Library',
+                'data_class' => LibraryItem::class,
             ]
         );
     }
