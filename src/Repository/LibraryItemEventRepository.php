@@ -64,9 +64,11 @@ class LibraryItemEventRepository extends ServiceEntityRepository
     public function findBorrowerRecords(BorrowerSearch $search): array
     {
         return $this->createQueryBuilder('lie')
+            ->select(['lie','li','p'])
             ->where('li.library = :library')
             ->andWhere("lie.responsibleForStatus = :person")
             ->join('lie.libraryItem', 'li')
+            ->join('lie.responsibleForStatus', 'p')
             ->setParameter('person', $search->getPerson())
             ->setParameter('library', $search->getLibrary())
             ->orderBy('lie.timestampOut', 'DESC')

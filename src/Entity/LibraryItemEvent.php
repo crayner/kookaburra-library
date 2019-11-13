@@ -13,7 +13,11 @@
 namespace Kookaburra\Library\Entity;
 
 use App\Entity\Person;
+use App\Entity\Setting;
 use App\Manager\EntityInterface;
+use App\Provider\ProviderFactory;
+use App\Util\ImageHelper;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Kookaburra\UserAdmin\Util\UserHelper;
 
@@ -303,5 +307,44 @@ class LibraryItemEvent implements EntityInterface
     {
         return $this->setOutPerson(UserHelper::getCurrentUser())
             ->setTimestampOut(new \DateTimeImmutable());
+    }
+
+    /**
+     * toArray
+     * @return array
+     */
+    public function toArray(): array
+    {
+
+        $returnDetails = $this->getStatus();
+        if ($this->getTimestampReturn() === null && $this->getLibraryItem()->getStatus() === 'On Loan') {
+            if ($this->getLibraryItem()->getReturnExpected() !== null && $this->getLibraryItem()->getReturnExpected()->format('Ymd') < date('Ymd')) {
+                $diff = $this->getLibraryItem()->getReturnExpected()->diff(new \DateTimeImmutable());
+                $returnDetails = '<span class="text-red-400">' . TranslationsHelper::translate('Overdue ({days})', ['{days}' => $diff->days], 'Library') . '</span>';
+            }
+        } else {
+            $returnDetails = $this->getTimestampReturn()->format('D jS M/Y');
+        }
+
+        return [
+            'name' => $this->getLibraryItem()->getName(),
+            'id' => $this->getLibraryItem()->getId(),
+            'identifier' => $this->getLibraryItem()->getIdentifier(),
+            'producer' => $this->getLibraryItem()->getProducer(),
+            'typeName' => $this->getLibraryItem()->getItemType(),
+            'space' => $this->getLibraryItem()->getSpace()->getName(),
+            'locationDetail' => $this->getLibraryItem()->getLocationDetail(),
+            'owner' => $this->getLibraryItem()->getOwnershipType() === 'Individual' ? $this->getLibraryItem()->getOwnership()->formatName(false): ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'organisationName'),
+            'status' => TranslationsHelper::translate($this->getStatus()),
+            'borrowable' => $this->getLibraryItem()->isBorrowable() ? TranslationsHelper::translate('Yes') : TranslationsHelper::translate('No'),
+            'isAvailable' => $this->getLibraryItem()->isAvailable(),
+            'isNotAvailable' => !$this->getLibraryItem()->isAvailable(),
+            'isLostOrDecommissioned' => in_array($this->getLibraryItem()->getStatus(), ['Lost', 'Decommissioned']),
+            'onLoan' => $this->getLibraryItem()->getStatus() === 'On Loan' && $this->getLibraryItem()->isBorrowable(),
+            'imageLocation' => ImageHelper::getAbsoluteImageURL($this->getLibraryItem()->getImageType(), $this->getLibraryItem()->getImageLocation()),
+            'fullString' => $this->getLibraryItem()->toFullString(),
+            'timestampStatus' => $this->getTimestampOut() ? $this->getTimestampOut()->format('D jS M/Y') : '',
+            'returnDetails' => $returnDetails,
+        ];
     }
 }

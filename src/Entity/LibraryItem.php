@@ -888,6 +888,8 @@ class LibraryItem implements EntityInterface
             $this->setSpace($this->getLibrary()->getFacility());
         if (null === $this->getDepartment() || '' === $this->getDepartment())
             $this->setDepartment($this->getLibrary()->getDepartment());
+        if (!in_array($this->getStatus(), ['On Loan']))
+            $this->setReturnExpected(null);
         return $this;
     }
 
@@ -1136,7 +1138,11 @@ class LibraryItem implements EntityInterface
         return $diff->days;
     }
 
+    /**
+     * @var
+     */
     private $fullString;
+
     /**
      * toFullString
      * @return string
@@ -1171,7 +1177,6 @@ class LibraryItem implements EntityInterface
             if ($this->getReturnExpected() < new \DateTimeImmutable())
             {
                 $diff = $this->getReturnExpected()->diff(new \DateTimeImmutable());
-                dump($diff);
                 return intval($diff->days);
             }
             return 0;

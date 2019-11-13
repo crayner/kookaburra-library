@@ -64,8 +64,8 @@ class LoanController extends AbstractController
 
         if ($item->getStatus() === 'On Loan' && $item->getReturnExpected() < new \DateTimeImmutable(date('Y-m-d') . ' 00:00:00'))
         {
-            $overdue = $item->getReturnExpected()->diff(new \DateTimeImmutable(date('Y-m-d') . ' 00:00:00'));
-            $libraryManager->getMessageManager()->add('error', 'This item is now # days overdue', ['count' => $overdue['days']], 'Library');
+            $overdue = $item->getReturnExpected() ? $item->getReturnExpected()->diff(new \DateTimeImmutable(date('Y-m-d') . ' 00:00:00')) : null;
+            $libraryManager->getMessageManager()->add('error', 'This item is now # days overdue', ['count' => $overdue ? $overdue->days : 0], 'Library');
         }
 
         $form = $this->createForm(ItemActionType::class, $item, ['action' => $this->generateUrl("library__loan_item", ['item' => $item->getId()])]);

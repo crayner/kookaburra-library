@@ -23,6 +23,7 @@ use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Form\BorrowerSearchType;
 use Kookaburra\Library\Form\CatalogueSearchType;
 use Kookaburra\Library\Form\UserStatusType;
+use Kookaburra\Library\Manager\BorrowerPagination;
 use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -65,7 +66,7 @@ class ReportController extends AbstractController
      * @Route("/report/borrowing/record/", name="report_borrow_record")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function borrowingRecord(Request $request)
+    public function borrowingRecord(Request $request, BorrowerPagination $pagination)
     {
         $search = isset($search) ? $search : new BorrowerSearch();
         $search->setLibrary($search->getLibrary() ?: LibraryHelper::getCurrentLibrary());
@@ -79,17 +80,18 @@ class ReportController extends AbstractController
             $form = $this->createForm(BorrowerSearchType::class, $search);
         }
 
-
         if ($search->getPerson() instanceof Person)
             $events = ProviderFactory::create(LibraryItemEvent::class)->findBorrowerRecords($search);
         else
             $events = [];
 
+        $pagination->setContent($events)->setPageMax(25)
+            ->setPaginationScript();
+
         return $this->render('@KookaburraLibrary/borrower_search.html.twig',
             [
                 'form' => $form->createView(),
                 'events' => $events,
-                'today' => new \DateTimeImmutable(),
             ]
         );
     }

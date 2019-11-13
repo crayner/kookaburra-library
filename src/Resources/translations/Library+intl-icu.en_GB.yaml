@@ -290,3 +290,4 @@ Include all users, regardless of status and current enrolment.: Include all user
 Borrowing User: Borrowing User
 Item: Item
 Days Overdue: Days Overdue
+'Overdue ({days})': 'Overdue ({days})'
