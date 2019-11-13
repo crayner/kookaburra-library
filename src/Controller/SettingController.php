@@ -60,28 +60,21 @@ class SettingController extends AbstractController
                 $library = ProviderFactory::getRepository(Library::class)->find(intval($content['workingOn'])) ?: new Library();
                 $form = $this->createForm(LibraryType::class, $library, ['action' => $this->generateUrl('library__settings', ['library' => $library->getId() ?: 0])]);
                 $manager->singlePanel($form->createView());
-                dump($library);
+                $request->getSession()->getBag('flashes')->clear();
                 if ($library->getId() > 0) {
                     $helper::setCurrentLibrary($library);
                     $this->addFlash('warning', TranslationsHelper::translate('The current library has been switched to \'{name}\'', ['{name}' => $library->getName()], 'Library'));
-                    return new JsonResponse(
-                        [
-                            'form' => $manager->getFormFromContainer('formContent', 'single'),
-                            'errors' => $errors,
-                            'status' => 'redirect',
-                            'redirect' => $this->generateUrl('library__settings', ['library' => $library->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-                        ],
-                        200);
                 }
                 return new JsonResponse(
                     [
                         'form' => $manager->getFormFromContainer('formContent', 'single'),
                         'errors' => $errors,
-                        'status' => $status,
+                        'status' => 'redirect',
+                        'redirect' => $this->generateUrl('library__settings', ['library' => intval($library->getId())], UrlGeneratorInterface::ABSOLUTE_URL),
                     ],
                     200);
-
             }
+
 
             unset($content['submit_clicked']);
             $form->submit($content);

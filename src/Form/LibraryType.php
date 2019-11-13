@@ -137,6 +137,7 @@ class LibraryType extends AbstractType
                         'title' => 'Submit',
                         'class' => 'btn-gibbon',
                     ],
+                    'translation_domain' => 'messages',
                 ]
             )
         ;

@@ -12,8 +12,6 @@
 
 namespace Kookaburra\Library\Manager\Traits;
 
-
-use App\Util\TranslationsHelper;
 use Kookaburra\Library\Manager\LibraryHelper;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -30,6 +28,6 @@ trait LibraryControllerTrait
     {
         $library = LibraryHelper::getCurrentLibrary();
         if ($library)
-            $session->getBag('flashes')->add('info', TranslationsHelper::translate("The current library is the '{name}'", ['{name}' => $library->getName()], 'Library'));
+            $session->getBag('flashes')->add('info', ["The current library is the '{name}'", ['{name}' => $library->getName()], 'Library']);
     }
 }

@@ -291,3 +291,16 @@ Borrowing User: Borrowing User
 Item: Item
 Days Overdue: Days Overdue
 'Overdue ({days})': 'Overdue ({days})'
+Library {name}: Library {name}
+This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.: This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.
+Library Name: Library Name
+Must be unique: Must be unique
+Library Abbreviation: Library Abbreviation
+Facility: Facility
+The storage location when the item is not in use.: The storage location when the item is not in use.
+Active: Active
+Default Lending Period: Default Lending Period
+in days: in days
+Background Colour: Background Colour
+Background Image: Background Image
+Submit: Submit
