@@ -178,4 +178,20 @@ class LibraryItemRepository extends ServiceEntityRepository
         return $query->getQuery()
             ->getResult();
     }
+
+    /**
+     * findOneUsingQuickSearch
+     * @param string $search
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneUsingQuickSearch(string $search)
+    {
+        return $this->createQueryBuilder('li')
+            ->where('li.identifier = :search')
+            ->setParameter('search', $search)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

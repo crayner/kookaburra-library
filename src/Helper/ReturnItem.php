@@ -97,7 +97,7 @@ class ReturnItem implements LibraryInterface
         if ($item->getStatus() !== 'On Loan' && $item->getReturnAction())
             return $this->returnActionNow($item);
         $action = $item->getReturnAction();
-        if (!$action->getActionBy() instanceof Person || $action->getReturnAction() === null || $action->getReturnAction() === '') {
+        if (null === $action || !$action->getActionBy() instanceof Person || $action->getReturnAction() === null || $action->getReturnAction() === '') {
             $item->setReturnAction(null);
         }
         $em = ProviderFactory::getEntityManager();

@@ -62,7 +62,7 @@ class BrowsePagination extends ReactPaginationManager
 
         $column = new PaginationColumn();
         $column->setLabel('ID')
-            ->setContentKey(['status', 'borrowable'])
+            ->setContentKey(['identifier', 'status'])
             ->setSort(false)
             ->setHelp('Status')
             ->setClass('column relative pr-4 cursor-pointer widthAuto');

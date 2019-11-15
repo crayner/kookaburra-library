@@ -118,6 +118,28 @@ module:
             permissions:
                 - Administrator
                 - 'Support Staff'
+        'Loan/Return Manager':
+            name: 'Loan/Return Manager'
+            precedence: 0
+            category: Catalogue
+            description: 'Lend and return items using a bar-code scanner.'
+            URLList: quick_loan
+            entryURL: quick_loan
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'Y'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+                - 'Support Staff'
+
 events:
     'Overdue Loan Items':
         name: Overdue Loan Items

@@ -20,6 +20,7 @@ use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
+use Kookaburra\Library\Entity\RapidLoan;
 use Kookaburra\Library\Helper\LoanItem;
 use Kookaburra\Library\Helper\RenewItem;
 use Kookaburra\Library\Helper\ReturnItem;
@@ -100,7 +101,7 @@ class LibraryManager
     /**
      * LibraryManager constructor.
      * @param MessageManager $messageManager
-     * @param EventBuilderProvider $provider  Initiate event provider
+     * @param EventBuilderProvider $provider Initiate event provider
      */
     public function __construct(MessageManager $messageManager, EventBuilderProvider $provider, RouterInterface $router)
     {
@@ -165,14 +166,14 @@ class LibraryManager
      */
     public function newIdentifier(LibraryItem $item, bool $changeID = false): LibraryItem
     {
-        if((!in_array($item->getIdentifier(), [null,'']) || $item->getLibrary() === null) && !$changeID)
+        if ((!in_array($item->getIdentifier(), [null, '']) || $item->getLibrary() === null) && !$changeID)
             return $item;
-        $key = uniqid($item->getLibrary()->getAbbr().'-');
+        $key = uniqid($item->getLibrary()->getAbbr() . '-');
         $ok = false;
         do {
             $ok = null === ProviderFactory::getRepository(LibraryItem::class)->findOneBy(['identifier' => $key]);
             if (!$ok)
-                $key = uniqid($item->getLibrary()->getAbbr().'-');
+                $key = uniqid($item->getLibrary()->getAbbr() . '-');
         } while (!$ok);
 
         return $item->setIdentifier($key);
@@ -200,8 +201,7 @@ class LibraryManager
 
         $item->setFields($this->buildFields($item, $content));
 
-        if ($content['imageType'] === 'File' && is_string($content['imageLocation']) && strpos($content['imageLocation'], 'data:image') === 0)
-        {
+        if ($content['imageType'] === 'File' && is_string($content['imageLocation']) && strpos($content['imageLocation'], 'data:image') === 0) {
             $content['imageLocation'] = ImageHelper::convertJsonToImage($content['imageLocation'], 'library_', 'Library');
             $item->setImageLocation($content['imageLocation']);
         }
@@ -264,8 +264,7 @@ class LibraryManager
     {
         $result = [];
 
-        foreach(self::$itemTypes as $name=>$type)
-        {
+        foreach (self::$itemTypes as $name => $type) {
             if ($type['active'])
                 $result[] = $name;
         }
@@ -300,9 +299,8 @@ class LibraryManager
     {
         $borrowers = [];
 
-        foreach($this->allowedBorrowers as $allowedType)
-        {
-            $allowedType = 'get' . rtrim($allowedType, 's').'Borrowers';
+        foreach ($this->allowedBorrowers as $allowedType) {
+            $allowedType = 'get' . rtrim($allowedType, 's') . 'Borrowers';
             $borrowers = array_merge($borrowers, $this->$allowedType());
         }
 
@@ -316,8 +314,8 @@ class LibraryManager
     private function getStudentBorrowers(): array
     {
         $result = [];
-        foreach(ProviderFactory::getRepository(Person::class)->findAllStudentsByRollGroup() as $student) {
-            $name = $student['fullName'] . ' ('.  ($student['studentID'] === '' ? $student['id'] : $student['studentID']) . ')';
+        foreach (ProviderFactory::getRepository(Person::class)->findAllStudentsByRollGroup() as $student) {
+            $name = $student['fullName'] . ' (' . ($student['studentID'] === '' ? $student['id'] : $student['studentID']) . ')';
             $result[$student['rollGroup']][$name] = $student['id'];
         }
 
@@ -331,7 +329,7 @@ class LibraryManager
     private function getStaffBorrowers(): array
     {
         $result = [];
-        foreach(ProviderFactory::getRepository(Person::class)->findCurrentStaff() as $staff) {
+        foreach (ProviderFactory::getRepository(Person::class)->findCurrentStaff() as $staff) {
             $name = $staff->formatName(['initial' => false, 'reverse' => true]);
             $result['Staff'][$name] = $staff->getId();
         }
@@ -371,9 +369,8 @@ class LibraryManager
     {
         $q = 0;
         $fields = [];
-        foreach($this->getItemType($item->getItemType())['fields'] as $name=>$field)
-        {
-            $fields[$name] = $content['field'.$q];
+        foreach ($this->getItemType($item->getItemType())['fields'] as $name => $field) {
+            $fields[$name] = $content['field' . $q];
             $q++;
         }
         return $fields;
@@ -507,8 +504,7 @@ class LibraryManager
      */
     private function getReturnAction(): ReturnItem
     {
-        if (null === $this->returnAction)
-        {
+        if (null === $this->returnAction) {
             $this->returnAction = new ReturnItem($this);
         }
         return $this->returnAction;
@@ -520,8 +516,7 @@ class LibraryManager
      */
     private function getLoanItem(): LoanItem
     {
-        if (null === $this->loanItem)
-        {
+        if (null === $this->loanItem) {
             $this->loanItem = new LoanItem($this);
         }
         return $this->loanItem;
@@ -533,8 +528,7 @@ class LibraryManager
      */
     private function getRenewItem(): RenewItem
     {
-        if (null === $this->renewItem)
-        {
+        if (null === $this->renewItem) {
             $this->renewItem = new RenewItem($this);
         }
         return $this->renewItem;
@@ -546,5 +540,79 @@ class LibraryManager
     public function getRouter(): RouterInterface
     {
         return $this->router;
+    }
+
+    /**
+     * quickLoanSearch
+     * @param array $content
+     * @param RapidLoan $loan
+     * @throws \Exception
+     */
+    public function quickLoanSearch(array $content, RapidLoan $loan)
+    {
+        $search = $content['search'];
+
+        // Look for a person
+        $person = ProviderFactory::getRepository(Person::class)->findOneUsingQuickSearch($search);
+
+        if (null === $person) {
+            $item = ProviderFactory::getRepository(LibraryItem::class)->findOneUsingQuickSearch($search);
+            ProviderFactory::getEntityManager()->refresh($item);
+            if (null === $item) {
+                $this->getMessageManager()->add('warning', 'No results were found for your search: "{search}"', ['{search}' => $search], 'Library');
+                return ;
+            }
+
+            //  Deal with an item.
+            if ($item->getStatus() === 'Available') {
+                $loan->addItem($item);
+                //$this->getMessageManager()->add('success', 'The item "{name}" was added to the loan list.', ['{name}' => $item->getName()], 'Library');
+                return;
+            } elseif ($item->getStatus() === 'On Loan') {
+                $this->returnItem($item);
+                $this->returnAction($item);
+                $this->getMessageManager()->add('success', 'The item "{name}" was returned to the library. Scan this item again to the add to loan list', ['{name}' => $item->getName()], 'Library');
+                $em  = ProviderFactory::getEntityManager();
+                $em->persist($item);
+                $em->flush();
+                return ;
+            } else {
+                $this->getMessageManager()->add('warning', 'The item "{name}" is not available for loan.', ['{name}' => $item->getName()], 'Library');
+                return ;
+            }
+        }
+
+        //handle a person
+        if ($loan->getItems()->count() > 0) {
+            foreach($loan->getItems() as $item)
+            {
+                $item->setResponsibleForStatus($person);
+                $this->loanItem($item);
+                $loan->removeItem($item);
+                $this->getMessageManager()->add('success', 'The item "{name}" was loaned to "{person}".', ['{name}' => $item->getName(), '{person}' => $person->formatName(['informal' => true])], 'Library');
+            }
+            return ;
+        } else {
+            $loan->setPerson($person);
+            return ;
+        }
+    }
+
+    /**
+     * transformItems
+     * @param array $content
+     * @param RapidLoan $loan
+     * @return array
+     */
+    public function transformItems(array $content, RapidLoan $loan)
+    {
+        $items = $content['items'] ?: [];
+
+        foreach ($items as $item) {
+            $loan->addItem(ProviderFactory::getRepository(LibraryItem::class)->find($item['id']));
+        }
+
+        $content['items'] = null;
+        return $content;
     }
 }

@@ -69,7 +69,7 @@ class LoanItem implements LibraryInterface
         $item->setStatus('On Loan');
         $item->setTimestampStatus(new \DateTimeImmutable());
         if (!$item->getReturnExpected() instanceof \DateTimeImmutable)
-            $item->setReturnExpected(new \DateTimeImmutable('+'.$item->getLibrary()->getLendingPeriod($this->getBorrowPeriod()).' days'));
+            $item->setReturnExpected(new \DateTimeImmutable('+'.$item->getLibrary()->getLendingPeriod($this->getBorrowPeriod($item)).' days'));
         $item->setStatusRecorder(UserHelper::getCurrentUser());
         $em = ProviderFactory::getEntityManager();
         $em->persist($item);

@@ -27,7 +27,18 @@ trait LibraryControllerTrait
     public function __construct(LibraryHelper $helper, SessionInterface $session)
     {
         $library = LibraryHelper::getCurrentLibrary();
-        if ($library)
-            $session->getBag('flashes')->add('info', ["The current library is the '{name}'", ['{name}' => $library->getName()], 'Library']);
+        $flashBag = $session->getBag('flashes');
+        $notSet = true;
+        if ($flashBag->has('info')) {
+            foreach($flashBag->peek('info') as $flash)
+            {
+                if (strpos($flash[0], 'The current library is the') === 0) {
+                    $notSet = false;
+                    break;
+                }
+            }
+        }
+        if ($library && $notSet)
+            $flashBag->add('info', ["The current library is the '{name}'", ['{name}' => $library->getName()], 'Library']);
     }
 }

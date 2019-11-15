@@ -304,3 +304,11 @@ in days: in days
 Background Colour: Background Colour
 Background Image: Background Image
 Submit: Submit
+Loan/Return Manager: Loan/Return Manager
+Item/Person Search: Item/Person Search
+This page will attempt to loan any item to any person, based on the item identifier and the person (StudentID) Identifier. Items, if on loan, are instantly returned. Items that are available are added to a loan list until a person is selected, then all items in the list are loaned to the person.  If the person is found first, then a confirmation button must be pressed to loan the items added to the list.: This page will attempt to loan any item to any person, based on the item identifier and the person (StudentID) Identifier. Items, if on loan, are instantly returned. Items that are available are added to a loan list until a person is selected, then all items in the list are loaned to the person.  If the person is found first, then a confirmation button must be pressed to loan the items added to the list.
+'No results were found for your search: "{search}"': 'No results were found for your search: "{search}"'
+'The item "{name}" was added to the loan list.': 'The item "{name}" was added to the loan list.'
+Confirm: Confirm
+single: single
+'Loan List': Loan List

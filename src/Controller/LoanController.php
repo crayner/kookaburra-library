@@ -12,11 +12,17 @@
 
 namespace Kookaburra\Library\Controller;
 
+use App\Container\Container;
 use App\Container\ContainerManager;
+use App\Container\Panel;
+use App\Twig\Sidebar\Message;
 use App\Twig\Sidebar\Photo;
 use App\Twig\SidebarContent;
+use App\Util\TranslationsHelper;
 use Kookaburra\Library\Entity\LibraryItem;
+use Kookaburra\Library\Entity\RapidLoan;
 use Kookaburra\Library\Form\ItemActionType;
+use Kookaburra\Library\Form\RapidLoanerType;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -48,6 +54,7 @@ class LoanController extends AbstractController
      * @param FlashBagInterface $flashBag
      * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Gibbon\Exception
+     * @throws \Exception
      * @Route("/loan/{item}/item/", name="loan_item")
      * @IsGranted("ROLE_ROUTE")
      */
@@ -139,5 +146,59 @@ class LoanController extends AbstractController
     {
         $libraryManager->reserveToLoanItem($item);
         return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
+    }
+
+    /**
+     * quickLoanReturn
+     * @param Request $request
+     * @Route("/quick/loan/", name="quick_loan")
+     */
+    public function quickLoanReturn(Request $request, SidebarContent $sidebar, ContainerManager $manager, LibraryManager $libraryManager, TranslatorInterface $translator)
+    {
+        TranslationsHelper::addTranslation('Loan List', [], 'Library');
+        TranslationsHelper::addTranslation('Remove Item', [], 'Library');
+        TranslationsHelper::addTranslation('Remove Person', [], 'Library');
+        $container = new Container();
+        $container->setTarget('formContent')->setApplication('QuickLoanApp');
+        $panel = new Panel('single', 'Library');
+        $container->addPanel($panel);
+
+        $message = new Message();
+        $message->setMessage('This page will attempt to loan any item to any person, based on the item identifier and the person (StudentID) Identifier. Items, if on loan, are instantly returned. Items that are available are added to a loan list until a person is selected, then all items in the list are loaned to the person.  If the person is found first, then a confirmation button must be pressed to loan the items added to the list.', [], 'Library')->setClass('info text-justify space15 no-border');
+        $sidebar->addContent($message);
+
+        $loan = new RapidLoan();
+
+        $form = $this->createForm(RapidLoanerType::class, $loan, ['action' => $this->generateUrl('library__quick_loan')]);
+
+        if ($request->getContentType() === 'json') {
+            $content = $libraryManager->transformItems(json_decode($request->getContent(), true), $loan);
+            $items = clone $loan->getItems();
+
+
+            if (isset($content['submit_clicked']))
+                unset($content['submit_clicked']);
+            $form->submit($content);
+            $loan->mergeItems($items);
+            if ($form->isValid()) {
+                $libraryManager->quickLoanSearch($content, $loan);
+            }
+            $loan->setSearch(null);
+
+            $form = $this->createForm(RapidLoanerType::class, $loan, ['action' => $this->generateUrl('library__quick_loan')]);
+            $container->addForm('single', $form->createView());
+            $manager->addContainer($container)->buildContainers();
+            dump($libraryManager);
+            return new JsonResponse([
+                'form' => $manager->getFormFromContainer('formContent','single'),
+                'status' => 'success',
+                'errors' => $libraryManager->getMessageManager()->serialiseTranslatedMessages($translator),
+            ],200);
+        }
+
+        $container->addForm('single', $form->createView());
+        $manager->addContainer($container)->buildContainers();
+
+        return $this->render('@KookaburraLibrary/lending/quick.html.twig');
     }
 }
