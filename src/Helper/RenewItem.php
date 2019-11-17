@@ -14,6 +14,8 @@ namespace Kookaburra\Library\Helper;
 
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
+use DateInterval;
+use DateTimeImmutable;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Manager\LibraryInterface;
@@ -46,16 +48,15 @@ class RenewItem implements LibraryInterface
     /**
      * renewItem
      * @param LibraryItem $item
-     * @throws \Exception
      */
-    public function renewItem(LibraryItem $item)
+    public function invoke(LibraryItem $item): void
     {
         if ($this->isItemAvailableForRenew($item)) {
             $newReturnDate = $item->getReturnExpected()
-                ->add(new \DateInterval('P'.$this->getBorrowPeriod($item).'D'));
+                ->add(new DateInterval('P' . $this->getBorrowPeriod($item) . 'D'));
             $item->setReturnExpected($newReturnDate);
             $lastEvent = $item->getLastEvent();
-            $now = new \DateTimeImmutable();
+            $now = new DateTimeImmutable();
             $lastEvent->setInPerson(UserHelper::getCurrentUser())
                 ->setTimestampReturn($now);
 
@@ -77,7 +78,6 @@ class RenewItem implements LibraryInterface
      * isItemAvailableForRenew
      * @param LibraryItem $item
      * @return bool
-     * @throws \Exception
      */
     private function isItemAvailableForRenew(LibraryItem $item): bool
     {

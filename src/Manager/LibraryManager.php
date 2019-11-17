@@ -23,6 +23,7 @@ use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Entity\RapidLoan;
 use Kookaburra\Library\Helper\LoanItem;
 use Kookaburra\Library\Helper\RenewItem;
+use Kookaburra\Library\Helper\ReturnAction;
 use Kookaburra\Library\Helper\ReturnItem;
 use Kookaburra\SystemAdmin\Notification\EventBuilderProvider;
 use Symfony\Component\Routing\RouterInterface;
@@ -81,7 +82,7 @@ class LibraryManager
     /**
      * @var ReturnItem
      */
-    private $returnAction;
+    private $returnItem;
 
     /**
      * @var RenewItem
@@ -92,6 +93,11 @@ class LibraryManager
      * @var LoanItem
      */
     private $loanItem;
+
+    /**
+     * @var ReturnAction
+     */
+    private $returnAction;
 
     /**
      * @var RouterInterface
@@ -380,11 +386,10 @@ class LibraryManager
      * loanItem
      * @param LibraryItem $item
      * @return LibraryManager
-     * @throws \Exception
      */
     public function loanItem(LibraryItem $item): LibraryManager
     {
-        $this->getLoanItem()->loanItem($item);
+        $this->getLoanItem()->invoke($item);
         return $this;
     }
 
@@ -392,7 +397,6 @@ class LibraryManager
      * loanItem
      * @param LibraryItem $item
      * @return LibraryManager
-     * @throws \Exception
      */
     public function reserveToLoanItem(LibraryItem $item): LibraryManager
     {
@@ -401,13 +405,13 @@ class LibraryManager
     }
 
     /**
-     * returnAction
+     * returnItem
      * @param LibraryItem $item
      * @return LibraryManager
      */
-    public function returnAction(LibraryItem $item): LibraryManager
+    public function returnItem(LibraryItem $item): LibraryManager
     {
-        $this->getReturnAction()->returnAction($item);
+        $this->getReturnItem()->invoke($item);
         return $this;
     }
 
@@ -429,16 +433,6 @@ class LibraryManager
     {
         $this->renewalMaximum = $renewalMaximum ?: 1;
         return $this;
-    }
-
-    /**
-     * returnItem
-     * @param LibraryItem $item
-     * @throws \Exception
-     */
-    public function returnItem(LibraryItem $item)
-    {
-        $this->getReturnAction()->returnItem($item);
     }
 
     /**
@@ -499,15 +493,15 @@ class LibraryManager
     }
 
     /**
-     * getReturnAction
+     * getReturnItem
      * @return ReturnItem
      */
-    private function getReturnAction(): ReturnItem
+    private function getReturnItem(): ReturnItem
     {
-        if (null === $this->returnAction) {
-            $this->returnAction = new ReturnItem($this);
+        if (null === $this->returnItem) {
+            $this->returnItem = new ReturnItem($this);
         }
-        return $this->returnAction;
+        return $this->returnItem;
     }
 
     /**
@@ -546,7 +540,6 @@ class LibraryManager
      * quickLoanSearch
      * @param array $content
      * @param RapidLoan $loan
-     * @throws \Exception
      */
     public function quickLoanSearch(array $content, RapidLoan $loan)
     {
@@ -557,20 +550,24 @@ class LibraryManager
 
         if (null === $person) {
             $item = ProviderFactory::getRepository(LibraryItem::class)->findOneUsingQuickSearch($search);
-            ProviderFactory::getEntityManager()->refresh($item);
             if (null === $item) {
                 $this->getMessageManager()->add('warning', 'No results were found for your search: "{search}"', ['{search}' => $search], 'Library');
                 return ;
             }
+            ProviderFactory::getEntityManager()->refresh($item);
 
             //  Deal with an item.
             if ($item->getStatus() === 'Available') {
                 $loan->addItem($item);
-                //$this->getMessageManager()->add('success', 'The item "{name}" was added to the loan list.', ['{name}' => $item->getName()], 'Library');
+                if ($loan->getPerson() instanceof Person)
+                {
+                    $item->setResponsibleForStatus($loan->getPerson());
+                    $this->loanItem($item);
+                    $loan->clear();
+                }
                 return;
             } elseif ($item->getStatus() === 'On Loan') {
                 $this->returnItem($item);
-                $this->returnAction($item);
                 $this->getMessageManager()->add('success', 'The item "{name}" was returned to the library. Scan this item again to the add to loan list', ['{name}' => $item->getName()], 'Library');
                 $em  = ProviderFactory::getEntityManager();
                 $em->persist($item);
@@ -587,10 +584,9 @@ class LibraryManager
             foreach($loan->getItems() as $item)
             {
                 $item->setResponsibleForStatus($person);
-                $this->loanItem($item);
-                $loan->removeItem($item);
-                $this->getMessageManager()->add('success', 'The item "{name}" was loaned to "{person}".', ['{name}' => $item->getName(), '{person}' => $person->formatName(['informal' => true])], 'Library');
+                $this->getLoanItem()->invoke($item);
             }
+            $loan->clear();
             return ;
         } else {
             $loan->setPerson($person);
@@ -614,5 +610,41 @@ class LibraryManager
 
         $content['items'] = null;
         return $content;
+    }
+
+    /**
+     * canBorrow
+     * @return bool
+     */
+    public function canBorrow(Person $person): bool
+    {
+        if (($borrowLimit = LibraryHelper::getCurrentLibrary()->getBorrowLimit()) === 0)
+            return true;
+
+        $currentLoanCount = ProviderFactory::getRepository(LibraryItem::class)->countOnLoanToPerson($person);
+
+        dump($currentLoanCount, $borrowLimit);
+        return intval($currentLoanCount) < intval($borrowLimit);
+    }
+
+    /**
+     * @return ReturnAction
+     */
+    public function getReturnAction(): ReturnAction
+    {
+        if (null === $this->returnAction)
+            $this->returnAction = new ReturnAction();
+        return $this->returnAction;
+    }
+
+    /**
+     * returnAction
+     * @param LibraryItem $item
+     * @return LibraryManager
+     */
+    public function returnAction(LibraryItem $item): LibraryManager
+    {
+        $this->getReturnAction()->invoke($item);
+        return $this;
     }
 }

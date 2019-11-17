@@ -24,7 +24,6 @@ class MakeAvailableItem
     /**
      * MakeAvailableItem constructor.
      * @param LibraryItem $item
-     * @throws \Exception
      */
     public function __construct(LibraryItem $item)
     {

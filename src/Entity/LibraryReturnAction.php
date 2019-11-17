@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class LibraryReturnAction
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryReturnActionRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryReturnAction")
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryReturnAction", indexes={@ORM\Index(name="action_by", columns={"action_by"}),@ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class LibraryReturnAction implements EntityInterface
@@ -39,13 +39,13 @@ class LibraryReturnAction implements EntityInterface
     /**
      * @var LibraryItem|null
      * @ORM\OneToOne(targetEntity="LibraryItem", inversedBy="returnAction")
-     * @ORM\JoinColumn(name="item", referencedColumnName="gibbonLibraryItemID")
+     * @ORM\JoinColumn(name="item", referencedColumnName="gibbonLibraryItemID",nullable=false)
      */
     private $item;
 
     /**
      * @var string|null
-     * @ORM\Column(name="on_return_action", length=16, options={"comment": "What to do when the item is returned?"}, nullable=true,)
+     * @ORM\Column(name="return_action", length=16, options={"comment": "What to do when the item is returned?"}, nullable=false)
      * @Assert\Choice(callback="getReturnActionList")
      */
     private $returnAction;
@@ -58,7 +58,7 @@ class LibraryReturnAction implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="action_by", referencedColumnName="gibbonPersonID")
+     * @ORM\JoinColumn(name="action_by", referencedColumnName="gibbonPersonID", nullable=false)
      */
     private $actionBy;
 
@@ -96,9 +96,10 @@ class LibraryReturnAction implements EntityInterface
     }
 
     /**
-     * @return Person|null
+     * getItem
+     * @return LibraryItem|null
      */
-    public function getItem(): ?Person
+    public function getItem(): ?LibraryItem
     {
         return $this->item;
     }
@@ -215,5 +216,14 @@ class LibraryReturnAction implements EntityInterface
     {
         return $this->setCreatedBy(UserHelper::getCurrentUser())
             ->setCreatedOn(new \DateTimeImmutable());
+    }
+
+    /**
+     * isValidAction
+     * @return bool
+     */
+    public function isValidAction(): bool
+    {
+        return in_array($this->getReturnAction(), self::getReturnActionList()) && $this->getActionBy() instanceof Person && $this->getItem() instanceof LibraryItem;
     }
 }

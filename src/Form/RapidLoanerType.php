@@ -55,6 +55,7 @@ class RapidLoanerType extends AbstractType
                     'label' => 'Item/Person Search',
                     'on_blur' => 'submitForm',
                     'on_key_press' => 'submitOnEnter',
+                    'required' => false,
                 ]
             )
             ->add('items', ReactCollectionType::class,
@@ -75,10 +76,14 @@ class RapidLoanerType extends AbstractType
                     'attr' => $personAttr,
                 ]
             )
-            ->add('submit', SubmitType::class,
+            ->add('clear', SubmitType::class,
                 [
-                    'label' => 'Confirm',
-                ]
+                    'label' => '<span class="fas fa-broom fa-fw"></span>',
+                    'attr' => [
+                        'title' => 'Clear',
+                        'help' => '',
+                    ],
+               ]
             )
         ;
 

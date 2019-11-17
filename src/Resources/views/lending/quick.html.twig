@@ -9,4 +9,25 @@
 
 {% block content %}
     <section id="formContent"></section>
+
+    <div class="secondary" style="clear: both;">
+        <h4>{{ 'Instructions'|trans }}</h4>
+        <p>{{ 'library.quick.p0'|trans }}</p>
+        <dl>
+            <dt>{{ 'Library Item'|trans }}</dt>
+            <dd>{{ 'library.quick.p1'|trans }}.</dd>
+            <dt>{{ 'Borrower'|trans }}</dt>
+            <dd>{{ 'library.quick.p2'|trans }}</dd>
+        </dl>
+
+        <ul>
+            <li>{{ 'library.quick.p4'|trans }}</li>
+            <li>{{ 'library.quick.p5'|trans }}</li>
+            <li>{{ 'library.quick.p6'|trans({'{button}': '<span class="fas fa-fw fa-broom"></span>'})|raw }}</li>
+            <li>{{ 'library.quick.p7'|trans }}</li>
+            <li>{{ 'library.quick.p8'|trans }}</li>
+            <li>{{ 'library.quick.p9'|trans }}</li>
+        </ul>
+    </div>
+
 {% endblock content %}

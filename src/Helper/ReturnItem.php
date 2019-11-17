@@ -19,8 +19,11 @@ use Kookaburra\Library\Manager\LibraryInterface;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\Library\Manager\LibraryTrait;
 use Kookaburra\UserAdmin\Util\UserHelper;
-use Symfony\Component\Mailer\Transport;
 
+/**
+ * Class ReturnItem
+ * @package Kookaburra\Library\Helper
+ */
 class ReturnItem implements LibraryInterface
 {
     use LibraryTrait;
@@ -42,14 +45,19 @@ class ReturnItem implements LibraryInterface
     /**
      * returnItem
      * @param LibraryItem $item
-     * @throws \Exception
      */
-    public function returnItem(LibraryItem $item)
+    public function invoke(LibraryItem $item): void
     {
+        if ($item->getStatus() !== 'On Loan')
+        {
+            return;
+        }
+
         $item->setStatus('Available')
             ->setTimestampStatus(new \DateTimeImmutable('now'))
             ->setStatusRecorder(UserHelper::getCurrentUser())
             ->setResponsibleForStatus(null)
+            ->setReturnExpected(null)
         ;
 
         $em = ProviderFactory::getEntityManager();

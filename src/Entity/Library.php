@@ -89,11 +89,15 @@ class Library implements EntityInterface
     /**
      * @var File|null
      * @ORM\Column(length=191, name="bg_image", nullable=true)
-     * @Assert\Length(
-     *     max = 1250000
-     * )
      */
     private $bgImage;
+
+    /**
+     * @var integer|null
+     * @ORM\Column(type="integer", nullable=true, columnDefinition="INT(3) UNSIGNED")
+     * @Assert\Range(max = 99)
+     */
+    private $borrowLimit;
 
     /**
      * @return int|null
@@ -272,6 +276,26 @@ class Library implements EntityInterface
     public function setBgImage(?string $bgImage): Library
     {
         $this->bgImage = $bgImage;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBorrowLimit(): int
+    {
+        return intval($this->borrowLimit);
+    }
+
+    /**
+     * BorrowLimit.
+     *
+     * @param int|null $borrowLimit
+     * @return Library
+     */
+    public function setBorrowLimit(?int $borrowLimit): Library
+    {
+        $this->borrowLimit = $borrowLimit;
         return $this;
     }
 }

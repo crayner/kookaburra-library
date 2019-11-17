@@ -17,6 +17,7 @@ use App\Entity\Space;
 use App\Form\Entity\SearchAny;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\NonUniqueResultException;
 use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\IgnoreStatus;
 use Kookaburra\Library\Entity\Library;
@@ -183,15 +184,39 @@ class LibraryItemRepository extends ServiceEntityRepository
      * findOneUsingQuickSearch
      * @param string $search
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findOneUsingQuickSearch(string $search)
     {
-        return $this->createQueryBuilder('li')
-            ->where('li.identifier = :search')
-            ->setParameter('search', $search)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+        try {
+            return $this->createQueryBuilder('li')
+                ->where('li.identifier = :search')
+                ->setParameter('search', $search)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * countOnLoanToPerson
+     * @param Person $person
+     * @return int
+     */
+    public function countOnLoanToPerson(Person $person): int
+    {
+        try {
+            return intval($this->createQueryBuilder('li')
+                ->where('li.status = :status')
+                ->setParameter('status', 'On Loan')
+                ->andWhere('li.responsibleForStatus = :person')
+                ->setParameter('person', $person)
+                ->select('COUNT(li.id)')
+                ->getQuery()
+                ->getSingleScalarResult());
+        } catch (NonUniqueResultException $e) {
+            return 0;
+        }
     }
 }

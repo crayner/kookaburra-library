@@ -80,8 +80,7 @@ class LoanController extends AbstractController
         if ($request->getContentType() === 'json') {
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
-            $libraryManager->loanItem($item);
-            $libraryManager->returnAction($item);
+            $libraryManager->loanItem($item)->returnAction($item);
 
             $libraryManager->getMessageManager()->pushToFlash($flashBag, $translator);
 
@@ -109,6 +108,7 @@ class LoanController extends AbstractController
      */
     public function return(LibraryItem $item, LibraryManager $manager)
     {
+        $this->getDoctrine()->getManager()->refresh($item);
         $manager->returnItem($item);
 
         return $this->redirectToRoute('library__loan_item', ['item' => $item->getId()]);
@@ -153,7 +153,7 @@ class LoanController extends AbstractController
      * @param Request $request
      * @Route("/quick/loan/", name="quick_loan")
      */
-    public function quickLoanReturn(Request $request, SidebarContent $sidebar, ContainerManager $manager, LibraryManager $libraryManager, TranslatorInterface $translator)
+    public function quickLoanReturn(Request $request, ContainerManager $manager, LibraryManager $libraryManager, TranslatorInterface $translator)
     {
         TranslationsHelper::addTranslation('Loan List', [], 'Library');
         TranslationsHelper::addTranslation('Remove Item', [], 'Library');
@@ -163,21 +163,26 @@ class LoanController extends AbstractController
         $panel = new Panel('single', 'Library');
         $container->addPanel($panel);
 
-        $message = new Message();
-        $message->setMessage('This page will attempt to loan any item to any person, based on the item identifier and the person (StudentID) Identifier. Items, if on loan, are instantly returned. Items that are available are added to a loan list until a person is selected, then all items in the list are loaned to the person.  If the person is found first, then a confirmation button must be pressed to loan the items added to the list.', [], 'Library')->setClass('info text-justify space15 no-border');
-        $sidebar->addContent($message);
-
         $loan = new RapidLoan();
-
         $form = $this->createForm(RapidLoanerType::class, $loan, ['action' => $this->generateUrl('library__quick_loan')]);
 
         if ($request->getContentType() === 'json') {
             $content = $libraryManager->transformItems(json_decode($request->getContent(), true), $loan);
+            if ('clear' === $content['submit_clicked'])
+            {
+                $loan = new RapidLoan();
+                $form = $this->createForm(RapidLoanerType::class, $loan, ['action' => $this->generateUrl('library__quick_loan')]);
+                $container->addForm('single', $form->createView());
+                $manager->addContainer($container)->buildContainers();
+                return new JsonResponse([
+                    'form' => $manager->getFormFromContainer('formContent','single'),
+                    'status' => 'success',
+                ],200);
+            }
             $items = clone $loan->getItems();
 
 
-            if (isset($content['submit_clicked']))
-                unset($content['submit_clicked']);
+            unset($content['submit_clicked']);
             $form->submit($content);
             $loan->mergeItems($items);
             if ($form->isValid()) {
@@ -188,7 +193,6 @@ class LoanController extends AbstractController
             $form = $this->createForm(RapidLoanerType::class, $loan, ['action' => $this->generateUrl('library__quick_loan')]);
             $container->addForm('single', $form->createView());
             $manager->addContainer($container)->buildContainers();
-            dump($libraryManager);
             return new JsonResponse([
                 'form' => $manager->getFormFromContainer('formContent','single'),
                 'status' => 'success',

@@ -145,4 +145,13 @@ class RapidLoan
 
         return $this;
     }
+
+    /**
+     * clear
+     * @return RapidLoan
+     */
+    public function clear(): RapidLoan
+    {
+        return $this->setPerson(null)->setItems(null)->setSearch(null);
+    }
 }

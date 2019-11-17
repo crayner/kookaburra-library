@@ -11,6 +11,8 @@
  */
 
 namespace Kookaburra\Library\Manager;
+use Kookaburra\Library\Entity\LibraryItem;
+
 /**
  * Interface LibraryInterface
  * @package Kookaburra\Library\Manager
@@ -22,4 +24,10 @@ interface LibraryInterface
      * @return LibraryManager
      */
     public function getLibraryManager(): LibraryManager;
+
+    /**
+     * invoke
+     * @param LibraryItem $item
+     */
+    public function invoke(LibraryItem $item): void;
 }

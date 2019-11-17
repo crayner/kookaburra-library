@@ -22,9 +22,11 @@ use App\Manager\Traits\BooleanList;
 use App\Provider\ProviderFactory;
 use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
+use Exception;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Doctrine\ORM\Mapping as ORM;
@@ -98,7 +100,7 @@ class LibraryItem implements EntityInterface
     private $fields = [];
 
     /**
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      * @ORM\Column(type="date_immutable",name="purchaseDate",nullable=true)
      */
     private $purchaseDate;
@@ -249,13 +251,13 @@ class LibraryItem implements EntityInterface
     private $statusRecorder;
 
     /**
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      * @ORM\Column(name="timestampStatus", type="datetime_immutable", options={"comment": "The time the status was recorded"}, nullable=true)
      */
     private $timestampStatus;
 
     /**
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      * @ORM\Column(name="returnExpected", type="date_immutable", options={"comment": "The time when the event expires."}, nullable=true)
      */
     private $returnExpected;
@@ -267,7 +269,7 @@ class LibraryItem implements EntityInterface
     private $returnAction;
 
     /**
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      */
     private $audit;
 
@@ -286,7 +288,7 @@ class LibraryItem implements EntityInterface
     private $createdBy;
 
     /**
-     * @var \DateTimeImmutable
+     * @var DateTimeImmutable
      * @ORM\Column(type="datetime_immutable", name="created_on")
      */
     private $createdOn;
@@ -424,18 +426,18 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return \DateTimeImmutable|null
+     * @return DateTimeImmutable|null
      */
-    public function getPurchaseDate(): ?\DateTimeImmutable
+    public function getPurchaseDate(): ?DateTimeImmutable
     {
         return $this->purchaseDate;
     }
 
     /**
-     * @param \DateTimeImmutable|null $purchaseDate
+     * @param DateTimeImmutable|null $purchaseDate
      * @return LibraryItem
      */
-    public function setPurchaseDate(?\DateTimeImmutable $purchaseDate): LibraryItem
+    public function setPurchaseDate(?DateTimeImmutable $purchaseDate): LibraryItem
     {
         $this->purchaseDate = $purchaseDate;
         return $this;
@@ -780,36 +782,36 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return \DateTimeImmutable|null
+     * @return DateTimeImmutable|null
      */
-    public function getTimestampStatus(): ?\DateTimeImmutable
+    public function getTimestampStatus(): ?DateTimeImmutable
     {
         return $this->timestampStatus;
     }
 
     /**
-     * @param \DateTimeImmutable|null $timestampStatus
+     * @param DateTimeImmutable|null $timestampStatus
      * @return LibraryItem
      */
-    public function setTimestampStatus(?\DateTimeImmutable $timestampStatus): LibraryItem
+    public function setTimestampStatus(?DateTimeImmutable $timestampStatus): LibraryItem
     {
         $this->timestampStatus = $timestampStatus;
         return $this;
     }
 
     /**
-     * @return \DateTimeImmutable|null
+     * @return DateTimeImmutable|null
      */
-    public function getReturnExpected(): ?\DateTimeImmutable
+    public function getReturnExpected(): ?DateTimeImmutable
     {
         return $this->returnExpected;
     }
 
     /**
-     * @param \DateTimeImmutable|null $returnExpected
+     * @param DateTimeImmutable|null $returnExpected
      * @return LibraryItem
      */
-    public function setReturnExpected(?\DateTimeImmutable $returnExpected): LibraryItem
+    public function setReturnExpected(?DateTimeImmutable $returnExpected): LibraryItem
     {
         $this->returnExpected = $returnExpected;
         return $this;
@@ -890,13 +892,15 @@ class LibraryItem implements EntityInterface
             $this->setDepartment($this->getLibrary()->getDepartment());
         if (!in_array($this->getStatus(), ['On Loan']))
             $this->setReturnExpected(null);
+        if (null !== $this->getReturnAction() && !$this->getReturnAction()->isValidAction() && intval($this->getReturnAction()->getId()) === 0)
+            $this->setReturnAction(null);
         return $this;
     }
 
     /**
      * persist
      * @return LibraryItem
-     * @throws \Exception
+     * @throws Exception
      * @ORM\PrePersist()
      */
     public function persist(): LibraryItem
@@ -905,7 +909,7 @@ class LibraryItem implements EntityInterface
             $this->setSpace($this->getLibrary()->getFacility());
         if (null === $this->getDepartment() || '' === $this->getDepartment())
             $this->setDepartment($this->getLibrary()->getDepartment());
-       return $this->update()->setCreatedBy(UserHelper::getCurrentUser())->setCreatedOn(new \DateTimeImmutable());
+       return $this->update()->setCreatedBy(UserHelper::getCurrentUser())->setCreatedOn(new DateTimeImmutable());
     }
 
     /**
@@ -985,9 +989,9 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return \DateTimeImmutable|null
+     * @return DateTimeImmutable|null
      */
-    public function getAudit(): ?\DateTimeImmutable
+    public function getAudit(): ?DateTimeImmutable
     {
         return $this->audit;
     }
@@ -995,10 +999,10 @@ class LibraryItem implements EntityInterface
     /**
      * Audit.
      *
-     * @param \DateTimeImmutable|null $audit
+     * @param DateTimeImmutable|null $audit
      * @return LibraryItem
      */
-    public function setAudit(?\DateTimeImmutable $audit): LibraryItem
+    public function setAudit(?DateTimeImmutable $audit): LibraryItem
     {
         $this->audit = $audit;
         return $this;
@@ -1062,9 +1066,9 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return \DateTimeImmutable
+     * @return DateTimeImmutable
      */
-    public function getCreatedOn(): \DateTimeImmutable
+    public function getCreatedOn(): DateTimeImmutable
     {
         return $this->createdOn;
     }
@@ -1072,10 +1076,10 @@ class LibraryItem implements EntityInterface
     /**
      * CreatedOn.
      *
-     * @param \DateTimeImmutable $createdOn
+     * @param DateTimeImmutable $createdOn
      * @return LibraryItem
      */
-    public function setCreatedOn(\DateTimeImmutable $createdOn): LibraryItem
+    public function setCreatedOn(DateTimeImmutable $createdOn): LibraryItem
     {
         $this->createdOn = $createdOn;
         return $this;
@@ -1121,16 +1125,19 @@ class LibraryItem implements EntityInterface
      * if not returned, then the days is calculated to the returnExpected date,
      * unless the date is now after the returnExpectedDate.
      * @return int
-     * @throws \Exception
      */
     public function getDaysOnLoan(): int
     {
         if ($this->getStatus() !== 'On Loan')
             return 0;
 
-        $start = new \DateTimeImmutable($this->getTimestampStatus()->format('Y-m-d 00:00:00'));
-        $last = $this->getReturnExpected();
-        $now = new \DateTimeImmutable(date('Y-m-d 00:00:00'));
+        try {
+            $start = new DateTimeImmutable($this->getTimestampStatus()->format('Y-m-d 00:00:00'));
+            $last = $this->getReturnExpected();
+            $now = new DateTimeImmutable(date('Y-m-d 00:00:00'));
+        } catch (Exception $e) {
+            return 0;
+        }
         if ($now > $this->getReturnExpected())
             $last = $now;
         $diff = $last->diff($start);
@@ -1169,14 +1176,14 @@ class LibraryItem implements EntityInterface
     /**
      * countOverdueDays
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     public function countOverdueDays(): int
     {
         if ($this->getStatus() === 'On Loan') {
-            if ($this->getReturnExpected() < new \DateTimeImmutable())
+            if ($this->getReturnExpected() < new DateTimeImmutable())
             {
-                $diff = $this->getReturnExpected()->diff(new \DateTimeImmutable());
+                $diff = $this->getReturnExpected()->diff(new DateTimeImmutable());
                 return intval($diff->days);
             }
             return 0;

@@ -15,8 +15,6 @@ namespace Kookaburra\Library\Helper;
 use App\Entity\Person;
 use App\Provider\ProviderFactory;
 use Kookaburra\Library\Entity\LibraryItem;
-use Kookaburra\Library\Entity\LibraryItemEvent;
-use Kookaburra\Library\Manager\LibraryEventManager;
 use Kookaburra\Library\Manager\LibraryInterface;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\Library\Manager\LibraryTrait;
@@ -57,25 +55,31 @@ class LoanItem implements LibraryInterface
      * loanItem
      * @param LibraryItem $item
      * @return LibraryManager
-     * @throws \Exception
      */
-    public function loanItem(LibraryItem $item): LoanItem
+    public function invoke(LibraryItem $item): void
     {
         if ($item->getStatus() !== 'Available' || !$item->isBorrowable())
-            return $this;
+            return ;
         if (! $item->getResponsibleForStatus() instanceof Person)
-            return $this;
+            return ;
+        if (!$this->getLibraryManager()->canBorrow($item->getResponsibleForStatus()))
+        {
+            $this->getMessageManager()->add('warning', 'return.warning.0', ['{person}' => $item->getResponsibleForStatus()->formatName(['informal' => true]), '{name}' => $item->getName()], 'Library');
+            return ;
+        }
 
         $item->setStatus('On Loan');
         $item->setTimestampStatus(new \DateTimeImmutable());
+        $ra = new ReturnAction();
+        $ra->invoke($item);
         if (!$item->getReturnExpected() instanceof \DateTimeImmutable)
-            $item->setReturnExpected(new \DateTimeImmutable('+'.$item->getLibrary()->getLendingPeriod($this->getBorrowPeriod($item)).' days'));
+            $item->setReturnExpected(new \DateTimeImmutable('+'. intval($item->getLibrary()->getLendingPeriod($this->getBorrowPeriod($item))).' days'));
         $item->setStatusRecorder(UserHelper::getCurrentUser());
         $em = ProviderFactory::getEntityManager();
         $em->persist($item);
         $em->flush();
-        $this->getMessageManager()->add('success', 'return.success.0', [], 'messages');
-        return $this;
+        $this->getMessageManager()->add('success', 'return.success.0', ['{name}' => $item->getName(), '{person}' => $item->getResponsibleForStatus()->formatName(['informal' => true])], 'Library');
+        return ;
     }
 
     /**

@@ -26,7 +26,6 @@ class DecommissionItem
     /**
      * DecommissionItem constructor.
      * @param LibraryItem $item
-     * @throws \Exception
      */
     public function __construct(LibraryItem $item)
     {

@@ -79,6 +79,15 @@ class LibraryType extends AbstractType
                     'help' => 'Must be unique',
                 ]
             )
+            ->add('borrowLimit', IntegerType::class,
+                [
+                    'label' => 'Borrowing Limit',
+                    'help' => 'The maximum number of items a borrower can have on loan.',
+                    'attr' => [
+                        'max' => 99,
+                    ]
+                ]
+            )
             ->add('department', EntityType::class,
                 [
                     'label' => 'Department',
