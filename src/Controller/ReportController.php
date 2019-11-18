@@ -18,8 +18,10 @@ use App\Provider\ProviderFactory;
 use Kookaburra\Library\Entity\BorrowerSearch;
 use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\IgnoreStatus;
+use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Entity\LibraryItemEvent;
+use Kookaburra\Library\Form\BorrowerIdentifierListType;
 use Kookaburra\Library\Form\BorrowerSearchType;
 use Kookaburra\Library\Form\CatalogueSearchType;
 use Kookaburra\Library\Form\UserStatusType;
@@ -98,6 +100,8 @@ class ReportController extends AbstractController
 
     /**
      * overdueReport
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/overdue/report/", name="overdue_item_report")
      * @IsGranted("ROLE_ROUTE")
      */
@@ -115,6 +119,28 @@ class ReportController extends AbstractController
             [
                 'form' => $form->createView(),
                 'overdue' => $overdue,
+            ]
+        );
+    }
+
+    /**
+     * borrowerIdentifierReport
+     * @param Request $request
+     * @Route("/borrower/identifier/report/", name="borrower_identifier_report")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function borrowerIdentifierReport(Request $request)
+    {
+        $form = $this->createForm(BorrowerIdentifierListType::class, null);
+
+        $form->handleRequest($request);
+
+        $people = ProviderFactory::create(Library::class)->findPeopleFormIdentifierReport($form);
+
+        return $this->render('@KookaburraLibrary/borrower_identifier_list.html.twig',
+            [
+                'form' => $form->createView(),
+                'people' => $people,
             ]
         );
     }

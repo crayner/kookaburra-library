@@ -331,3 +331,15 @@ library:
         p9: 'If you are attempting to loan the item that was on loan, then you will need to scan the item a second time.'
 Library Item: Library Item
 Instructions: Instructions
+Loan / Return Manager: Loan / Return Manager
+Borrower Identifiers: Borrower Identifiers
+Borrower List Generator: Borrower List Generator
+borrower:
+    type:
+        student: Student
+        staff: Staff
+        parent: Parent
+        other: Other
+Roll Group: Roll Group
+Only required with a Student Types: Only required with a Student Types
+Borrower List: Borrower List

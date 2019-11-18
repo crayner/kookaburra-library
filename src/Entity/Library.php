@@ -100,6 +100,16 @@ class Library implements EntityInterface
     private $borrowLimit;
 
     /**
+     * @var array
+     */
+    private static $borrowerTypes = [
+        'Student',
+        'Staff',
+        'Parent',
+        'Other',
+    ];
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -297,5 +307,13 @@ class Library implements EntityInterface
     {
         $this->borrowLimit = $borrowLimit;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getBorrowerTypes(): array
+    {
+        return self::$borrowerTypes;
     }
 }

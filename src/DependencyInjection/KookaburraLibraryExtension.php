@@ -11,6 +11,7 @@
  */
 namespace Kookaburra\Library\DependencyInjection;
 
+use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\LibraryManager;
 use Symfony\Component\Config\FileLocator;
@@ -106,7 +107,7 @@ class KookaburraLibraryExtension extends Extension
 
         $x = [];
         foreach($allowedBorrowers as $w)
-            if (in_array($w, ['Staff', 'Students', 'Parents', 'Others']))
+            if (in_array($w, Library::getBorrowerTypes()))
                 $x[] = $w;
 
         if ([] === $x)
