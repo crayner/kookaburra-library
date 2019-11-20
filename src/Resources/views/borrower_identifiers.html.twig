@@ -11,7 +11,7 @@
     {% endif %}
 
     {% for person in people %}
-        <div class="text-center" style="float: left; width: 33%; border: 1px solid #ccc; min-height: {{ min_height }}px">
+        <div class="text-center" style="float: left; margin-top: -1px; width: 33.3333333%; border: 1px solid #ccc; min-height: {{ min_height }}px">
             {% if form.withPhoto.vars.value is same as('Y') %}
                 {% include 'components/photo.html.twig' with {photo: displayImage(person, 'getImage240', 125, 'user max150')} %}
             {% endif %}
