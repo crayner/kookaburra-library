@@ -13,8 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
-        "tecnickcom/tc-lib-barcode": "^1.15"
+        "php": "^7.3"
     },
     "require-dev": {
     },

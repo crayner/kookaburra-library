@@ -1,0 +1,23 @@
+{% trans_default_domain 'Library' %}
+
+<div class="smallIntBorder fullWidth table">
+    <h3>{{ 'Borrower List - {borrowerType}'|trans({'{borrowerType}': ('borrower.type.' ~ form.borrowerType.vars.value|lower|default('empty'))|trans }) }} ({{ people|length }})</h3>
+    {% if form.borrowerType.vars.value is same as('Student') and form.rollGroup.vars.data is not same as(null) %}
+        <p>{{ 'Roll Group: {roll_group}'|trans({'{roll_group}': form.rollGroup.vars.data.__toString|default('')}) }}</p>
+    {% endif %}
+    {% set min_height = 65 %}
+    {% if form.withPhoto.vars.value is same as('Y') %}
+        {% set min_height = 215 %}
+    {% endif %}
+
+    {% for person in people %}
+        <div class="text-center" style="float: left; width: 33%; border: 1px solid #ccc; min-height: {{ min_height }}px">
+            {% if form.withPhoto.vars.value is same as('Y') %}
+                {% include 'components/photo.html.twig' with {photo: displayImage(person, 'getImage240', 125, 'user max150')} %}
+            {% endif %}
+            <div class="text-center" style="background-image: url('data:image/png;base64,{{ generateBarcode(person.uniqueIdentifier, {width: '150', height: '35', padding: [5,10,5,10]}) }}'); background-repeat: no-repeat; background-position: center;">
+                <span style="background-color: white; margin-top: 050px; padding: 0; position: relative; top: 15px; font-weight: bold">{{ person.formatName({'informal': true}) }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>

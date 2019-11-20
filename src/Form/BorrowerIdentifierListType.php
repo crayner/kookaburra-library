@@ -15,7 +15,10 @@ namespace Kookaburra\Library\Form;
 use App\Entity\RollGroup;
 use App\Form\Type\EnumType;
 use App\Form\Type\HeaderType;
+use App\Form\Type\ToggleType;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\EntityRepository;
+use Kookaburra\Library\Entity\BorrowerIdentifierList;
 use Kookaburra\Library\Entity\Library;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -67,11 +70,33 @@ class BorrowerIdentifierListType extends AbstractType
                     },
                     'required' => false,
                     'row_id' => 'roll_group_list',
+                    'attr' => [
+                        'onchange' => 'this.form.submit()',
+                    ],
                 ]
             )
-            ->add('submit', SubmitType::class,
+            ->add('withPhoto', ToggleType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Include Borrower Photo',
+                    'wrapper_class' => 'flex-1 relative text-right',
+                    'submit_on_change' => true,
+                ]
+            )
+            ->add('search', SubmitType::class,
+                [
+                    'label' => '<span class="fas fa-search fa-fw"></span>',
+                    'attr' => [
+                        'title' => TranslationsHelper::translate('Search', [], 'messages'),
+                    ],
+                ]
+            )
+            ->add('print', SubmitType::class,
+                [
+                    'label' => '<span class="fas fa-print fa-fw"></span>',
+                    'attr' => [
+                        'help' => '',
+                        'title' => TranslationsHelper::translate('Print', [], 'messages'),
+                    ],
                 ]
             )
         ;
@@ -85,7 +110,10 @@ class BorrowerIdentifierListType extends AbstractType
     {
         $resolver->setDefaults([
             'translation_domain' => 'Library',
-            'data_class' => null,
+            'data_class' => BorrowerIdentifierList::class,
+            'attr' => [
+                'id' => 'borrower_identifier_list',
+            ],
         ]);
     }
 }

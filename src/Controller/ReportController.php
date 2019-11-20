@@ -15,6 +15,9 @@ namespace Kookaburra\Library\Controller;
 use App\Entity\Person;
 use App\Manager\ExcelManager;
 use App\Provider\ProviderFactory;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Kookaburra\Library\Entity\BorrowerIdentifierList;
 use Kookaburra\Library\Entity\BorrowerSearch;
 use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\IgnoreStatus;
@@ -25,6 +28,8 @@ use Kookaburra\Library\Form\BorrowerIdentifierListType;
 use Kookaburra\Library\Form\BorrowerSearchType;
 use Kookaburra\Library\Form\CatalogueSearchType;
 use Kookaburra\Library\Form\UserStatusType;
+use Kookaburra\Library\Manager\BorrowerIdentifierReport;
+use Kookaburra\Library\Manager\BorrowerListPDF;
 use Kookaburra\Library\Manager\BorrowerPagination;
 use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
@@ -129,13 +134,17 @@ class ReportController extends AbstractController
      * @Route("/borrower/identifier/report/", name="borrower_identifier_report")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function borrowerIdentifierReport(Request $request)
+    public function borrowerIdentifierReport(Request $request, BorrowerListPDF $pdf)
     {
-        $form = $this->createForm(BorrowerIdentifierListType::class, null);
-
+        $data = new BorrowerIdentifierList();
+        $form = $this->createForm(BorrowerIdentifierListType::class, $data);
         $form->handleRequest($request);
 
         $people = ProviderFactory::create(Library::class)->findPeopleFormIdentifierReport($form);
+
+        if ($form->get('print')->isClicked()) {
+            $pdf->setForm($form)->setPeople($people)->generate();
+        }
 
         return $this->render('@KookaburraLibrary/borrower_identifier_list.html.twig',
             [

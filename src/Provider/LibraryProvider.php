@@ -17,23 +17,39 @@ use App\Entity\Person;
 use App\Manager\Traits\EntityTrait;
 use App\Provider\EntityProviderInterface;
 use Kookaburra\Library\Entity\Library;
+use Symfony\Component\Form\FormInterface;
 
 class LibraryProvider implements EntityProviderInterface
 {
     use EntityTrait;
 
+    /**
+     * @var string
+     */
     private $entityName = Library::class;
 
     /**
      * findPeopleFormIdentifierReport
-     * @param $form
-     * @return mixed
+     * @param FormInterface $form
+     * @return array
      */
-    public function findPeopleFormIdentifierReport($form)
+    public function findPeopleFormIdentifierReport(FormInterface $form): array
     {
-        return $this->getRepository(Person::class)->createQueryBuilder('p')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
+        $borrowerType = $form->get("borrowerType")->getData();
+        $rollGroup = $form->get("rollGroup")->getData();
+
+        switch ($borrowerType) {
+            case 'Student':
+                if ($rollGroup === null)
+                    return [];
+                return $this->getRepository(Person::class)->findStudentsByRollGroup($rollGroup, 'surname');
+            case 'Staff':
+                return $this->getRepository(Person::class)->findCurrentStaff();
+            case 'Parent':
+                return $this->getRepository(Person::class)->findCurrentParents();
+            case 'Other':
+                return $this->getRepository(Person::class)->findOthers();
+        }
+        return [];
     }
 }

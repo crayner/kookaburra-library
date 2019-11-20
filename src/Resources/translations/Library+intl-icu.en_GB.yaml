@@ -340,6 +340,9 @@ borrower:
         staff: Staff
         parent: Parent
         other: Other
+        empty: ''
 Roll Group: Roll Group
 Only required with a Student Types: Only required with a Student Types
-Borrower List: Borrower List
+Borrower List - {borrowerType}: Borrower List - {borrowerType}
+'Roll Group: {roll_group}': 'Roll Group: {roll_group}'
+Include Borrower Photo: Include Borrower Photo

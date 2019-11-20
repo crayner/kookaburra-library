@@ -8,50 +8,54 @@
 
 {% block content %}
     {{ form_start(form) }}
-
         <table class="smallIntBorder fullWidth standardForm relative">
             <tbody>
                 {{ form_row(form.borrowerHeader) }}
                 {{ form_row(form.borrowerType) }}
                 {{ form_row(form.rollGroup) }}
-                {{ form_row(form.submit) }}
+                {{ form_row(form.withPhoto) }}
+                <tr class="flex flex-col sm:flex-row justify-between content-center p-0">
+                    <td class="flex-grow justify-center px-2 border-b-0 sm:border-b border-t-0"><span class="emphasis small">* denotes a required field</span></td>
+                    <td class="w-full max-w-full sm:max-w-xs flex justify-end items-center px-2 border-b-0 sm:border-b border-t-0">
+                        {% if people|length > 0 %}
+                            {{ form_widget(form.print) }}
+                        {% else %}
+                            {% do form.print.setRendered %}
+                        {% endif %}
+                        {{ form_widget(form.search) }}
+                    </td>
+                </tr>
             </tbody>
         </table>
     {{ form_end(form) }}
 
-    <div class="smallIntBorder fullWidth table">
-        <h3>{{ 'Borrower List'|trans }}</h3>
-        {% for person in people %}
-            <div class="text-center" style="float: left; width: 33%; border: 1px solid #ccc; min-height: 215px">
-            {% include 'components/photo.html.twig' with {photo: displayImage(person, 'getImage240', 125, 'user max150')} %}
-            <div class="text-center" style="background-image: url('data:image/png;base64,{{ generateBarcode(person.uniqueIdentifier, {width: '150', height: '35', padding: [5,10,5,10]}) }}'); background-repeat: no-repeat; background-position: center;">
-                <span style="background-color: white; margin-top: 050px; padding: 0; position: relative; top: 15px; font-weight: bold">{{ person.formatName({'informal': true}) }}</span>
-            </div>
-            </div>
-        {% endfor %}
-    </div>
+    {% if people|length > 0 %}
+        {% include '@KookaburraLibrary/borrower_identifiers.html.twig' %}
+    {% endif %}
 {% endblock content %}
 
 {% block foot %}
     {{ parent() }}
     <script>
         window.onload = function () {
-            toggleRollGroupList()
+            toggleRollGroupList(false)
             init()
         }
 
-        function toggleRollGroupList() {
+        function toggleRollGroupList(submit = true) {
             const x = document.getElementById('borrower_identifier_list_borrowerType')
             var bType = x.options[x.selectedIndex].value;
             var rollGroupList = document.getElementById('roll_group_list')
 
             const hidden = rollGroupList.classList.contains('hidden')
             if (bType === 'Student' && hidden) {
-               rollGroupList.classList.toggle('hidden')
+                rollGroupList.classList.toggle('hidden')
             }
             if (bType !== 'Student' && hidden === false) {
                 rollGroupList.classList.toggle('hidden')
             }
+            if (submit)
+                document.getElementById('borrower_identifier_list').submit();
         }
     </script>
 {% endblock foot %}
