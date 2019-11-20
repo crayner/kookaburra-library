@@ -1,3 +1,3 @@
 # Kookaburra Library Bundle
 Library Bundle for Kookaburra
-#### Version 0.0.00
+#### Version 1.0.00-RC1
