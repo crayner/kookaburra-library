@@ -47,7 +47,7 @@ class RapidLoanerType extends AbstractType
         $builder
             ->add('loanHeader', HeaderType::class,
                 [
-                    'label' => 'Loan/Return Manager',
+                    'label' => 'Loan / Return Manager',
                 ]
             )
             ->add('search', TextType::class,

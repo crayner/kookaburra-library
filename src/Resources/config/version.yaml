@@ -118,8 +118,8 @@ module:
             permissions:
                 - Administrator
                 - 'Support Staff'
-        'Loan/Return Manager':
-            name: 'Loan/Return Manager'
+        'Loan / Return Manager':
+            name: 'Loan / Return Manager'
             precedence: 0
             category: Catalogue
             description: 'Lend and return items using a bar-code scanner.'

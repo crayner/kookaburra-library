@@ -48,7 +48,7 @@ class BrowsePagination extends ReactPaginationManager
             ->setContentKey('imageLocation')
             ->setContentType('image')
             ->setClass('column relative pr-4 cursor-pointer widthAuto text-centre')
-            ->setOptions(['class' => 'max200 user'])
+            ->setOptions(['class' => 'max150 user'])
         ;
         $row->addColumn($column);
 

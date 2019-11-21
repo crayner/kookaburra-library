@@ -60,7 +60,7 @@ class CatalogueController extends AbstractController
      * @Route("/catalogue/manage/", name="manage_catalogue")
      * @Route("/catalogue/manage/", name="status")
      * @Route("/", name="default")
-     * @IsGranted("ROLE_ROUTE")
+     * @Security("is_granted('ROLE_ROUTE', ['library__manage_catalogue'])")
      */
     public function manageCatalogue(CataloguePagination $pagination, Request $request, LibraryManager $manager)
     {
@@ -265,7 +265,7 @@ class CatalogueController extends AbstractController
     public function edit(Request $request, ContainerManager $manager, LibraryManager $libraryManager, SidebarContent $sidebar, int $item = 0, string $tabName = 'Catalogue')
     {
         $item = ProviderFactory::getRepository(LibraryItem::class)->find($item) ?: new LibraryItem();
-        $photo = new Photo($item, 'getImageLocation', '240', 'user');
+        $photo = new Photo($item, 'getImageLocation', '240', 'user max240');
         $photo->setTransDomain('Library')->setTitle('Cover Photo');
         $sidebar->addContent($photo);
 

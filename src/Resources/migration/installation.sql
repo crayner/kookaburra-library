@@ -202,4 +202,4 @@ ALTER TABLE `__prefix__LibraryReturnAction`
     ADD CONSTRAINT `FK_C8FEAEE11F1B251E` FOREIGN KEY (`library_item_id`) REFERENCES `__prefix__LibraryItem` (`id`),
     ADD CONSTRAINT `FK_C8FEAEE1DE12AB56` FOREIGN KEY (`created_by`) REFERENCES `gibbonPerson` (`gibbonPersonID`);
 
-INSERT INTO `gibbonLibrary` (`active`, `name`, `abbr`, `lending_period`) VALUES (1, 'General Library', 'GEN', 14);
+INSERT INTO `__prefix__Library` (`active`, `name`, `abbr`, `lending_period`) VALUES (1, 'General Library', 'GEN', 14);

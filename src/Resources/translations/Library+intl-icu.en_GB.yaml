@@ -304,7 +304,7 @@ in days: in days
 Background Colour: Background Colour
 Background Image: Background Image
 Submit: Submit
-Loan/Return Manager: Loan / Return Manager
+Loan / Return Manager: Loan / Return Manager
 Item/Person Search: Item/Person Search
 'No results were found for your search: "{search}"': 'No results were found for your search: "{search}"'
 'The item "{name}" was added to the loan list.': 'The item "{name}" was added to the loan list.'
@@ -331,7 +331,6 @@ library:
         p9: 'If you are attempting to loan the item that was on loan, then you will need to scan the item a second time.'
 Library Item: Library Item
 Instructions: Instructions
-Loan / Return Manager: Loan / Return Manager
 Borrower Identifiers: Borrower Identifiers
 Borrower List Generator: Borrower List Generator
 borrower:
