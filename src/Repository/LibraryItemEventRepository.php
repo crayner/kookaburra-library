@@ -17,7 +17,7 @@ use Kookaburra\Library\Entity\BorrowerSearch;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Manager\LibraryHelper;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * Class LibraryItemEventRepository
@@ -27,9 +27,9 @@ class LibraryItemEventRepository extends ServiceEntityRepository
 {
     /**
      * ApplicationFormRepository constructor.
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, LibraryItemEvent::class);
     }
