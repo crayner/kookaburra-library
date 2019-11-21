@@ -17,13 +17,14 @@ use App\Entity\Person;
 use App\Manager\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kookaburra\UserAdmin\Util\UserHelper;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class LibraryReturnAction
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryReturnActionRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryReturnAction", indexes={@ORM\Index(name="action_by", columns={"action_by"}),@ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryReturnAction", indexes={@ORM\Index(name="action_by", columns={"action_by"}),@ORM\Index(name="created_by", columns={"created_by"})},uniqueConstraints={@ORM\UniqueConstraint(name="item", columns={"library_item_id"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class LibraryReturnAction implements EntityInterface
@@ -39,7 +40,7 @@ class LibraryReturnAction implements EntityInterface
     /**
      * @var LibraryItem|null
      * @ORM\OneToOne(targetEntity="LibraryItem", inversedBy="returnAction")
-     * @ORM\JoinColumn(name="item", referencedColumnName="gibbonLibraryItemID",nullable=false)
+     * @ORM\JoinColumn(name="library_item_id", referencedColumnName="id",nullable=false,unique=true)
      */
     private $item;
 

@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * Gibbon-Responsive
+ * Kookaburra
  *
  * (c) 2018 Craig Rayner <craig@craigrayner.com>
  *

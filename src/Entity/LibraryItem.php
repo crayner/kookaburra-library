@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * Gibbon-Responsive
+ * Kookaburra
  *
  * (c) 2018 Craig Rayner <craig@craigrayner.com>
  *
@@ -36,7 +36,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class LibraryItem
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryItemRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryItem", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})},indexes={@ORM\Index(name="item_type", columns={"item_type"}),@ORM\Index(name="library", columns={"library"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryItem", uniqueConstraints={@ORM\UniqueConstraint(name="identifier", columns={"identifier"})},
+ *     indexes={
+ *          @ORM\Index(name="item_type", columns={"item_type"}),
+ *     @ORM\Index(name="library", columns={"library_id"}),
+ *     @ORM\Index(name="person_ownership", columns={"person_ownership"}),
+ *     @ORM\Index(name="department", columns={"department_id"}),
+ *     @ORM\Index(name="created_by", columns={"created_by"}),
+ *     @ORM\Index(name="replacement_year", columns={"replacement_year"}),
+ *     @ORM\Index(name="responsible_for_status", columns={"responsible_for_status"}),
+ *     @ORM\Index(name="space", columns={"facility_id"}),
+ *     @ORM\Index(name="status_recorder", columns={"status_recorder"})
+ * })
  * @ORM\HasLifecycleCallbacks()
  */
 class LibraryItem implements EntityInterface
@@ -46,7 +57,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="integer", name="gibbonLibraryItemID", columnDefinition="INT(10) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer", columnDefinition="INT(10) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -54,7 +65,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Library|null
      * @ORM\ManyToOne(targetEntity="Library")
-     * @ORM\JoinColumn(name="library", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="library_id", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
     private $library;
@@ -68,7 +79,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(name="id",unique=true)
+     * @ORM\Column(unique=true)
      * @Assert\NotBlank()
      */
     private $identifier;
@@ -101,19 +112,19 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var DateTimeImmutable|null
-     * @ORM\Column(type="date_immutable",name="purchaseDate",nullable=true)
+     * @ORM\Column(type="date_immutable",name="purchase_date",nullable=true)
      */
     private $purchaseDate;
 
     /**
      * @var string|null
-     * @ORM\Column(length=50,name="invoiceNumber",nullable=true)
+     * @ORM\Column(length=50,name="invoice_number",nullable=true)
      */
     private $invoiceNumber;
 
     /**
      * @var string|null
-     * @ORM\Column(name="imageType", length=4, options={"comment": "Type of image. Image should be 240px x 240px, or smaller."})
+     * @ORM\Column(name="image_type", length=4, options={"comment": "Type of image. Image should be 240px x 240px, or smaller."})
      * @Assert\Choice(callback="getImageTypeList")
      */
     private $imageType = '';
@@ -125,7 +136,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(name="imageLocation",options={"comment": "URL or local FS path of image."},nullable=true)
+     * @ORM\Column(name="image_location",options={"comment": "URL or local FS path of image."},nullable=true)
      */
     private $imageLocation;
 
@@ -138,19 +149,19 @@ class LibraryItem implements EntityInterface
     /**
      * @var Space|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Space")
-     * @ORM\JoinColumn(name="gibbonSpaceID", referencedColumnName="gibbonSpaceID", nullable=true)
+     * @ORM\JoinColumn(name="facility_id", referencedColumnName="gibbonSpaceID", nullable=true)
      */
     private $space;
 
     /**
      * @var string|null
-     * @ORM\Column(name="locationDetail", nullable=true)
+     * @ORM\Column(name="location_detail", nullable=true)
      */
     private $locationDetail;
 
     /**
      * @var string|null
-     * @ORM\Column(name="ownershipType", length=12, options={"default": "School"})
+     * @ORM\Column(name="ownership_type", length=12, options={"default": "School"})
      * @Assert\Choice(callback="getOwnershipTypeList")
      */
     private $ownershipType = 'School';
@@ -163,7 +174,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDOwnership", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="person_ownership", referencedColumnName="gibbonPersonID", nullable=true)
      * If owned by school, then this is the main user. If owned by individual, then this is that individual.
      */
     private $ownership;
@@ -171,8 +182,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Department|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Department")
-     * @ORM\JoinColumn(name="gibbonDepartmentID", referencedColumnName="gibbonDepartmentID", nullable=true)
-     * Who is responsible for managing this item? By default this will be the person who added the record, but it can be changed.
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="gibbonDepartmentID", nullable=true)
      */
     private $department;
 
@@ -185,20 +195,20 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(name="replacementCost", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="replacement_cost", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $replacementCost;
 
     /**
      * @var SchoolYear|null
      * @ORM\ManyToOne(targetEntity="App\Entity\SchoolYear")
-     * @ORM\JoinColumn(name="gibbonSchoolYearIDReplacement", referencedColumnName="gibbonSchoolYearID", nullable=true)
+     * @ORM\JoinColumn(name="replacement_year", referencedColumnName="gibbonSchoolYearID", nullable=true)
      */
     private $replacementYear;
 
     /**
      * @var string|null
-     * @ORM\Column(name="physicalCondition", length=16)
+     * @ORM\Column(name="physical_condition", length=16)
      * @Assert\Choice(callback="getPhysicalConditionList")
      */
     private $physicalCondition = '';
@@ -237,7 +247,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDStatusResponsible", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="gibbonPersonID", nullable=true)
      * The person who is responsible for the current status. (borrower/repairer/etc)
      */
     private $responsibleForStatus;
@@ -245,20 +255,20 @@ class LibraryItem implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDStatusRecorder", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="status_recorder", referencedColumnName="gibbonPersonID")
      * The person who recorded the current status.
      */
     private $statusRecorder;
 
     /**
      * @var DateTimeImmutable|null
-     * @ORM\Column(name="timestampStatus", type="datetime_immutable", options={"comment": "The time the status was recorded"}, nullable=true)
+     * @ORM\Column(name="timestamp_status", type="datetime_immutable", options={"comment": "The time the status was recorded"}, nullable=true)
      */
     private $timestampStatus;
 
     /**
      * @var DateTimeImmutable|null
-     * @ORM\Column(name="returnExpected", type="date_immutable", options={"comment": "The time when the event expires."}, nullable=true)
+     * @ORM\Column(name="return_expected", type="date_immutable", options={"comment": "The time when the event expires."}, nullable=true)
      */
     private $returnExpected;
 

@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * Gibbon-Responsive
+ * Kookaburra
  *
  * (c) 2018 Craig Rayner <craig@craigrayner.com>
  *
@@ -25,7 +25,7 @@ use Kookaburra\UserAdmin\Util\UserHelper;
  * Class LibraryItemEvent
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryItemEventRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryItemEvent")
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryItemEvent", indexes={@ORM\Index(name="item", columns={"library_item_id"}),@ORM\Index(name="responsible_for_status", columns={"responsible_for_status"}),@ORM\Index(name="person_in", columns={"person_in"}),@ORM\Index(name="person_out", columns={"person_out"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class LibraryItemEvent implements EntityInterface
@@ -33,7 +33,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="bigint", name="gibbonLibraryItemEventID", columnDefinition="INT(14) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="bigint", name="id", columnDefinition="INT(14) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -41,7 +41,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var LibraryItem|null
      * @ORM\ManyToOne(targetEntity="LibraryItem", inversedBy="events")
-     * @ORM\JoinColumn(name="gibbonLibraryItemID", referencedColumnName="gibbonLibraryItemID", nullable=false)
+     * @ORM\JoinColumn(name="library_item_id", referencedColumnName="id", nullable=false)
      */
     private $libraryItem;
 
@@ -70,7 +70,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDStatusResponsible", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="gibbonPersonID", nullable=true)
      * The person who was responsible for the event.
      */
     private $responsibleForStatus;
@@ -78,26 +78,26 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDOut", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="person_out", referencedColumnName="gibbonPersonID", nullable=true)
      */
     private $outPerson;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(name="timestampOut", type="datetime_immutable", nullable=true, options={"comment": "The time the event was recorded"})
+     * @ORM\Column(name="timestamp_out", type="datetime_immutable", nullable=true, options={"comment": "The time the event was recorded"})
      */
     private $timestampOut;
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(name="timestampReturn", type="datetime_immutable", nullable=true)
+     * @ORM\Column(name="timestamp_in", type="datetime_immutable", nullable=true)
      */
     private $timestampReturn;
 
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDIn", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="person_in", referencedColumnName="gibbonPersonID", nullable=true)
      */
     private $inPerson;
 

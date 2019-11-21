@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Library
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="Library",uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),@ORM\UniqueConstraint(name="abbr", columns={"abbr"})},indexes={@ORM\Index(name="facility", columns={"facility"}), @ORM\Index(name="department", columns="department") })
+ * @ORM\Table(options={"auto_increment": 1}, name="Library",uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),@ORM\UniqueConstraint(name="abbr", columns={"abbr"})},indexes={@ORM\Index(name="facility", columns={"facility_id"}), @ORM\Index(name="department", columns="department_id") })
  */
 class Library implements EntityInterface
 {
@@ -55,14 +55,14 @@ class Library implements EntityInterface
     /**
      * @var Space|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Space")
-     * @ORM\JoinColumn(name="facility",referencedColumnName="gibbonSpaceID",nullable=true)
+     * @ORM\JoinColumn(name="facility_id",referencedColumnName="gibbonSpaceID",nullable=true)
      */
     private $facility;
 
     /**
      * @var Department|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Department")
-     * @ORM\JoinColumn(name="department",referencedColumnName="gibbonDepartmentID",nullable=true)
+     * @ORM\JoinColumn(name="department_id",referencedColumnName="gibbonDepartmentID",nullable=true)
      */
     private $department;
 
