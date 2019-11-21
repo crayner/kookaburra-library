@@ -12,7 +12,7 @@
  */
 namespace Kookaburra\Library\Repository;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Space;
 use App\Form\Entity\SearchAny;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

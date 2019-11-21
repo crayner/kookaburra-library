@@ -12,12 +12,10 @@
 
 namespace Kookaburra\Library\Entity;
 
-
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kookaburra\UserAdmin\Util\UserHelper;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -58,14 +56,14 @@ class LibraryReturnAction implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="action_by", referencedColumnName="gibbonPersonID", nullable=false)
      */
     private $actionBy;
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="gibbonPersonID")
      */
     private $createdBy;

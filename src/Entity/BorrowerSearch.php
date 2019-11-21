@@ -12,7 +12,7 @@
 
 namespace Kookaburra\Library\Entity;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Provider\ProviderFactory;
 use Kookaburra\Library\Manager\LibraryHelper;
 

@@ -12,7 +12,7 @@
 
 namespace Kookaburra\Library\Form;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Form\Type\HeaderType;
 use App\Form\Type\HiddenEntityType;
 use App\Form\Type\ReactCollectionType;

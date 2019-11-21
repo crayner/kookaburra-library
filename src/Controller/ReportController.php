@@ -12,7 +12,7 @@
 
 namespace Kookaburra\Library\Controller;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\ExcelManager;
 use App\Provider\ProviderFactory;
 use Dompdf\Dompdf;

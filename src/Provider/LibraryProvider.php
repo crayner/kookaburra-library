@@ -13,7 +13,7 @@
 namespace Kookaburra\Library\Provider;
 
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\Traits\EntityTrait;
 use App\Provider\EntityProviderInterface;
 use Kookaburra\Library\Entity\Library;

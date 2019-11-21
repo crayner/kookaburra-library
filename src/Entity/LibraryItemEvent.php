@@ -12,7 +12,7 @@
  */
 namespace Kookaburra\Library\Entity;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Setting;
 use App\Manager\EntityInterface;
 use App\Provider\ProviderFactory;
@@ -69,7 +69,7 @@ class LibraryItemEvent implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="gibbonPersonID", nullable=true)
      * The person who was responsible for the event.
      */
@@ -77,7 +77,7 @@ class LibraryItemEvent implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="person_out", referencedColumnName="gibbonPersonID", nullable=true)
      */
     private $outPerson;
@@ -96,7 +96,7 @@ class LibraryItemEvent implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="person_in", referencedColumnName="gibbonPersonID", nullable=true)
      */
     private $inPerson;

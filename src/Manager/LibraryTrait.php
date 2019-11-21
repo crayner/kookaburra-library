@@ -12,7 +12,7 @@
 
 namespace Kookaburra\Library\Manager;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\MessageManager;
 use Kookaburra\Library\Entity\LibraryItem;
 use Symfony\Component\Routing\RouterInterface;

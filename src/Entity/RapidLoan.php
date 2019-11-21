@@ -12,7 +12,7 @@
 
 namespace Kookaburra\Library\Entity;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

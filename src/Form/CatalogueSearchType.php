@@ -12,7 +12,7 @@
 
 namespace Kookaburra\Library\Form;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Space;
 use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EnumType;

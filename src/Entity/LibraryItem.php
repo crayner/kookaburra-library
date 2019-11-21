@@ -13,7 +13,7 @@
 namespace Kookaburra\Library\Entity;
 
 use App\Entity\Department;
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\SchoolYear;
 use App\Entity\Setting;
 use App\Entity\Space;
@@ -173,7 +173,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="person_ownership", referencedColumnName="gibbonPersonID", nullable=true)
      * If owned by school, then this is the main user. If owned by individual, then this is that individual.
      */
@@ -246,7 +246,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="gibbonPersonID", nullable=true)
      * The person who is responsible for the current status. (borrower/repairer/etc)
      */
@@ -254,7 +254,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="status_recorder", referencedColumnName="gibbonPersonID")
      * The person who recorded the current status.
      */
@@ -292,7 +292,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var Person|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="gibbonPersonID")
      */
     private $createdBy;
