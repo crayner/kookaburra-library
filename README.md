@@ -1,6 +1,6 @@
 # Kookaburra Library Bundle
 Library Bundle for Kookaburra
-#### Version 1.0.00-RC2
+#### Version 1.0.00-RC3
 
 This bundle allows the creation of multiple library catalogues, allowing you to setup a general library, and perhaps a text book library or two.
 
@@ -18,3 +18,5 @@ The Borrow / Return Manager allows the use of a bar code scanner.  The bar codes
 The system is able to generate a list of borrowers for your library use. 
 
 @todo  Add the ability to set a last return day per library.
+
+#### [Release Notes](ReleaseNotes.md)
