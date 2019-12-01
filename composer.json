@@ -33,7 +33,7 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "php -r \"copy('vendor/kookaburra/src/Resources/config/dist/library.yaml', 'config/packages/kookaburra_library.yaml');\""
+            "php -r \"copy('vendor/kookaburra/library/src/Resources/config/dist/library.yaml', 'config/packages/kookaburra_library.yaml');\""
         ]
     },
     "autoload-dev": {
