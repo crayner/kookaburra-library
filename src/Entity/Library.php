@@ -316,4 +316,14 @@ class Library implements EntityInterface
     {
         return self::$borrowerTypes;
     }
+
+    /**
+     * toArray
+     * @param string|null $name
+     * @return array
+     */
+    public function toArray(?string $name = null): array
+    {
+        return [];
+    }
 }
