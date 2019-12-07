@@ -1,6 +1,6 @@
 # Kookaburra Library Bundle
 Library Bundle for Kookaburra
-#### Version 1.0.00-RC3
+#### Version 1.0.00-RC4
 
 This bundle allows the creation of multiple library catalogues, allowing you to setup a general library, and perhaps a text book library or two.
 
