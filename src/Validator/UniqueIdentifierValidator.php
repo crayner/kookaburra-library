@@ -30,7 +30,6 @@ class UniqueIdentifierValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        dump($value, ProviderFactory::getRepository(LibraryItem::class)->findOneBy(['identifier' => $value]));
         if (null !== ProviderFactory::getRepository(LibraryItem::class)->findOneBy(['identifier' => $value]))
             $this->context->buildViolation('The value is not unique')
                 ->setTranslationDomain('messages')

@@ -225,4 +225,14 @@ class LibraryReturnAction implements EntityInterface
     {
         return in_array($this->getReturnAction(), self::getReturnActionList()) && $this->getActionBy() instanceof Person && $this->getItem() instanceof LibraryItem;
     }
+
+    /**
+     * toArray
+     * @param string|null $name
+     * @return array
+     */
+    public function toArray(?string $name = null): array
+    {
+        return [];
+    }
 }

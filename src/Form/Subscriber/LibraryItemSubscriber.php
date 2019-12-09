@@ -402,8 +402,6 @@ class LibraryItemSubscriber implements EventSubscriberInterface
                 case 'URL':
                     $form->add('field'.$q, UrlType::class, $options);
                     break;
-                default:
-                    dump($field['type']);
             }
 
             if (isset($data['field'.$q])) {

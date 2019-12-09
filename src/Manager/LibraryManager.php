@@ -623,7 +623,6 @@ class LibraryManager
 
         $currentLoanCount = ProviderFactory::getRepository(LibraryItem::class)->countOnLoanToPerson($person);
 
-        dump($currentLoanCount, $borrowLimit);
         return intval($currentLoanCount) < intval($borrowLimit);
     }
 

@@ -103,7 +103,7 @@ class LibraryItemStatusChangeListener implements EventSubscriber
                     $this->fromLost($changeSet['status'][1]);
                     break;
                 default:
-                    dump($changeSet['status']);
+                    //dump($changeSet['status']);
             }
         }
 
@@ -126,7 +126,7 @@ class LibraryItemStatusChangeListener implements EventSubscriber
                 $this->toReserved();
                 break;
             default:
-                dump('On Loan => ' . $toStatus);
+                //dump('On Loan => ' . $toStatus);
         }
     }
 
@@ -162,7 +162,7 @@ class LibraryItemStatusChangeListener implements EventSubscriber
                 $this->toLost();
                 break;
             default:
-                dump('Available => ' . $toStatus);
+               // dump('Available => ' . $toStatus);
         }
     }
 
@@ -179,7 +179,7 @@ class LibraryItemStatusChangeListener implements EventSubscriber
                 $this->toAvailable();
                 break;
             default:
-                dump('Decommissioned => ' . $toStatus);
+                //dump('Decommissioned => ' . $toStatus);
         }
     }
 
@@ -199,7 +199,7 @@ class LibraryItemStatusChangeListener implements EventSubscriber
                 $this->toDecommissioned();
                 break;
             default:
-                dump('Repair => ' . $toStatus);
+                //dump('Repair => ' . $toStatus);
         }
 
     }
@@ -291,7 +291,7 @@ class LibraryItemStatusChangeListener implements EventSubscriber
                 $this->toDecommissioned();
                 break;
             default:
-                dump('In Use => ' . $toStatus);
+                //dump('In Use => ' . $toStatus);
         }
     }
 
@@ -322,7 +322,7 @@ class LibraryItemStatusChangeListener implements EventSubscriber
                 $this->toAvailable();
                 break;
             default:
-                dump('Lost => ' . $toStatus);
+                //dump('Lost => ' . $toStatus);
         }
     }
 

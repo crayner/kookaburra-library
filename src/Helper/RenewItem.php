@@ -92,7 +92,6 @@ class RenewItem implements LibraryInterface
             return false;
         }
 
-        dump($item->getDaysOnLoan(),$this->getBorrowPeriod($item),$this->getRenewalMaximum());
         if ($item->getDaysOnLoan() >= $this->getBorrowPeriod($item) * ($this->getRenewalMaximum() + 1)) {
             $this->getMessageManager()->add('warning', 'This borrower has already exceeded renewal allowances for this library on this item.');
             return false;

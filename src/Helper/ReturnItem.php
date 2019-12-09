@@ -158,7 +158,6 @@ class ReturnItem implements LibraryInterface
                 break;
             default:
                 $item->getLastEvent();
-                dump($item);
         }
         return $this;
     }

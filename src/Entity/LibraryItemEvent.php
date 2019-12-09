@@ -309,11 +309,13 @@ class LibraryItemEvent implements EntityInterface
             ->setTimestampOut(new \DateTimeImmutable());
     }
 
+
     /**
      * toArray
+     * @param string|null $name
      * @return array
      */
-    public function toArray(): array
+    public function toArray(?string $name = null): array
     {
 
         $returnDetails = $this->getStatus();
