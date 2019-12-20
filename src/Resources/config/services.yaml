@@ -7,7 +7,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Kookaburra\Library\:
         resource: '../../../src/*'
-        exclude: '../../../src/{DependencyInjection,Resources,Tests,Entity,Helper}'
+        exclude: '../../../src/{DependencyInjection,Resources,Tests,Entity,Helper,Provider}'
 
     Kookaburra\Library\Listener\LibraryItemStatusChangeListener:
         tags:
