@@ -14,7 +14,7 @@ namespace Kookaburra\Library\Entity;
 
 use App\Entity\Department;
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\SchoolYear;
 use App\Entity\Setting;
 use App\Entity\Space;
 use App\Manager\EntityInterface;
@@ -201,7 +201,7 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var SchoolYear|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\SchoolYear")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\SchoolYear")
      * @ORM\JoinColumn(name="replacement_year", referencedColumnName="gibbonSchoolYearID", nullable=true)
      */
     private $replacementYear;
