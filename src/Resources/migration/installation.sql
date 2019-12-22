@@ -46,7 +46,7 @@ CREATE TABLE `__prefix__LibraryItem` (
                                          `facility_id` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
                                          `person_ownership` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
                                          `department_id` int(4) UNSIGNED ZEROFILL DEFAULT NULL,
-                                         `replacement_year` int(3) UNSIGNED ZEROFILL DEFAULT NULL,
+                                         `replacement_date` date DEFAULT NULL COMMENT '(DC2Type:date_immutable)',
                                          `responsible_for_status` int(10) UNSIGNED ZEROFILL DEFAULT NULL,
                                          `status_recorder` int(10) UNSIGNED ZEROFILL NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -107,7 +107,6 @@ ALTER TABLE `__prefix__LibraryItem`
     ADD KEY `space` (`facility_id`),
     ADD KEY `person_ownership` (`person_ownership`),
     ADD KEY `department` (`department_id`),
-    ADD KEY `replacement_year` (`replacement_year`),
     ADD KEY `responsible_for_status` (`responsible_for_status`),
     ADD KEY `item_type` (`item_type`),
     ADD KEY `library` (`library_id`),
@@ -176,7 +175,6 @@ ALTER TABLE `__prefix__Library`
 -- Constraints for table `__prefix__LibraryItem`
 --
 ALTER TABLE `__prefix__LibraryItem`
-    ADD CONSTRAINT `FK_7D8DF16E2797629C` FOREIGN KEY (`replacement_year`) REFERENCES `gibbonSchoolyear` (`gibbonSchoolYearID`),
     ADD CONSTRAINT `FK_7D8DF16E6DFE7E92` FOREIGN KEY (`department_id`) REFERENCES `gibbonDepartment` (`gibbonDepartmentID`),
     ADD CONSTRAINT `FK_7D8DF16E7268946F` FOREIGN KEY (`status_recorder`) REFERENCES `gibbonPerson` (`gibbonPersonID`),
     ADD CONSTRAINT `FK_7D8DF16EA18098BC` FOREIGN KEY (`library_id`) REFERENCES `__prefix__Library` (`id`),

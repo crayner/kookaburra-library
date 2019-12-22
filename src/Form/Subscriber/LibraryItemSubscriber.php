@@ -30,7 +30,9 @@ use Symfony\Component\Form\Event\PreSetDataEvent;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -80,7 +82,7 @@ class LibraryItemSubscriber implements EventSubscriberInterface
     public function preSetData(PreSetDataEvent $event)
     {
         $data = $event->getData();
-        if ($data->getLibrary() instanceof Library && in_array($data->getItemType(), LibraryItem::getItemTypeList())) {
+        if ($data->getLibrary() instanceof Library && (in_array($data->getItemType(), LibraryItem::getItemTypeList()) || intval($data->getId()) > 0)) {
             if ($this->libraryManager->isGenerateIdentifier()) {
                 $data->setIdentifier($this->libraryManager->newIdentifier($data)->getIdentifier());
             }
@@ -288,6 +290,23 @@ class LibraryItemSubscriber implements EventSubscriberInterface
                 [
                     'label' => 'Plan Replacement?',
                     'panel' => 'General',
+                    'visibleByClass' => 'replacement-details'
+                ]
+            )
+            ->add('replacementCost', NumberType::class,
+                [
+                    'label' => 'Replacement Cost',
+                    'panel' => 'General',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 replacement-details',
+                    'scale' => 2,
+                ]
+            )
+            ->add('replacementDate', ReactDateType::class,
+                [
+                    'label' => 'Replacement Date',
+                    'panel' => 'General',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 replacement-details',
+                    'input' => 'datetime_immutable',
                 ]
             )
             ->add('physicalCondition', EnumType::class,

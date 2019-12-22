@@ -43,7 +43,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     @ORM\Index(name="person_ownership", columns={"person_ownership"}),
  *     @ORM\Index(name="department", columns={"department_id"}),
  *     @ORM\Index(name="created_by", columns={"created_by"}),
- *     @ORM\Index(name="replacement_year", columns={"replacement_year"}),
  *     @ORM\Index(name="responsible_for_status", columns={"responsible_for_status"}),
  *     @ORM\Index(name="space", columns={"facility_id"}),
  *     @ORM\Index(name="status_recorder", columns={"status_recorder"})
@@ -200,11 +199,10 @@ class LibraryItem implements EntityInterface
     private $replacementCost;
 
     /**
-     * @var SchoolYear|null
-     * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\SchoolYear")
-     * @ORM\JoinColumn(name="replacement_year", referencedColumnName="gibbonSchoolYearID", nullable=true)
+     * @var DateTimeImmutable
+     * @ORM\Column(name="replacement_date", type="date_immutable", nullable=true)
      */
-    private $replacementYear;
+    private $replacementDate;
 
     /**
      * @var string|null
@@ -652,20 +650,22 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return SchoolYear|null
+     * @return null|DateTimeImmutable
      */
-    public function getReplacementYear(): ?SchoolYear
+    public function getReplacementDate(): ?DateTimeImmutable
     {
-        return $this->replacementYear;
+        return $this->replacementDate;
     }
 
     /**
-     * @param SchoolYear|null $replacementYear
+     * ReplacementDate.
+     *
+     * @param DateTimeImmutable $replacementDate
      * @return LibraryItem
      */
-    public function setReplacementYear(?SchoolYear $replacementYear): LibraryItem
+    public function setReplacementDate(DateTimeImmutable $replacementDate): LibraryItem
     {
-        $this->replacementYear = $replacementYear;
+        $this->replacementDate = $replacementDate;
         return $this;
     }
 

@@ -67,7 +67,7 @@ class EditType extends AbstractType
                     'choice_label' => 'name',
                     'label' => 'Library',
                     'placeholder' => 'Please select...',
-                    //'data' => $options['data']->getLibrary() !== null ? $options['data']->getLibrary()->getId() : null,
+                    'data' => $options['data']->getLibrary() !== null ? $options['data']->getLibrary()->getId() : null,
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('l')
                             ->where('l.active = :true')
