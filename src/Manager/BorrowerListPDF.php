@@ -4,6 +4,9 @@
  *
  * kookaburra
  * (c) 2019 Craig Rayner <craig@craigrayner.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  * @author: Emmanuel Havet <ehavet@yahoo.fr> (Code 39)
  *
  * User: craig
