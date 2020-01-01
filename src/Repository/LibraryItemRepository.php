@@ -23,7 +23,7 @@ use Kookaburra\Library\Entity\IgnoreStatus;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Manager\LibraryHelper;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class LibraryItemRepository

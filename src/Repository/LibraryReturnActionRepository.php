@@ -17,7 +17,7 @@ namespace Kookaburra\Library\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Kookaburra\Library\Entity\LibraryReturnAction;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class LibraryReturnActionRepository

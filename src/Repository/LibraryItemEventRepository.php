@@ -17,7 +17,7 @@ use Kookaburra\Library\Entity\BorrowerSearch;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItemEvent;
 use Kookaburra\Library\Manager\LibraryHelper;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class LibraryItemEventRepository
