@@ -15,7 +15,7 @@
 
 namespace Kookaburra\Library\Form\Subscriber;
 
-use App\Entity\Department;
+use Kookaburra\Departments\Entity\Department;
 use App\Entity\Space;
 use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;

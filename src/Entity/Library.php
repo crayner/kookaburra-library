@@ -15,11 +15,11 @@
 
 namespace Kookaburra\Library\Entity;
 
-use App\Entity\Department;
 use App\Entity\Space;
 use App\Manager\EntityInterface;
 use App\Validator as Validator;
 use Doctrine\ORM\Mapping as ORM;
+use Kookaburra\Departments\Entity\Department;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -64,8 +64,8 @@ class Library implements EntityInterface
 
     /**
      * @var Department|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Department")
-     * @ORM\JoinColumn(name="department_id",referencedColumnName="gibbonDepartmentID",nullable=true)
+     * @ORM\ManyToOne(targetEntity="Kookaburra\Departments\Entity\Department")
+     * @ORM\JoinColumn(name="department_id",referencedColumnName="id",nullable=true)
      */
     private $department;
 

@@ -12,9 +12,8 @@
  */
 namespace Kookaburra\Library\Entity;
 
-use App\Entity\Department;
+use Kookaburra\Departments\Entity\Department;
 use Kookaburra\UserAdmin\Entity\Person;
-use Kookaburra\SchoolAdmin\Entity\SchoolYear;
 use App\Entity\Setting;
 use App\Entity\Space;
 use App\Manager\EntityInterface;
@@ -180,8 +179,8 @@ class LibraryItem implements EntityInterface
 
     /**
      * @var Department|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Department")
-     * @ORM\JoinColumn(name="department_id", referencedColumnName="gibbonDepartmentID", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Kookaburra\Departments\Entity\Department")
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="id", nullable=true)
      */
     private $department;
 

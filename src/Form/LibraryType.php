@@ -15,18 +15,17 @@
 
 namespace Kookaburra\Library\Form;
 
-use App\Entity\Department;
 use App\Entity\Space;
 use App\Form\Type\FilePathType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use Doctrine\ORM\EntityRepository;
+use Kookaburra\Departments\Entity\Department;
 use Kookaburra\Library\Entity\Library;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
