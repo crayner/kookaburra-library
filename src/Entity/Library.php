@@ -15,11 +15,11 @@
 
 namespace Kookaburra\Library\Entity;
 
-use App\Entity\Space;
 use App\Manager\EntityInterface;
 use App\Validator as Validator;
 use Doctrine\ORM\Mapping as ORM;
 use Kookaburra\Departments\Entity\Department;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,7 +27,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Library
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="Library",uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),@ORM\UniqueConstraint(name="abbr", columns={"abbr"})},indexes={@ORM\Index(name="facility", columns={"facility_id"}), @ORM\Index(name="department", columns="department_id") })
+ * @ORM\Table(options={"auto_increment": 1}, name="Library",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}),
+ *     @ORM\UniqueConstraint(name="abbr", columns={"abbr"})},
+ *     indexes={@ORM\Index(name="facility", columns={"facility"}),
+ *     @ORM\Index(name="department", columns="department") })
  */
 class Library implements EntityInterface
 {
@@ -56,16 +60,16 @@ class Library implements EntityInterface
     private $abbr;
 
     /**
-     * @var Space|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Space")
-     * @ORM\JoinColumn(name="facility_id",referencedColumnName="gibbonSpaceID",nullable=true)
+     * @var Facility|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\Facility")
+     * @ORM\JoinColumn(name="facility",referencedColumnName="id",nullable=true)
      */
     private $facility;
 
     /**
      * @var Department|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\Departments\Entity\Department")
-     * @ORM\JoinColumn(name="department_id",referencedColumnName="id",nullable=true)
+     * @ORM\JoinColumn(name="department",referencedColumnName="id",nullable=true)
      */
     private $department;
 

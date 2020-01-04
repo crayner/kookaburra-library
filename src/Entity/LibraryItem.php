@@ -13,6 +13,7 @@
 namespace Kookaburra\Library\Entity;
 
 use Kookaburra\Departments\Entity\Department;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Setting;
 use App\Entity\Space;
@@ -35,15 +36,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class LibraryItem
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryItemRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryItem", uniqueConstraints={@ORM\UniqueConstraint(name="identifier", columns={"identifier"})},
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryItem",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="identifier", columns={"identifier"})},
  *     indexes={
  *          @ORM\Index(name="item_type", columns={"item_type"}),
- *     @ORM\Index(name="library", columns={"library_id"}),
+ *     @ORM\Index(name="library", columns={"library"}),
  *     @ORM\Index(name="person_ownership", columns={"person_ownership"}),
- *     @ORM\Index(name="department", columns={"department_id"}),
+ *     @ORM\Index(name="department", columns={"department"}),
  *     @ORM\Index(name="created_by", columns={"created_by"}),
  *     @ORM\Index(name="responsible_for_status", columns={"responsible_for_status"}),
- *     @ORM\Index(name="space", columns={"facility_id"}),
+ *     @ORM\Index(name="facility", columns={"facility"}),
  *     @ORM\Index(name="status_recorder", columns={"status_recorder"})
  * })
  * @ORM\HasLifecycleCallbacks()
@@ -63,7 +65,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Library|null
      * @ORM\ManyToOne(targetEntity="Library")
-     * @ORM\JoinColumn(name="library_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="library", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
     private $library;
@@ -145,11 +147,11 @@ class LibraryItem implements EntityInterface
     private $comment;
 
     /**
-     * @var Space|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\Space")
-     * @ORM\JoinColumn(name="facility_id", referencedColumnName="gibbonSpaceID", nullable=true)
+     * @var Facility|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\Facility")
+     * @ORM\JoinColumn(name="facility", referencedColumnName="id", nullable=true)
      */
-    private $space;
+    private $facility;
 
     /**
      * @var string|null
@@ -180,7 +182,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Department|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\Departments\Entity\Department")
-     * @ORM\JoinColumn(name="department_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="department", referencedColumnName="id", nullable=true)
      */
     private $department;
 
@@ -523,22 +525,25 @@ class LibraryItem implements EntityInterface
     }
 
     /**
-     * @return Space|null
+     * @return Facility|null
      */
-    public function getSpace(): ?Space
+    public function getFacility(): ?Facility
     {
-        return $this->space;
+        return $this->facility;
     }
 
     /**
-     * @param Space|null $space
+     * Facility.
+     *
+     * @param Facility|null $facility
      * @return LibraryItem
      */
-    public function setSpace(?Space $space): LibraryItem
+    public function setFacility(?Facility $facility): LibraryItem
     {
-        $this->space = $space;
+        $this->facility = $facility;
         return $this;
     }
+
 
     /**
      * @return string|null
