@@ -13,7 +13,6 @@
 namespace Kookaburra\Library\Entity;
 
 use Kookaburra\Departments\Entity\Department;
-use Kookaburra\SchoolAdmin\Entity\Facility;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Setting;
 use Kookaburra\SchoolAdmin\Entity\Facility;
