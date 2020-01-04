@@ -15,7 +15,7 @@
 
 namespace Kookaburra\Library\Form;
 
-use App\Entity\Space;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use App\Form\Type\FilePathType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;

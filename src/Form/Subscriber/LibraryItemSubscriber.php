@@ -16,7 +16,7 @@
 namespace Kookaburra\Library\Form\Subscriber;
 
 use Kookaburra\Departments\Entity\Department;
-use App\Entity\Space;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;
 use App\Form\Type\FilePathType;

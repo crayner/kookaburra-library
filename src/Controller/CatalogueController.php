@@ -18,7 +18,7 @@ namespace Kookaburra\Library\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
-use App\Entity\Space;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use App\Provider\ProviderFactory;
 use App\Twig\Sidebar\Photo;
 use App\Twig\SidebarContent;

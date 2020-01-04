@@ -16,7 +16,7 @@
 namespace Kookaburra\Library\Entity;
 
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Space;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\LibraryManager;
 

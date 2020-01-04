@@ -13,7 +13,7 @@
 namespace Kookaburra\Library\Repository;
 
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Space;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use App\Form\Entity\SearchAny;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;

@@ -16,7 +16,7 @@
 namespace Kookaburra\Library\Form;
 
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Space;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EnumType;
 use App\Provider\ProviderFactory;

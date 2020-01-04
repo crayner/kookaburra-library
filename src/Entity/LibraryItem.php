@@ -16,7 +16,7 @@ use Kookaburra\Departments\Entity\Department;
 use Kookaburra\SchoolAdmin\Entity\Facility;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Setting;
-use App\Entity\Space;
+use Kookaburra\SchoolAdmin\Entity\Facility;
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
 use App\Provider\ProviderFactory;
