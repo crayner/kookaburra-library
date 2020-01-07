@@ -15,7 +15,6 @@
 
 namespace Kookaburra\Library\Form;
 
-use App\Entity\RollGroup;
 use App\Form\Type\EnumType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ToggleType;
@@ -23,6 +22,7 @@ use App\Util\TranslationsHelper;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\Library\Entity\BorrowerIdentifierList;
 use Kookaburra\Library\Entity\Library;
+use Kookaburra\RollGroups\Entity\RollGroup;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
