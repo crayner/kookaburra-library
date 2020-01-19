@@ -25,7 +25,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class LibraryReturnAction
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryReturnActionRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryReturnAction", indexes={@ORM\Index(name="action_by", columns={"action_by"}),@ORM\Index(name="created_by", columns={"created_by"})},uniqueConstraints={@ORM\UniqueConstraint(name="item", columns={"library_item_id"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryReturnAction",
+ *     indexes={@ORM\Index(name="action_by", columns={"action_by"}),
+ *     @ORM\Index(name="created_by", columns={"created_by"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="item", columns={"library_item"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class LibraryReturnAction implements EntityInterface
@@ -41,7 +44,7 @@ class LibraryReturnAction implements EntityInterface
     /**
      * @var LibraryItem|null
      * @ORM\OneToOne(targetEntity="LibraryItem", inversedBy="returnAction")
-     * @ORM\JoinColumn(name="library_item_id", referencedColumnName="id",nullable=false,unique=true)
+     * @ORM\JoinColumn(name="library_item", referencedColumnName="id",nullable=false,unique=true)
      */
     private $item;
 
@@ -60,14 +63,14 @@ class LibraryReturnAction implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="action_by", referencedColumnName="gibbonPersonID", nullable=false)
+     * @ORM\JoinColumn(name="action_by", referencedColumnName="id", nullable=false)
      */
     private $actionBy;
 
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="created_by", referencedColumnName="gibbonPersonID")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdBy;
 

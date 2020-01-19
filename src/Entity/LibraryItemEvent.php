@@ -25,7 +25,11 @@ use Kookaburra\UserAdmin\Util\UserHelper;
  * Class LibraryItemEvent
  * @package Kookaburra\Library\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\Library\Repository\LibraryItemEventRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="LibraryItemEvent", indexes={@ORM\Index(name="item", columns={"library_item_id"}),@ORM\Index(name="responsible_for_status", columns={"responsible_for_status"}),@ORM\Index(name="person_in", columns={"person_in"}),@ORM\Index(name="person_out", columns={"person_out"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="LibraryItemEvent",
+ *     indexes={@ORM\Index(name="item", columns={"library_item"}),
+ *     @ORM\Index(name="responsible_for_status", columns={"responsible_for_status"}),
+ *     @ORM\Index(name="person_in", columns={"person_in"}),
+ *     @ORM\Index(name="person_out", columns={"person_out"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class LibraryItemEvent implements EntityInterface
@@ -41,7 +45,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var LibraryItem|null
      * @ORM\ManyToOne(targetEntity="LibraryItem", inversedBy="events")
-     * @ORM\JoinColumn(name="library_item_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="library_item", referencedColumnName="id", nullable=false)
      */
     private $libraryItem;
 
@@ -70,7 +74,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="id", nullable=true)
      * The person who was responsible for the event.
      */
     private $responsibleForStatus;
@@ -78,7 +82,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="person_out", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="person_out", referencedColumnName="id", nullable=true)
      */
     private $outPerson;
 
@@ -97,7 +101,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="person_in", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="person_in", referencedColumnName="id", nullable=true)
      */
     private $inPerson;
 

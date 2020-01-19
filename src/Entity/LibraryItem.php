@@ -173,7 +173,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="person_ownership", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="person_ownership", referencedColumnName="id", nullable=true)
      * If owned by school, then this is the main user. If owned by individual, then this is that individual.
      */
     private $ownership;
@@ -245,7 +245,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="gibbonPersonID", nullable=true)
+     * @ORM\JoinColumn(name="responsible_for_status", referencedColumnName="id", nullable=true)
      * The person who is responsible for the current status. (borrower/repairer/etc)
      */
     private $responsibleForStatus;
@@ -253,7 +253,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="status_recorder", referencedColumnName="gibbonPersonID")
+     * @ORM\JoinColumn(name="status_recorder", referencedColumnName="id")
      * The person who recorded the current status.
      */
     private $statusRecorder;
@@ -291,7 +291,7 @@ class LibraryItem implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="created_by", referencedColumnName="gibbonPersonID")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdBy;
 
