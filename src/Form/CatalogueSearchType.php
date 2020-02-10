@@ -80,13 +80,13 @@ class CatalogueSearchType extends AbstractType
             ->add('location', EntityType::class,
                 [
                     'label' => 'Location',
-                    'class' => Space::class,
+                    'class' => Facility::class,
                     'required' => false,
                     'choice_label' => 'name',
                     'placeholder' => '',
                     'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('s')
-                            ->orderBy('s.name', 'ASC');
+                        return $er->createQueryBuilder('f')
+                            ->orderBy('f.name', 'ASC');
                     },
                 ]
             )

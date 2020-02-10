@@ -110,10 +110,10 @@ class LibraryType extends AbstractType
                     'choice_label' => 'name',
                     'help' => 'The storage location when the item is not in use.',
                     'data' => $options['data']->getFacility() ? $options['data']->getFacility()->getId() : 0,
-                    'class' => Space::class,
+                    'class' => Facility::class,
                     'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('s')
-                            ->orderBy('s.name');
+                        return $er->createQueryBuilder('f')
+                            ->orderBy('f.name');
                     },
                 ]
             )

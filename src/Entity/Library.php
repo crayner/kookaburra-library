@@ -177,9 +177,9 @@ class Library implements EntityInterface
     }
 
     /**
-     * @return Space|null
+     * @return Facility|null
      */
-    public function getFacility(): ?Space
+    public function getFacility(): ?Facility
     {
         return $this->facility;
     }
@@ -187,10 +187,10 @@ class Library implements EntityInterface
     /**
      * Facility.
      *
-     * @param Space|null $facility
+     * @param Facility|null $facility
      * @return Library
      */
-    public function setFacility(?Space $facility): Library
+    public function setFacility(?Facility $facility): Library
     {
         $this->facility = $facility;
         return $this;
