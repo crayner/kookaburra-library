@@ -18,7 +18,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=iaVLeokzxFIC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F FOR)"
         ownershipType: ""
         replacement: "N"
@@ -26,9 +26,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-04 16:04:08"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:30:05"
     -
         itemType: 'Print Publication'
@@ -41,7 +41,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=jbZgQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F FIT)"
         ownershipType: ""
         replacement: "N"
@@ -49,9 +49,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-04 16:13:57"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:38:46"
     -
         itemType: 'Print Publication'
@@ -64,7 +64,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=noSCftZGbPMC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Play (812.54 ALB)"
         ownershipType: ""
         replacement: "N"
@@ -72,7 +72,7 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-04 16:20:34"
         statusRecorder: 0000000689
         timestampStatus: "2017-10-12 09:33:41"
@@ -87,7 +87,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=SGAZdjNfruYC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Class Read 3"
         ownershipType: ""
         replacement: "N"
@@ -95,7 +95,7 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:14:04"
         statusRecorder: 0000000689
         timestampStatus: "2015-12-08 14:54:43"
@@ -110,7 +110,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=A1hgPQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F HAS)"
         ownershipType: ""
         replacement: "N"
@@ -118,9 +118,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:16:23"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:09:57"
     -
         itemType: 'Print Publication'
@@ -133,7 +133,7 @@ item:
         imageType: "Link"
         imageLocation: "https://www.booktopia.com.au/http_coversbooktopiacomau/big/9780747587484/0000/pride-and-prejudice.jpg"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F AUS)"
         ownershipType: ""
         replacement: "N"
@@ -141,9 +141,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:18:51"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-11-07 11:42:37"
     -
         itemType: 'Print Publication'
@@ -156,7 +156,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=rK34BBMEnoAC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F STE)"
         ownershipType: ""
         replacement: "N"
@@ -164,9 +164,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:20:18"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:10:47"
     -
         itemType: 'Print Publication'
@@ -179,7 +179,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=gxKcPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F GRI)"
         ownershipType: ""
         replacement: "N"
@@ -187,9 +187,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:23:52"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:09:43"
     -
         itemType: 'Print Publication'
@@ -202,7 +202,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=SluXuAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F BRO)"
         ownershipType: ""
         replacement: "N"
@@ -210,9 +210,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:26:07"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:11:03"
     -
         itemType: 'Print Publication'
@@ -225,7 +225,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=z2uMAAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F CAR)"
         ownershipType: ""
         replacement: "N"
@@ -233,9 +233,9 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:27:55"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:08:20"
     -
         itemType: 'Print Publication'
@@ -248,7 +248,7 @@ item:
         imageType: "Link"
         imageLocation: "https://books.google.com/books?id=UupQPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         comment: ""
-        space: Library
+        facility: Library
         locationDetail: "Classics (F BRO)"
         ownershipType: ""
         replacement: "N"
@@ -256,8 +256,8 @@ item:
         bookable: "N"
         borrowable: "Y"
         status: "Available"
-        createdBy: 0000000823
+        createdBy: 1
         createdOn: "2012-10-05 08:29:39"
-        statusRecorder: 0000000823
+        statusRecorder: 1
         timestampStatus: "2012-10-30 10:10:28"
 

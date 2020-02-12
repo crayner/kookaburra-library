@@ -40,9 +40,9 @@ class LibraryItemProvider implements EntityProviderInterface
      * @return mixed
      * @throws \Exception
      */
-    public function getCatalogueList(CatalogueSearch $search, bool $asArray = false)
+    public function getCatalogueList(bool $asArray = false)
     {
-        $result = $this->getRepository()->findBySearch($search, $asArray);
+        $result = $this->getRepository()->findAll();
         if ($asArray) {
             $content = [];
             TranslationsHelper::setDomain('Library');

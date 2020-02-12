@@ -12,3 +12,9 @@ services:
     Kookaburra\Library\Listener\LibraryItemStatusChangeListener:
         tags:
             - { name: 'doctrine.event_subscriber' }
+
+    Kookaburra\Library\Manager\CataloguePagination:
+        calls:
+            -   method: setStack
+                arguments:
+                    - '@request_stack'

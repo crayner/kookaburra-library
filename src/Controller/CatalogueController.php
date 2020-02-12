@@ -25,7 +25,6 @@ use App\Twig\SidebarContent;
 use App\Util\TranslationsHelper;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\PDOException;
-use Kookaburra\Library\Entity\CatalogueSearch;
 use Kookaburra\Library\Entity\Library;
 use Kookaburra\Library\Entity\LibraryItem;
 use Kookaburra\Library\Form\CatalogueSearchType;
@@ -33,7 +32,6 @@ use Kookaburra\Library\Form\DuplicateCopyIdentifierType;
 use Kookaburra\Library\Form\DuplicateItemType;
 use Kookaburra\Library\Form\EditType;
 use Kookaburra\Library\Manager\CataloguePagination;
-use Kookaburra\Library\Manager\LibraryHelper;
 use Kookaburra\Library\Manager\LibraryManager;
 use Kookaburra\Library\Manager\Traits\LibraryControllerTrait;
 use Kookaburra\UserAdmin\Util\UserHelper;
@@ -67,34 +65,14 @@ class CatalogueController extends AbstractController
      */
     public function manageCatalogue(CataloguePagination $pagination, Request $request, LibraryManager $manager)
     {
-        if ($request->getMethod() !== 'POST' && $request->getSession()->has('libraryCatalogueSearch'))
-            $search = $request->getSession()->get('libraryCatalogueSearch');
-        $search = isset($search) ? $search : new CatalogueSearch();
-        $search->setLibrary($search->getLibrary() ?: LibraryHelper::getCurrentLibrary());
-
-        $form = $this->createForm(CatalogueSearchType::class, $search);
-
-        $form->handleRequest($request);
-
-        if ($form->get('clear')->isClicked()) {
-            $search = new CatalogueSearch();
-            $form = $this->createForm(CatalogueSearchType::class, $search);
-        }
-
-        if ($form->get('export')->isClicked()) {
-            return $this->forward(ReportController::class.'::catalogueSummary');
-        }
-
         $provider = ProviderFactory::create(LibraryItem::class);
-        $content = $provider->getCatalogueList($search);
-        $pagination->setContent($content)->setPageMax(25)
-            ->setPaginationScript();
+        $content = $provider->getCatalogueList();
+        $pagination->setStoreFilterURL($this->generateUrl('library__catalogue_filter_store'))->setContent($content)
+            ->setPageMax(25)->setPaginationScript();
 
-        $request->getSession()->set('libraryCatalogueSearch', $search);
         return $this->render('@KookaburraLibrary/manage_catalogue.html.twig',
             [
                 'content' => $content,
-                'form' => $form->createView(),
                 'count' => $provider->getRepository()->count([]),
             ]
         );
@@ -386,7 +364,7 @@ class CatalogueController extends AbstractController
             $lib->$name($value);
         }
 
-        $space = null;
+        $facility = null;
         try {
             $em->beginTransaction();
             $em->persist($lib);
@@ -399,29 +377,25 @@ class CatalogueController extends AbstractController
                         case 'fields':
                             $value = unserialize($value);
                             break;
-                        case 'space':
-                            $space = $space ?: ProviderFactory::getRepository(Space::class)->findOneBy(['name' => 'Library', 'type' => 'Library']);
-                            if (null === $space) {
-                                $space = ProviderFactory::getRepository(Space::class)->findOneByType('Library');
-                                if (null === $space) {
-                                    $space = new Space();
-                                    $space->setName('Library')->setType('Library');
-                                    $em->persist($space);
+                        case 'facility':
+                            $facility = $facility ?: ProviderFactory::getRepository(Facility::class)->findOneBy(['name' => 'Library', 'type' => 'Library']);
+                            if (null === $facility) {
+                                $facility = ProviderFactory::getRepository(Facility::class)->findOneByType('Library');
+                                if (null === $facility) {
+                                    $facility = new Facility();
+                                    $facility->setName('Library')->setType('Library');
+                                    $em->persist($facility);
                                 }
                             }
-                            $value = $space;
+                            $value = $facility;
                             break;
                         case 'createdBy':
-                            $value = UserHelper::getCurrentUser();
-                            break;
                         case 'statusRecorder':
                             $value = UserHelper::getCurrentUser();
                             break;
                         case 'createdOn':
-                            $value = new \DateTimeImmutable($value);
-                            break;
                         case 'timestampStatus':
-                            $value = new \DateTimeImmutable($value);
+                            $value = new \DateTimeImmutable();
                             break;
                     }
                     $name = 'set' . ucfirst($name);
@@ -440,5 +414,20 @@ class CatalogueController extends AbstractController
         }
 
         return $this->redirectToRoute('library__manage_catalogue');
+    }
+
+    /**
+     * storeFilter
+     * @param Request $request
+     * @param CataloguePagination $pagination
+     * @return JsonResponse
+     * @Route("/catalogue/filter/store/",name="catalogue_filter_store", methods={"POST"})
+     * @Security("is_granted('ROLE_ROUTE', ['library__manage_catalogue'])")
+     */
+    public function storeFilter(Request $request, CataloguePagination $pagination)
+    {
+        $content = json_decode($request->getContent(), true);
+        $pagination->writeInitialFilter($content);
+        return new JsonResponse([],200);
     }
 }

@@ -53,10 +53,15 @@ class ReportController extends AbstractController
 
     /**
      * catalogueSummary
+     * @Route("/catalogue/export/", name="catalogue_export")
      * @Security("is_granted('ROLE_ROUTE', ['library__manage_catalogue'])")
+     * @param Request $request
+     * @param ExcelManager $excelManager
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function catalogueSummary(Request $request, ExcelManager $excelManager)
     {
+        dd($request->getSession());
         $search = isset($search) ? $search : new CatalogueSearch();
 
         $form = $this->createForm(CatalogueSearchType::class, $search);

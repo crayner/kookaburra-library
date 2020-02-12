@@ -899,8 +899,8 @@ class LibraryItem implements EntityInterface
      */
     public function update(): LibraryItem
     {
-        if (null === $this->getSpace() || '' === $this->getSpace())
-            $this->setSpace($this->getLibrary()->getFacility());
+        if (null === $this->getFacility() || '' === $this->getFacility())
+            $this->setFacility($this->getLibrary()->getFacility());
         if (null === $this->getDepartment() || '' === $this->getDepartment())
             $this->setDepartment($this->getLibrary()->getDepartment());
         if (!in_array($this->getStatus(), ['On Loan']))
@@ -918,8 +918,8 @@ class LibraryItem implements EntityInterface
      */
     public function persist(): LibraryItem
     {
-        if (null === $this->getSpace() || '' === $this->getSpace())
-            $this->setSpace($this->getLibrary()->getFacility());
+        if (null === $this->getFacility() || '' === $this->getFacility())
+            $this->setFacility($this->getLibrary()->getFacility());
         if (null === $this->getDepartment() || '' === $this->getDepartment())
             $this->setDepartment($this->getLibrary()->getDepartment());
        return $this->update()->setCreatedBy(UserHelper::getCurrentUser())->setCreatedOn(new DateTimeImmutable());
@@ -947,7 +947,7 @@ class LibraryItem implements EntityInterface
             'identifier' => $this->getIdentifier(),
             'producer' => $this->getProducer(),
             'typeName' => $this->getItemType(),
-            'space' => $this->getSpace()->getName(),
+            'facility' => $this->getFacility()->getName(),
             'locationDetail' => $this->getLocationDetail(),
             'owner' => $this->getOwnershipType() === 'Individual' ? $this->getOwnership()->formatName(false): ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'organisationName'),
             'status' => TranslationsHelper::translate($this->getStatus()),
@@ -957,7 +957,8 @@ class LibraryItem implements EntityInterface
             'isLostOrDecommissioned' => in_array($this->getStatus(), ['Lost', 'Decommissioned']),
             'onLoan' => $this->getStatus() === 'On Loan' && $this->isBorrowable(),
             'imageLocation' => ImageHelper::getAbsoluteImageURL($this->getImageType(), $this->getImageLocation()),
-            'fullString' => $this->toFullString()
+            'fullString' => $this->toFullString(),
+            'libraryName' => $this->getLibrary()->getName(),
         ];
     }
 
@@ -1178,7 +1179,7 @@ class LibraryItem implements EntityInterface
             $result .= $this->getComment();
             $result .= implode('', array_values($this->getFields()));
             $result .= $this->getProducer();
-            $result .= $this->getSpace()->getName();
+            $result .= $this->getFacility()->getName();
             $result .= $this->getLocationDetail();
             $result .= $this->getStatus();
 

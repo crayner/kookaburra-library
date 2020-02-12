@@ -277,11 +277,11 @@ class Library implements EntityInterface
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getBgImage(): ?string
+    public function getBgImage(): string
     {
-        return $this->bgImage;
+        return $this->bgImage ?: '';
     }
 
     /**

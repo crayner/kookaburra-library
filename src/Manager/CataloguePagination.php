@@ -17,11 +17,14 @@ namespace Kookaburra\Library\Manager;
 
 use App\Manager\Entity\PaginationAction;
 use App\Manager\Entity\PaginationColumn;
+use App\Manager\Entity\PaginationFilter;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
 use App\Manager\ReactPaginationManager;
 use App\Manager\ScriptManager;
+use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
+use Kookaburra\Library\Entity\Library;
 
 /**
  * Class CataloguePagination
@@ -50,22 +53,24 @@ class CataloguePagination extends ReactPaginationManager
         $column->setLabel('SchoolID')
             ->setContentKey(['identifier','typeName'])
             ->setHelp('Type')
-            ->setSort(true)
+            ->setSort()
+            ->setSearch()
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
         $column = new PaginationColumn();
         $column->setLabel('Name')
             ->setContentKey(['name','producer'])
+            ->setSearch()
             ->setHelp('Producer')
-            ->setSort(true)
+            ->setSort()
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
         $column = new PaginationColumn();
         $column->setLabel('Location')
-            ->setContentKey(['space', 'locationDetail'])
-            ->setSort(false)
+            ->setContentKey(['facility', 'locationDetail'])
+            ->setSearch()
             ->setClass('column hidden sm:table-cell relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
@@ -73,6 +78,7 @@ class CataloguePagination extends ReactPaginationManager
         $column->setLabel('Ownership')
             ->setContentKey('owner')
             ->setSort(false)
+            ->setSearch()
             ->setHelp('User/Owner')
             ->setClass('column hidden md:table-cell relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
@@ -80,7 +86,7 @@ class CataloguePagination extends ReactPaginationManager
         $column = new PaginationColumn();
         $column->setLabel('Status')
             ->setContentKey(['status', 'borrowable'])
-            ->setSort(false)
+            ->setSearch()
             ->setHelp('Borrowable')
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
@@ -143,6 +149,19 @@ class CataloguePagination extends ReactPaginationManager
             ->setRoute('library__duplicate_item')
             ->setRouteParams(['item' => 'id']);
         $row->addAction($action);
+
+        $libraries = ProviderFactory::getRepository(Library::class)->findAll();
+        if (count($libraries) > 1 ) {
+            foreach($libraries as $library) {
+                $filter = new PaginationFilter();
+                $filter->setName('Library: ' . $library->getName())
+                    ->setValue($library->getName())
+                    ->setLabel(['Library: {value}', ['{value}' => $library->getName()], 'Library'])
+                    ->setGroup('Library')
+                    ->setContentKey('libraryName');
+                $row->addFilter($filter);
+            }
+        }
 
         $this->setRow($row);
         return $this;
