@@ -19,7 +19,7 @@ use App\Manager\Entity\PaginationAction;
 use App\Manager\Entity\PaginationColumn;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
-use App\Manager\ReactPaginationManager;
+use App\Manager\AbstractPaginationManager;
 use App\Manager\ScriptManager;
 use App\Util\TranslationsHelper;
 
@@ -27,7 +27,7 @@ use App\Util\TranslationsHelper;
  * Class BrowsePagination
  * @package Manager
  */
-class BrowsePagination extends ReactPaginationManager
+class BrowsePagination extends AbstractPaginationManager
 {
     /**
      * CataloguePagination constructor.

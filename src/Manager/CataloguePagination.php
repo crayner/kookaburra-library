@@ -20,7 +20,7 @@ use App\Manager\Entity\PaginationColumn;
 use App\Manager\Entity\PaginationFilter;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
-use App\Manager\ReactPaginationManager;
+use App\Manager\AbstractPaginationManager;
 use App\Manager\ScriptManager;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
@@ -30,7 +30,7 @@ use Kookaburra\Library\Entity\Library;
  * Class CataloguePagination
  * @package Kookaburra\Library\Manager
  */
-class CataloguePagination extends ReactPaginationManager
+class CataloguePagination extends AbstractPaginationManager
 {
     /**
      * CataloguePagination constructor.
