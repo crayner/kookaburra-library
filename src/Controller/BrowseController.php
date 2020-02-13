@@ -91,6 +91,7 @@ class BrowseController extends AbstractController
      * @param LibraryItem $item
      * @Route("/item/{item}/information", name="item_information")
      * @Security("is_granted('ROLE_ROUTE', ['library__browse'])")
+     * @return JsonResponse
      */
     public function itemInformation(LibraryItem $item)
     {
