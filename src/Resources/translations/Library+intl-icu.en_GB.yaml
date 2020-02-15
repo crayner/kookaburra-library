@@ -87,6 +87,7 @@ Type Specific Fields: Type Specific Fields
 "For example, a computer's MAC address or a book's ISBN.": "For example, a computer's MAC address or a book's ISBN."
 Search: Search
 Clear Search: Clear Search
+Clear: Clear
 View: View
 Add: Add
 Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.: Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.
@@ -345,3 +346,5 @@ Only required with a Student Types: Only required with a Student Types
 Borrower List - {borrowerType}: Borrower List - {borrowerType}
 'Roll Group: {roll_group}': 'Roll Group: {roll_group}'
 Include Borrower Photo: Include Borrower Photo
+Borrowing Limit: Borrowing Limit
+The maximum number of items a borrower can have on loan.: The maximum number of items a borrower can have on loan.
