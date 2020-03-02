@@ -145,7 +145,7 @@ class CatalogueController extends AbstractController
                         200);
 
                 }
-                $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your request was completed successfully. # records were added.', ['count' => $form->get('copies')->getData()])];
+                $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('return.success.0 # records were added.', ['count' => $form->get('copies')->getData()])];
             } else {
                 $errors[] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
                 $status = 'error';
@@ -205,7 +205,7 @@ class CatalogueController extends AbstractController
                 $em->flush();
 
                 $manager->singlePanel($form->createView());
-                $this->addFlash('success', TranslationsHelper::translate('Your request was completed successfully. # records were added.', ['count' => $copies], ));
+                $this->addFlash('success', TranslationsHelper::translate('return.success.0 # records were added.', ['count' => $copies], ));
                 return new JsonResponse(
                     [
                         'form' => $manager->getFormFromContainer('formContent', 'single'),
