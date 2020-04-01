@@ -1,0 +1,347 @@
+Library: 图书馆
+return_date_help: return_date_help
+'Fiction - Best Sellers': 'Fiction - Best Sellers'
+'Fiction - Classics': 'Fiction - Classics'
+'Fiction - Mystery': 'Fiction - Mystery'
+'Fiction - Series': 'Fiction - Series'
+'Fiction - Young Adult': 'Fiction - Young Adult'
+Nonfiction: Nonfiction
+'Nonfiction - College Prep': 'Nonfiction - College Prep'
+'Nonfiction - Graphic Novels': 'Nonfiction - Graphic Novels'
+'Nonfiction - Life Skills': 'Nonfiction - Life Skills'
+'Nonfiction - Reference': 'Nonfiction - Reference'
+Borrower: 借用人
+'Who is borrowing the library item?': 'Who is borrowing the library item?'
+'Expected Return Date': 预期归还日期
+Loan: Loan
+'View Item': 查看项目
+'Item Details': 项目详情
+Borrowable: 可借
+Lending: 借
+'On Return': 归还
+'What to do when item is next returned.': 项目归还后怎么办？
+'Make Available': 'Make Available'
+Decommission: 退役
+Reserve: 保留
+'Responsible User': 负责的用户
+'Who will be responsible for the future status?': 谁将对未来的状态负责？
+' ': ' '
+'Date Out & In': 日期和时间
+'Due Date': 截止日期
+'Return Action': 归还操作
+'Recorded By': 记录
+Actions: 操作
+Out: Out
+In: In
+'Image File': 图片文件
+'Image Link': 图片链接
+Catalogue: Catalogue
+'Browse The Library': 浏览图书馆
+'Lending & Activity Log': 出借和活动日志
+'Manage Catalog': 管理目录
+Reports: 报告
+'Catalogue Summary': 'Catalogue Summary'
+'Student Borrowing Record': 学生借书记录
+'View Overdue Items': 查看逾期项目
+'Module Menu': 模块菜单
+Available: 可用的
+'Yes': 是
+Edit: 编辑
+Delete: '删除'
+Duplicate: 复制
+SchoolID: SchoolID
+Name: 名称
+Location: 位置
+Ownership: 所有权
+Status: 状态
+'There are no records to display.': '查询 无记录。'
+'Records {start}-{end} of {total}': 'Records {start}-{end} of {total}'
+'First Page': 'First Page'
+'Previous Page': 'Previous Page'
+'Next Page': 'Next Page'
+'Last Page': 'Last Page'
+'Are you sure you want to delete this record?': '确定要删除这条记录吗？'
+'This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!': 此操作不可撤消，并且可能导致系统中的重要数据丢失。谨慎操作！
+Close: 关闭
+'Search & Filter': 搜索和筛选
+ID/Name/Producer: ID/名字/制作人
+'Item Type': 物品种类
+'Print Publication': 打印出版物
+Computer: 电脑
+Electronics: 电子产品
+Other: 其他
+Software: 软件
+'Audio/Visual Hardware': 音频/视频硬件
+'Optical Media': 光学媒体
+'In Use': 正在使用
+Decommissioned: 退役
+Lost: 丢失
+'On Loan': 出借
+Repair: 修理
+Reserved: 保留
+Owner/User: 所有者/用户
+'Type Specific Fields': 'Type Specific Fields'
+'For example, a computer''s MAC address or a book''s ISBN.': 例如，一台计算机的MAC地址或一本书的ISBN。
+Search: 搜索
+'Clear Search': 清除搜索
+Clear: 清除
+View: 查看
+Add: '添加'
+'Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.': '请在尝试从Google图书获取数据之前输入 ISBN13或ISBN10 的值。'
+'The specified record cannot be found.': 未找到指定的记录。
+'Please select...': 请选择...
+'denotes a required field': 必填
+Action: 操作
+'Close Message': 'Close Message'
+Identifier: Identifier
+Author/Brand: 作者/品牌
+'Manage Catalogue': 'Manage Catalogue'
+'This item is not available to borrow.': 'This item is not available to borrow.'
+'No': 否
+Fiction: Fiction
+'Library Item Type': 'Library Item Type'
+'General Details': 一般信息
+'Volume or Product name': 'Volume or Product name'
+'Image Type': 图片类型
+'Location Details': 'Location Details'
+School: '学校'
+Individual: 个人
+'Which department is responsible for the item?': 哪个部门负责该项目？
+'Bookable As Facility?': 如教室可预订？
+'Can item be booked via Facility Booking in Timetable? Useful for laptop carts, etc.': 可以通过课程表中的教室预订项目吗？用于笔记本电脑、推车等。
+Availability: Availability
+'Plan Replacement?': 计划更换？
+'Physical Condition': 新旧程度
+'As New': 新的
+'Lightly Worn': 轻轻磨损
+'Moderately Worn': 中度磨损
+Damaged: '破损'
+Unusable: 不可用
+'Submit All': 'Submit All'
+'Specific Details': 'Specific Details'
+'Get Book Data From Google': 从Google获取图书数据
+'Art - Original': 'Art - Original'
+'Art - Reproduction': 'Art - Reproduction'
+Book: Book
+Braille: Braille
+'Cartographic material': 'Cartographic material'
+Chart: Chart
+Diorama: Diorama
+'Electronic Resource': 'Electronic Resource'
+Filmstrip: Filmstrip
+'Flash Card': 'Flash Card'
+Game: Game
+Globe: Globe
+Journal: Journal
+Kit: Kit
+'Large print': 'Large print'
+Magazine: Magazine
+Manuscript: Manuscript
+Microform: Microform
+'Microscope slide': 'Microscope slide'
+Model: Model
+'Motion Picture': 'Motion Picture'
+Music: 音乐
+Picture: Picture
+Realia: Realia
+Resource: Resource
+Serial: Serial
+Slide: Slide
+'Sound Recording': 'Sound Recording'
+'Technical Drawing': 'Technical Drawing'
+Toy: Toy
+Transparency: Transparency
+Videorecording: Videorecording
+'Format: dd/mm/yyyy, mm/yyyy or yyyy.': 'Format: dd/mm/yyyy, mm/yyyy or yyyy.'
+General: 一般
+Specific: Specific
+'Edit Item': 编辑项目
+'Add Item': '添加条目'
+'Google Developers Developer Key': Google开发者主键
+'SMTP Username': SMTP用户名
+'Username to use for SMTP authentication. Leave blank for no authentication.': 用于smtp身份验证的用户名。不用身份验证就留空。
+'SMTP Password': 'SMTP密码'
+'SMTP Host': SMTP主机
+'Set the hostname of the mail server.': 设置邮件服务器的主机名。
+'SMTP Port': SMTP端口
+'Set the SMTP port number - likely to be 25, 465 or 587.': '设置smtp端口号 - 可能是25,465或587。'
+'SMTP Encryption': 'SMTP Encryption'
+'Automatically sets the encryption based on the port, otherwise select one manually.': 'Automatically sets the encryption based on the port, otherwise select one manually.'
+'Password to use for SMTP authentication. Leave blank for no authentication.': '用于smtp认证的密码。不用身份验证就留空。'
+'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.': 'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.'
+'Google OAuth Download File': 'Google OAuth Download File'
+'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}'
+'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}'
+'Check for Installed Bundles': 'Check for Installed Bundles'
+'Load Demonstration Data': 'Load Demonstration Data'
+'Item Identifier {identifier}': 'Item Identifier {identifier}'
+'Must be unique, or will lead to update not insert.': 必须是唯一的，否则将导致更新不能插入。
+'Who created the item?': '谁创造了这个项目？'
+Vendor: 供应商
+'Who supplied the item?': 谁提供的项目？
+'Purchase Date': 购买日期
+'Invoice Number': '发票号码'
+'Location Detail': 位置详情
+'Shelf, cabinet, sector, etc': 货架，橱柜，部门等
+'Volume or product name.': 数量或产品名称。
+'Ownership Type': 所有权类型
+'Main User': 主要用户
+'Username of person the device is assigned to.': 设备分配给的人员的用户名。
+'Borrowable?': '是否可借?'
+'Is item available for loan?': 这个项目是否可借？
+'Status?': 状态？
+'Replacement?': 替代？
+'Replacement Cost': 替换成本
+'Replacement Year': 更改年份
+Comments/Notes: 注释/备注
+Format: '格式'
+Publisher: 出版社
+'Name of the company who published the volume.': 'Name of the company who published the volume.'
+'Publication Date': 发布日期
+'Country of Publication': 出版国
+Edition: 版本
+ISBN10: ISBN10
+'10-digit unique ISBN number.': '10-digit unique ISBN number.'
+ISBN13: ISBN13
+'13-digit unique ISBN number.': '13-digit unique ISBN number.'
+'A brief blurb describing the volume.': 'A brief blurb describing the volume.'
+Subjects: 学科
+'Comma separated list of subjects.': 'Comma separated list of subjects.'
+Collection: 采集
+'Control Number': 控制序列号
+'Cataloging Authority': 目录权限
+'Reader Age (Youngest)': 读者年龄（最小）
+'Age in years, youngest reading age recommendation.': 'Age in years, youngest reading age recommendation.'
+'Reader Age (Oldest)': 读者年龄（最大）
+'Age in years, oldest reading age recommendation.': 'Age in years, oldest reading age recommendation.'
+'Page Count': 页数
+'The number of pages in the volume.': 'The number of pages in the volume.'
+Height: 高度
+'The physical height of the volume, in cm.': 'The physical height of the volume, in cm.'
+Width: 宽度
+'The physical thickness of the volume, in cm.': 'The physical thickness of the volume, in cm.'
+'The primary language of the volume.': 'The primary language of the volume.'
+'Link to web-based information on the volume.': 'Link to web-based information on the volume.'
+'Issuing authority for Control Number.': 'Issuing authority for Control Number.'
+'What kind of product is this?': 'What kind of product is this?'
+'Serial Number': 序列号
+'Model Name': 模块名称
+'Model ID': 模块ID
+Accessories: 附件
+'Any chargers, remotes controls, etc?': 'Any chargers, remotes controls, etc?'
+'Warranty Number': 保修编号
+'Warranty Expiry': 保修期满
+'Repair Log/Notes': 修理日志/笔记
+Link: 链接
+File: 文件
+'Please Select...': 'Please Select...'
+Department: 部门
+Text: 文本
+Description: 描述
+'The physical width of the volume, in cm.': 'The physical width of the volume, in cm.'
+Thickness: 厚度
+Language: 语言
+User: 用户
+'Return Item': 归还物品
+'Renew Item': 更新项目
+'The item is not available for renewal.': 'The item is not available for renewal.'
+'This borrower has already exceeded renewal allowances for this library on this item.': 'This borrower has already exceeded renewal allowances for this library on this item.'
+'The return of the item is required for "{action}".': 'The return of the item is required for "{action}".'
+'Reserved Item Available': 'Reserved Item Available'
+reserve:
+    available: 'The item "{title}" you reserved is available for collection.  It will be kept until "{keptTill}". The item will be returned to circulation after this date.'
+'Start Loan': 'Start Loan'
+Return: Return
+'This item is not available to reserve.': 'This item is not available to reserve.'
+'Browse the Library': 'Browse the Library'
+'Library Item Details': 'Library Item Details'
+'View Description': 描述
+ID: ID
+Title: 称谓
+Author/Producer: 作者/制作人
+'Monthly Top 5': 每月排名前五位
+'New Titles': '新标题'
+by: 作者
+'': ''
+'The current library has been switched to ''{name}''': 'The current library has been switched to ''{name}'''
+Settings: 设置
+'Library Settings': 'Library Settings'
+'The current library is the ''{name}''': 'The current library is the ''{name}'''
+'Clear this value to show all items from all libraries.': 'Clear this value to show all items from all libraries.'
+'Export Summary': 'Export Summary'
+'School ID': '学校ID'
+'Name Producer': 'Name Producer'
+Type: 类型
+'Ownership User/Owner': 'Ownership User/Owner'
+'Status Borrowable': 'Status Borrowable'
+'Purchase Date Vendor': 'Purchase Date Vendor'
+Details: 细节
+'Choose Individual': 'Choose Individual'
+'Report Data': 报告数据
+'Borrow Date': 借用日期
+'Return Date': 归还日期
+'Show Details': 'Show Details'
+'Borrowing Record': 'Borrowing Record'
+Filter: 筛选
+'Ignore Status': 忽略状态
+'Include all users, regardless of status and current enrolment.': '包括所有用户，无论其状态和当前注册情况如何。'
+'Borrowing User': 借用用户
+Item: 项目
+'Days Overdue': 过期的日子
+'Overdue ({days})': 'Overdue ({days})'
+'Library {name}': 'Library {name}'
+'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.': 'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.'
+'Library Name': 'Library Name'
+'Must be unique': 必须是唯一的
+'Library Abbreviation': 'Library Abbreviation'
+Facility: 教室
+'The storage location when the item is not in use.': 'The storage location when the item is not in use.'
+Active: 激活
+'Default Lending Period': 'Default Lending Period'
+'in days': 'in days'
+'Background Colour': 'Background Colour'
+'Background Image': 'Background Image'
+Submit: 提交
+'Loan / Return Manager': 'Loan / Return Manager'
+'Item/Person Search': 'Item/Person Search'
+'No results were found for your search: "{search}"': 'No results were found for your search: "{search}"'
+'The item "{name}" was added to the loan list.': 'The item "{name}" was added to the loan list.'
+Confirm: 确认
+single: single
+'Loan List': 'Loan List'
+'Remove Item': 'Remove Item'
+'Remove Person': 'Remove Person'
+return:
+    warning:
+        - '{person} has reached borrowing limits and may not borrow "{name}"'
+    success:
+        - 'The item "{name}" was loaned to "{person}".'
+library:
+    quick:
+        p0: 'The page is designed for use with a bar code scanner, and will accept identifiers for library items and borrowers.'
+        p1: 'Can only be identified using the library item identifier.'
+        p2: 'Borrowers can be identified by the StudentID, by their username or by their hidden system identifier.'
+        p4: 'Your barcode scanner should return the item/borrower code with a carriage return. When entering the code manually, press enter on the keyboard to action the search.'
+        p5: 'When a borrower is linked first, then the first available libray item scanned will be loaned to that borrower, and the form will reset.'
+        p6: 'Pressing Clear {button} will reset the form.'
+        p7: 'A list of select library items will be shown until a borrower is selected.  All selected items are then borrowed by the selected borrower.'
+        p8: 'Any scanned library item that is currently on loan is returned to the library. Any return action is applied or the item is made available.'
+        p9: 'If you are attempting to loan the item that was on loan, then you will need to scan the item a second time.'
+'Library Item': 'Library Item'
+Instructions: Instructions
+'Borrower Identifiers': 'Borrower Identifiers'
+'Borrower List Generator': 'Borrower List Generator'
+borrower:
+    type:
+        student: 学生
+        staff: 员工
+        parent: 家长
+        other: 其他
+        empty: ''
+'Roll Group': 小组
+'Only required with a Student Types': 'Only required with a Student Types'
+'Borrower List - {borrowerType}': 'Borrower List - {borrowerType}'
+'Roll Group: {roll_group}': 'Roll Group: {roll_group}'
+'Include Borrower Photo': 'Include Borrower Photo'
+'Borrowing Limit': 'Borrowing Limit'
+'The maximum number of items a borrower can have on loan.': 'The maximum number of items a borrower can have on loan.'

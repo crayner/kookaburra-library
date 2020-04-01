@@ -1,0 +1,347 @@
+Library: Knjižnica
+return_date_help: return_date_help
+'Fiction - Best Sellers': 'Fiction - Best Sellers'
+'Fiction - Classics': 'Fiction - Classics'
+'Fiction - Mystery': 'Fiction - Mystery'
+'Fiction - Series': 'Fiction - Series'
+'Fiction - Young Adult': 'Fiction - Young Adult'
+Nonfiction: Nonfiction
+'Nonfiction - College Prep': 'Nonfiction - College Prep'
+'Nonfiction - Graphic Novels': 'Nonfiction - Graphic Novels'
+'Nonfiction - Life Skills': 'Nonfiction - Life Skills'
+'Nonfiction - Reference': 'Nonfiction - Reference'
+Borrower: 'Osoba koja posuđuje'
+'Who is borrowing the library item?': 'Who is borrowing the library item?'
+'Expected Return Date': 'Očekivani datum povratka'
+Loan: Loan
+'View Item': 'Prikaz primjerka'
+'Item Details': 'Detalji primjerka'
+Borrowable: 'Može se posuditi?'
+Lending: Posuđivanje
+'On Return': 'Po povratku'
+'What to do when item is next returned.': 'Što napraviti po povratku primjerka'
+'Make Available': 'Make Available'
+Decommission: Otpis
+Reserve: Rezerviraj
+'Responsible User': 'Odgovorni korisnik'
+'Who will be responsible for the future status?': 'Tko će biti odgovoran za budući status?'
+' ': ' '
+'Date Out & In': 'Datum izdavanja i povratka'
+'Due Date': 'Rok za plaćanje'
+'Return Action': 'Akcija po povratku'
+'Recorded By': Zabilježio
+Actions: Akcije
+Out: Van
+In: Unutra
+'Image File': 'Slikovna datoteka'
+'Image Link': 'Poveznica na sliku'
+Catalogue: Catalogue
+'Browse The Library': 'Pregled knjižnice'
+'Lending & Activity Log': 'Dnevnik posudbe i aktivnosti'
+'Manage Catalog': 'Upravljaj katalogom'
+Reports: Izvještaji
+'Catalogue Summary': 'Catalogue Summary'
+'Student Borrowing Record': 'Popis prethodnih posudbi polaznika'
+'View Overdue Items': 'Pregled kašnjenja u posudbi'
+'Module Menu': 'Modul izbornika'
+Available: Dostupno
+'Yes': Da
+Edit: Uredi
+Delete: Izbriši
+Duplicate: Dupliciraj
+SchoolID: SchoolID
+Name: Ime
+Location: Lokacija
+Ownership: Vlasništvo
+Status: Status
+'There are no records to display.': 'Nema zapisa za prikaz.'
+'Records {start}-{end} of {total}': 'Records {start}-{end} of {total}'
+'First Page': 'First Page'
+'Previous Page': 'Previous Page'
+'Next Page': 'Next Page'
+'Last Page': 'Last Page'
+'Are you sure you want to delete this record?': 'Želite li obrisati ovaj zapis?'
+'This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!': 'Ovu operaciju nije moguće poništiti i može dovesti do gubitka važnih podataka u vašem sustavu. NASTAVITE S OPREZOM!'
+Close: Zatvori
+'Search & Filter': 'Pretraži i filtriraj'
+ID/Name/Producer: Id/Naziv/Autor
+'Item Type': 'Vrsta primjerka'
+'Print Publication': 'Tiskana publikacija'
+Computer: Računalo
+Electronics: Elektronika
+Other: Ostalo
+Software: Softver
+'Audio/Visual Hardware': 'AV čitači'
+'Optical Media': 'Optički medij'
+'In Use': 'Koristi se'
+Decommissioned: Otpisano
+Lost: Izgubljeno
+'On Loan': Posuđeno
+Repair: 'Na popravku'
+Reserved: Rezervirano
+Owner/User: 'Vlasnik / korisnik'
+'Type Specific Fields': 'Type Specific Fields'
+'For example, a computer''s MAC address or a book''s ISBN.': 'Npr. MAC adresa računala/uređaja ili ISBN knjige.'
+Search: Pretraživanje
+'Clear Search': 'Obriši pretraživanje'
+Clear: Izbriši
+View: Prikaz
+Add: Dodaj
+'Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.': 'Unesite vrijednost ISBN13 ili ISBN10 prije pokušaja dobivanja podataka iz usluge Google Knjige.'
+'The specified record cannot be found.': 'Taj zapis nije moguće pronaći.'
+'Please select...': Odaberite...
+'denotes a required field': 'označava obavezno polje'
+Action: Akcija
+'Close Message': 'Close Message'
+Identifier: Identifier
+Author/Brand: Author/Brand
+'Manage Catalogue': 'Manage Catalogue'
+'This item is not available to borrow.': 'This item is not available to borrow.'
+'No': Ne
+Fiction: Fiction
+'Library Item Type': 'Library Item Type'
+'General Details': 'Opći podaci'
+'Volume or Product name': 'Volume or Product name'
+'Image Type': 'Vrsta slike'
+'Location Details': 'Location Details'
+School: 'Škola'
+Individual: Individual
+'Which department is responsible for the item?': 'Koji odsjek je odgovoran za primjerak?'
+'Bookable As Facility?': 'Može se rezervirati kao objekt?'
+'Can item be booked via Facility Booking in Timetable? Useful for laptop carts, etc.': 'Can item be booked via Facility Booking in Timetable? Useful for laptop carts, etc.'
+Availability: Dostupnost
+'Plan Replacement?': 'Plan Replacement?'
+'Physical Condition': 'Fizičko stanje'
+'As New': 'Kao novo'
+'Lightly Worn': 'Malo istrošeno'
+'Moderately Worn': 'Srednje istrošeno'
+Damaged: Oštećeno
+Unusable: Neiskoristivo
+'Submit All': 'Submit All'
+'Specific Details': 'Specific Details'
+'Get Book Data From Google': 'Preuzmi podatke o knjizi putem Google'
+'Art - Original': 'Art - Original'
+'Art - Reproduction': 'Art - Reproduction'
+Book: Book
+Braille: Braille
+'Cartographic material': 'Cartographic material'
+Chart: Chart
+Diorama: Diorama
+'Electronic Resource': 'Electronic Resource'
+Filmstrip: Filmstrip
+'Flash Card': 'Flash Card'
+Game: Game
+Globe: Globe
+Journal: Journal
+Kit: Kit
+'Large print': 'Large print'
+Magazine: Magazine
+Manuscript: Manuscript
+Microform: Microform
+'Microscope slide': 'Microscope slide'
+Model: Model
+'Motion Picture': 'Motion Picture'
+Music: Glazbeni
+Picture: Picture
+Realia: Realia
+Resource: Resource
+Serial: Serial
+Slide: Slide
+'Sound Recording': 'Sound Recording'
+'Technical Drawing': 'Technical Drawing'
+Toy: Toy
+Transparency: Transparency
+Videorecording: Videorecording
+'Format: dd/mm/yyyy, mm/yyyy or yyyy.': 'Format: dd/mm/yyyy, mm/yyyy or yyyy.'
+General: Opća
+Specific: Specific
+'Edit Item': 'Uredi primjerak'
+'Add Item': 'Dodaj primjerak'
+'Google Developers Developer Key': 'Google Developers Developer Key'
+'SMTP Username': 'SMTP korisničko ime'
+'Username to use for SMTP authentication. Leave blank for no authentication.': 'Korisničko ime za SMTP autorizaciju. Ostavite prazno ako ne koristite autorizaciju.'
+'SMTP Password': 'SMTP lozinka'
+'SMTP Host': 'SMTP poslužitelj'
+'Set the hostname of the mail server.': 'Zadajte naziv poslužitelja e-pošte.'
+'SMTP Port': 'SMTP port'
+'Set the SMTP port number - likely to be 25, 465 or 587.': 'Zadajte broj SMTP porta, najvjerojatnije 25, 465 ili 587.'
+'SMTP Encryption': 'SMTP enkripcija'
+'Automatically sets the encryption based on the port, otherwise select one manually.': 'Automatically sets the encryption based on the port, otherwise select one manually.'
+'Password to use for SMTP authentication. Leave blank for no authentication.': 'Lozinka koju ćete koristiti za SMTP autentikaciju. Ostavite prazno za provjeru autentičnosti.'
+'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.': 'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.'
+'Google OAuth Download File': 'Google OAuth Download File'
+'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}'
+'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}'
+'Check for Installed Bundles': 'Check for Installed Bundles'
+'Load Demonstration Data': 'Load Demonstration Data'
+'Item Identifier {identifier}': 'Item Identifier {identifier}'
+'Must be unique, or will lead to update not insert.': 'Must be unique, or will lead to update not insert.'
+'Who created the item?': 'Tko je stvorio primjerak/zapis?'
+Vendor: Dobavljač
+'Who supplied the item?': 'Od koga je dobavljen primjerak?'
+'Purchase Date': 'Datum kupovine'
+'Invoice Number': 'Broj računa'
+'Location Detail': 'Detalji o lokaciji'
+'Shelf, cabinet, sector, etc': 'Polica, ormar, sektor, itd.'
+'Volume or product name.': 'Naziv proizvoda.'
+'Ownership Type': 'Vrsta vlasništva'
+'Main User': 'Glavni korisnik'
+'Username of person the device is assigned to.': 'Korisničko ime osobe kojoj je uređaj dodijeljen.'
+'Borrowable?': 'Može se posuditi?'
+'Is item available for loan?': 'Je li primjerak dostupan za posudbu?'
+'Status?': 'Status?'
+'Replacement?': 'Zamjena?'
+'Replacement Cost': 'Cijena zamjene'
+'Replacement Year': 'Godina zamjene'
+Comments/Notes: Komentari/bilješke
+Format: Oblik
+Publisher: Izdavač
+'Name of the company who published the volume.': 'Name of the company who published the volume.'
+'Publication Date': 'Datum izdanja'
+'Country of Publication': 'Zemlja izdanja'
+Edition: Edicija
+ISBN10: ISBN10
+'10-digit unique ISBN number.': '10-digit unique ISBN number.'
+ISBN13: ISBN13
+'13-digit unique ISBN number.': '13-digit unique ISBN number.'
+'A brief blurb describing the volume.': 'A brief blurb describing the volume.'
+Subjects: Teme
+'Comma separated list of subjects.': 'Comma separated list of subjects.'
+Collection: Kolekcija
+'Control Number': 'Kontrolni broj'
+'Cataloging Authority': 'Tijelo za katalogizaciju'
+'Reader Age (Youngest)': 'Reader Age (Youngest)'
+'Age in years, youngest reading age recommendation.': 'Age in years, youngest reading age recommendation.'
+'Reader Age (Oldest)': 'Reader Age (Oldest)'
+'Age in years, oldest reading age recommendation.': 'Age in years, oldest reading age recommendation.'
+'Page Count': 'Broj stranica'
+'The number of pages in the volume.': 'The number of pages in the volume.'
+Height: Visina
+'The physical height of the volume, in cm.': 'The physical height of the volume, in cm.'
+Width: 'Širina'
+'The physical thickness of the volume, in cm.': 'The physical thickness of the volume, in cm.'
+'The primary language of the volume.': 'The primary language of the volume.'
+'Link to web-based information on the volume.': 'Link to web-based information on the volume.'
+'Issuing authority for Control Number.': 'Issuing authority for Control Number.'
+'What kind of product is this?': 'What kind of product is this?'
+'Serial Number': 'Serijski broj'
+'Model Name': Model
+'Model ID': 'Model ID'
+Accessories: Accessories
+'Any chargers, remotes controls, etc?': 'Any chargers, remotes controls, etc?'
+'Warranty Number': 'Broj garancije'
+'Warranty Expiry': 'Istek garancije'
+'Repair Log/Notes': 'Repair Log/Notes'
+Link: Poveznica
+File: Datoteka
+'Please Select...': 'Please Select...'
+Department: Odsjek
+Text: Tekst
+Description: Opis
+'The physical width of the volume, in cm.': 'The physical width of the volume, in cm.'
+Thickness: Debljina
+Language: Jezik
+User: Korisnik
+'Return Item': 'Vrati primjerak'
+'Renew Item': 'Obnovi primjerak'
+'The item is not available for renewal.': 'The item is not available for renewal.'
+'This borrower has already exceeded renewal allowances for this library on this item.': 'This borrower has already exceeded renewal allowances for this library on this item.'
+'The return of the item is required for "{action}".': 'The return of the item is required for "{action}".'
+'Reserved Item Available': 'Reserved Item Available'
+reserve:
+    available: 'The item "{title}" you reserved is available for collection.  It will be kept until "{keptTill}". The item will be returned to circulation after this date.'
+'Start Loan': 'Start Loan'
+Return: Return
+'This item is not available to reserve.': 'This item is not available to reserve.'
+'Browse the Library': 'Browse the Library'
+'Library Item Details': 'Library Item Details'
+'View Description': 'Prikaz opisa'
+ID: ID
+Title: Titula
+Author/Producer: Autor
+'Monthly Top 5': 'Mjesečnih top 5'
+'New Titles': 'Novi naslovi'
+by: by
+'': ''
+'The current library has been switched to ''{name}''': 'The current library has been switched to ''{name}'''
+Settings: Postavke
+'Library Settings': 'Library Settings'
+'The current library is the ''{name}''': 'The current library is the ''{name}'''
+'Clear this value to show all items from all libraries.': 'Clear this value to show all items from all libraries.'
+'Export Summary': 'Export Summary'
+'School ID': 'ID škole'
+'Name Producer': 'Name Producer'
+Type: Vrsta
+'Ownership User/Owner': 'Ownership User/Owner'
+'Status Borrowable': 'Status Borrowable'
+'Purchase Date Vendor': 'Purchase Date Vendor'
+Details: Detalji
+'Choose Individual': 'Choose Individual'
+'Report Data': 'Report Data'
+'Borrow Date': 'Datum posudbe'
+'Return Date': 'Datum vraćanja'
+'Show Details': 'Show Details'
+'Borrowing Record': 'Borrowing Record'
+Filter: Filter
+'Ignore Status': 'Ignoriraj status'
+'Include all users, regardless of status and current enrolment.': 'Uključite sve korisnike, bez obzira na status i trenutačno stanje upisa.'
+'Borrowing User': 'Korisnik koji je posudio'
+Item: Stavka
+'Days Overdue': 'Prekoračenje u danima'
+'Overdue ({days})': 'Overdue ({days})'
+'Library {name}': 'Library {name}'
+'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.': 'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.'
+'Library Name': 'Library Name'
+'Must be unique': 'Mora biti jedinstveno'
+'Library Abbreviation': 'Library Abbreviation'
+Facility: Objekt
+'The storage location when the item is not in use.': 'The storage location when the item is not in use.'
+Active: Aktivno
+'Default Lending Period': 'Default Lending Period'
+'in days': 'in days'
+'Background Colour': 'Background Colour'
+'Background Image': 'Background Image'
+Submit: Predaj
+'Loan / Return Manager': 'Loan / Return Manager'
+'Item/Person Search': 'Item/Person Search'
+'No results were found for your search: "{search}"': 'No results were found for your search: "{search}"'
+'The item "{name}" was added to the loan list.': 'The item "{name}" was added to the loan list.'
+Confirm: Potvrda
+single: single
+'Loan List': 'Loan List'
+'Remove Item': 'Remove Item'
+'Remove Person': 'Remove Person'
+return:
+    warning:
+        - '{person} has reached borrowing limits and may not borrow "{name}"'
+    success:
+        - 'The item "{name}" was loaned to "{person}".'
+library:
+    quick:
+        p0: 'The page is designed for use with a bar code scanner, and will accept identifiers for library items and borrowers.'
+        p1: 'Can only be identified using the library item identifier.'
+        p2: 'Borrowers can be identified by the StudentID, by their username or by their hidden system identifier.'
+        p4: 'Your barcode scanner should return the item/borrower code with a carriage return. When entering the code manually, press enter on the keyboard to action the search.'
+        p5: 'When a borrower is linked first, then the first available libray item scanned will be loaned to that borrower, and the form will reset.'
+        p6: 'Pressing Clear {button} will reset the form.'
+        p7: 'A list of select library items will be shown until a borrower is selected.  All selected items are then borrowed by the selected borrower.'
+        p8: 'Any scanned library item that is currently on loan is returned to the library. Any return action is applied or the item is made available.'
+        p9: 'If you are attempting to loan the item that was on loan, then you will need to scan the item a second time.'
+'Library Item': 'Library Item'
+Instructions: Instructions
+'Borrower Identifiers': 'Borrower Identifiers'
+'Borrower List Generator': 'Borrower List Generator'
+borrower:
+    type:
+        student: Polaznik
+        staff: 'Nastavno osoblje'
+        parent: Roditelj
+        other: Ostalo
+        empty: ''
+'Roll Group': Grupa
+'Only required with a Student Types': 'Only required with a Student Types'
+'Borrower List - {borrowerType}': 'Borrower List - {borrowerType}'
+'Roll Group: {roll_group}': 'Roll Group: {roll_group}'
+'Include Borrower Photo': 'Include Borrower Photo'
+'Borrowing Limit': 'Borrowing Limit'
+'The maximum number of items a borrower can have on loan.': 'The maximum number of items a borrower can have on loan.'

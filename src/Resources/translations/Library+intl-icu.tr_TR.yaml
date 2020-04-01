@@ -1,0 +1,347 @@
+Library: Kütüphane
+return_date_help: return_date_help
+'Fiction - Best Sellers': 'Fiction - Best Sellers'
+'Fiction - Classics': 'Fiction - Classics'
+'Fiction - Mystery': 'Fiction - Mystery'
+'Fiction - Series': 'Fiction - Series'
+'Fiction - Young Adult': 'Fiction - Young Adult'
+Nonfiction: Nonfiction
+'Nonfiction - College Prep': 'Nonfiction - College Prep'
+'Nonfiction - Graphic Novels': 'Nonfiction - Graphic Novels'
+'Nonfiction - Life Skills': 'Nonfiction - Life Skills'
+'Nonfiction - Reference': 'Nonfiction - Reference'
+Borrower: Borçlu
+'Who is borrowing the library item?': 'Who is borrowing the library item?'
+'Expected Return Date': 'Beklenen İade Tarihi'
+Loan: Loan
+'View Item': 'Ürünü incele'
+'Item Details': 'Ürün Detayları'
+Borrowable: Ödünç
+Lending: 'borç verme'
+'On Return': Dönüşde
+'What to do when item is next returned.': 'Öğe iade edildiğinde ne yapmalı.'
+'Make Available': 'Make Available'
+Decommission: decommission
+Reserve: rezerv
+'Responsible User': 'Sorumlu Kullanıcı'
+'Who will be responsible for the future status?': 'Gelecekteki durumdan kim sorumlu olacak?'
+' ': ' '
+'Date Out & In': 'Çıkma Tarihi ve Girişi'
+'Due Date': 'Bitiş tarihi'
+'Return Action': 'İade İşlemi'
+'Recorded By': 'Tarafından kaydedildi'
+Actions: Eylemler
+Out: Dışarı
+In: İçinde
+'Image File': 'Görüntü dosyası'
+'Image Link': 'Resim Bağlantısı'
+Catalogue: Catalogue
+'Browse The Library': 'Kütüphaneye Göz Atın'
+'Lending & Activity Log': 'Borç Verme ve Faaliyet Günlüğü'
+'Manage Catalog': 'Kataloğu Yönet'
+Reports: Raporlar
+'Catalogue Summary': 'Catalogue Summary'
+'Student Borrowing Record': 'Öğrenci Borçlanma Kaydı'
+'View Overdue Items': 'Geciken Öğeleri Görüntüle'
+'Module Menu': 'Modül Menüsü'
+Available: Mevcut
+'Yes': Evet
+Edit: Düzenle
+Delete: silmek
+Duplicate: Çift
+SchoolID: SchoolID
+Name: isim
+Location: yer
+Ownership: sahiplik
+Status: durum
+'There are no records to display.': 'Gösterilecek kayıt yok.'
+'Records {start}-{end} of {total}': 'Records {start}-{end} of {total}'
+'First Page': 'First Page'
+'Previous Page': 'Previous Page'
+'Next Page': 'Next Page'
+'Last Page': 'Last Page'
+'Are you sure you want to delete this record?': 'Bu kaydı silmek istediğinize emin misiniz?'
+'This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!': "Bu işlem geri alınamaz ve sisteminizde hayati veri kaybına neden olabilir.\_DİKKATLE İLERLE!"
+Close: Kapat
+'Search & Filter': 'Ara ve Filtrele'
+ID/Name/Producer: 'ID / Ad / Yapımcı'
+'Item Type': 'Öğe türü'
+'Print Publication': 'Yayını Yazdır'
+Computer: Bilgisayar
+Electronics: Elektronik
+Other: Diğer
+Software: Yazılım
+'Audio/Visual Hardware': 'Görsel / İşitsel Donanım'
+'Optical Media': 'Optik medya'
+'In Use': Kullanımda
+Decommissioned: görevden
+Lost: Kayıp
+'On Loan': Borçlu
+Repair: 'Tamir etmek'
+Reserved: Ayrılmış
+Owner/User: 'Sahibi / Kullanıcı'
+'Type Specific Fields': 'Type Specific Fields'
+'For example, a computer''s MAC address or a book''s ISBN.': 'Örneğin, bir bilgisayarın MAC adresi veya bir kitabın ISBN’si.'
+Search: Arama
+'Clear Search': 'Aramayı Temizle'
+Clear: Açık
+View: Görünüm
+Add: Ekle
+'Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.': 'Google Kitaplardan veri almaya çalışmadan önce lütfen bir ISBN13 veya ISBN10 değeri girin.'
+'The specified record cannot be found.': 'Belirtilen kayıt bulunamadı.'
+'Please select...': 'Lütfen seçin...'
+'denotes a required field': 'gerekli bir alan belirtir'
+Action: Aksiyon
+'Close Message': 'Close Message'
+Identifier: Identifier
+Author/Brand: 'Yazar / Marka'
+'Manage Catalogue': 'Manage Catalogue'
+'This item is not available to borrow.': 'This item is not available to borrow.'
+'No': 'Yok hayır'
+Fiction: Fiction
+'Library Item Type': 'Library Item Type'
+'General Details': 'Genel Detaylar'
+'Volume or Product name': 'Volume or Product name'
+'Image Type': 'Resim türü'
+'Location Details': 'Location Details'
+School: Okul
+Individual: bireysel
+'Which department is responsible for the item?': 'Maddeden hangi bölüm sorumlu?'
+'Bookable As Facility?': 'Tesis Olarak Rezervasyon Yapılabilir mi?'
+'Can item be booked via Facility Booking in Timetable? Useful for laptop carts, etc.': "Öğe, Timetable'daki Facility Booking ile ayırtılabilir mi?\_Dizüstü bilgisayar arabaları için faydalıdır."
+Availability: Availability
+'Plan Replacement?': 'Plan Değiştirme?'
+'Physical Condition': 'Fiziksel durumu'
+'As New': 'Yeni olarak'
+'Lightly Worn': 'Hafif Aşınmış'
+'Moderately Worn': 'Orta Aşınmış'
+Damaged: Hasarlı
+Unusable: kullanılmaz
+'Submit All': 'Submit All'
+'Specific Details': 'Specific Details'
+'Get Book Data From Google': 'Google''dan Kitap Verileri Alın'
+'Art - Original': 'Art - Original'
+'Art - Reproduction': 'Art - Reproduction'
+Book: Book
+Braille: Braille
+'Cartographic material': 'Cartographic material'
+Chart: Chart
+Diorama: Diorama
+'Electronic Resource': 'Electronic Resource'
+Filmstrip: Filmstrip
+'Flash Card': 'Flash Card'
+Game: Game
+Globe: Globe
+Journal: Journal
+Kit: Kit
+'Large print': 'Large print'
+Magazine: Magazine
+Manuscript: Manuscript
+Microform: Microform
+'Microscope slide': 'Microscope slide'
+Model: Model
+'Motion Picture': 'Motion Picture'
+Music: Müzik
+Picture: Picture
+Realia: Realia
+Resource: Resource
+Serial: Serial
+Slide: Slide
+'Sound Recording': 'Sound Recording'
+'Technical Drawing': 'Technical Drawing'
+Toy: Toy
+Transparency: Transparency
+Videorecording: Videorecording
+'Format: dd/mm/yyyy, mm/yyyy or yyyy.': 'Format: dd/mm/yyyy, mm/yyyy or yyyy.'
+General: Genel
+Specific: Specific
+'Edit Item': 'Ögeyi düzenle'
+'Add Item': 'Öğe eklemek'
+'Google Developers Developer Key': 'Google Geliştiricileri Geliştirici Anahtarı'
+'SMTP Username': 'SMTP Kullanıcı Adı'
+'Username to use for SMTP authentication. Leave blank for no authentication.': "SMTP kimlik doğrulaması için kullanılacak kullanıcı adı.\_Kimlik doğrulama için boş bırakın."
+'SMTP Password': 'SMTP Şifresi'
+'SMTP Host': 'SMTP Sunucusu'
+'Set the hostname of the mail server.': 'Posta sunucusunun ana bilgisayar adını ayarlayın.'
+'SMTP Port': 'SMTP Bağlantı Noktası'
+'Set the SMTP port number - likely to be 25, 465 or 587.': 'SMTP port numarasını ayarlayın - muhtemelen 25, 465 veya 587 olabilir.'
+'SMTP Encryption': 'SMTP Encryption'
+'Automatically sets the encryption based on the port, otherwise select one manually.': 'Automatically sets the encryption based on the port, otherwise select one manually.'
+'Password to use for SMTP authentication. Leave blank for no authentication.': "SMTP kimlik doğrulaması için kullanılacak şifre.\_Kimlik doğrulama için boş bırakın."
+'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.': 'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.'
+'Google OAuth Download File': 'Google OAuth Download File'
+'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}'
+'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}'
+'Check for Installed Bundles': 'Check for Installed Bundles'
+'Load Demonstration Data': 'Load Demonstration Data'
+'Item Identifier {identifier}': 'Item Identifier {identifier}'
+'Must be unique, or will lead to update not insert.': 'Benzersiz olması gerekir, aksi halde güncelleme eklenmez.'
+'Who created the item?': 'Öğeyi kim yarattı?'
+Vendor: satıcı
+'Who supplied the item?': 'Ürünü kim tedarik etti?'
+'Purchase Date': 'Satınalma tarihi'
+'Invoice Number': 'Fatura numarası'
+'Location Detail': 'Konum Detayı'
+'Shelf, cabinet, sector, etc': 'Raf, dolap, sektör vb.'
+'Volume or product name.': 'Birim veya ürün adı.'
+'Ownership Type': 'Mülkiyet Türü'
+'Main User': 'Ana kullanıcı'
+'Username of person the device is assigned to.': 'Cihazın atandığı kişinin kullanıcı adı.'
+'Borrowable?': 'Ödünç?'
+'Is item available for loan?': 'Borç için öğe mevcut mu?'
+'Status?': 'Durum?'
+'Replacement?': 'Değiştirme?'
+'Replacement Cost': 'Değiştirme ücreti'
+'Replacement Year': 'Değiştirme Yılı'
+Comments/Notes: 'Yorumlar / Notlar'
+Format: Biçim
+Publisher: Yayımcı
+'Name of the company who published the volume.': 'Name of the company who published the volume.'
+'Publication Date': 'Yayın tarihi'
+'Country of Publication': 'Yayın Ülkesi'
+Edition: Baskı
+ISBN10: ISBN10
+'10-digit unique ISBN number.': '10-digit unique ISBN number.'
+ISBN13: ISBN13
+'13-digit unique ISBN number.': '13-digit unique ISBN number.'
+'A brief blurb describing the volume.': 'A brief blurb describing the volume.'
+Subjects: denekler
+'Comma separated list of subjects.': 'Comma separated list of subjects.'
+Collection: Toplamak
+'Control Number': 'Kontrol numarası'
+'Cataloging Authority': 'Kataloglama Yetkilisi'
+'Reader Age (Youngest)': 'Okuyucu Yaşı (En Genç)'
+'Age in years, youngest reading age recommendation.': 'Age in years, youngest reading age recommendation.'
+'Reader Age (Oldest)': 'Okuyucu Yaşı (En Eski)'
+'Age in years, oldest reading age recommendation.': 'Age in years, oldest reading age recommendation.'
+'Page Count': 'Sayfa sayısı'
+'The number of pages in the volume.': 'The number of pages in the volume.'
+Height: Yükseklik
+'The physical height of the volume, in cm.': 'The physical height of the volume, in cm.'
+Width: Genişlik
+'The physical thickness of the volume, in cm.': 'The physical thickness of the volume, in cm.'
+'The primary language of the volume.': 'The primary language of the volume.'
+'Link to web-based information on the volume.': 'Link to web-based information on the volume.'
+'Issuing authority for Control Number.': 'Issuing authority for Control Number.'
+'What kind of product is this?': 'What kind of product is this?'
+'Serial Number': 'Seri numarası'
+'Model Name': 'Model adı'
+'Model ID': 'Model kimliği'
+Accessories: Aksesuarlar
+'Any chargers, remotes controls, etc?': 'Any chargers, remotes controls, etc?'
+'Warranty Number': 'Garanti numarası'
+'Warranty Expiry': 'Garanti süresi'
+'Repair Log/Notes': 'Onarım Günlüğü / Notları'
+Link: bağlantı
+File: Dosya
+'Please Select...': 'Please Select...'
+Department: Bölüm
+Text: Metin
+Description: Açıklama
+'The physical width of the volume, in cm.': 'The physical width of the volume, in cm.'
+Thickness: Kalınlık
+Language: Dil
+User: kullanıcı
+'Return Item': 'Ürünü geri vermek'
+'Renew Item': 'Öğeyi Yenile'
+'The item is not available for renewal.': 'The item is not available for renewal.'
+'This borrower has already exceeded renewal allowances for this library on this item.': 'This borrower has already exceeded renewal allowances for this library on this item.'
+'The return of the item is required for "{action}".': 'The return of the item is required for "{action}".'
+'Reserved Item Available': 'Reserved Item Available'
+reserve:
+    available: 'The item "{title}" you reserved is available for collection.  It will be kept until "{keptTill}". The item will be returned to circulation after this date.'
+'Start Loan': 'Start Loan'
+Return: Return
+'This item is not available to reserve.': 'This item is not available to reserve.'
+'Browse the Library': 'Browse the Library'
+'Library Item Details': 'Library Item Details'
+'View Description': 'Açıklamayı Görüntüle'
+ID: İD
+Title: Başlık
+Author/Producer: 'Yazar / Yapımcı'
+'Monthly Top 5': 'Aylık En İyi 5'
+'New Titles': 'Yeni Başlıklar'
+by: tarafından
+'': ''
+'The current library has been switched to ''{name}''': 'The current library has been switched to ''{name}'''
+Settings: Settings
+'Library Settings': 'Library Settings'
+'The current library is the ''{name}''': 'The current library is the ''{name}'''
+'Clear this value to show all items from all libraries.': 'Clear this value to show all items from all libraries.'
+'Export Summary': 'Export Summary'
+'School ID': 'Okul kimliği'
+'Name Producer': 'Name Producer'
+Type: tip
+'Ownership User/Owner': 'Ownership User/Owner'
+'Status Borrowable': 'Status Borrowable'
+'Purchase Date Vendor': 'Purchase Date Vendor'
+Details: ayrıntılar
+'Choose Individual': 'Choose Individual'
+'Report Data': 'Verileri Raporla'
+'Borrow Date': 'Ödünç Tarihi'
+'Return Date': 'Dönüş tarihi'
+'Show Details': 'Show Details'
+'Borrowing Record': 'Borrowing Record'
+Filter: filtre
+'Ignore Status': 'Durumu Yoksay'
+'Include all users, regardless of status and current enrolment.': 'Durum ve mevcut kayıt ne olursa olsun, tüm kullanıcıları dahil edin.'
+'Borrowing User': 'Ödünç Alan Kullanıcı'
+Item: madde
+'Days Overdue': 'Geciken Günler'
+'Overdue ({days})': 'Overdue ({days})'
+'Library {name}': 'Library {name}'
+'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.': 'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.'
+'Library Name': 'Library Name'
+'Must be unique': 'Eşsiz olmalı'
+'Library Abbreviation': 'Library Abbreviation'
+Facility: tesis
+'The storage location when the item is not in use.': 'The storage location when the item is not in use.'
+Active: Aktif
+'Default Lending Period': 'Default Lending Period'
+'in days': 'in days'
+'Background Colour': 'Background Colour'
+'Background Image': 'Background Image'
+Submit: Gönder
+'Loan / Return Manager': 'Loan / Return Manager'
+'Item/Person Search': 'Item/Person Search'
+'No results were found for your search: "{search}"': 'No results were found for your search: "{search}"'
+'The item "{name}" was added to the loan list.': 'The item "{name}" was added to the loan list.'
+Confirm: Onaylamak
+single: single
+'Loan List': 'Loan List'
+'Remove Item': 'Remove Item'
+'Remove Person': 'Remove Person'
+return:
+    warning:
+        - '{person} has reached borrowing limits and may not borrow "{name}"'
+    success:
+        - 'The item "{name}" was loaned to "{person}".'
+library:
+    quick:
+        p0: 'The page is designed for use with a bar code scanner, and will accept identifiers for library items and borrowers.'
+        p1: 'Can only be identified using the library item identifier.'
+        p2: 'Borrowers can be identified by the StudentID, by their username or by their hidden system identifier.'
+        p4: 'Your barcode scanner should return the item/borrower code with a carriage return. When entering the code manually, press enter on the keyboard to action the search.'
+        p5: 'When a borrower is linked first, then the first available libray item scanned will be loaned to that borrower, and the form will reset.'
+        p6: 'Pressing Clear {button} will reset the form.'
+        p7: 'A list of select library items will be shown until a borrower is selected.  All selected items are then borrowed by the selected borrower.'
+        p8: 'Any scanned library item that is currently on loan is returned to the library. Any return action is applied or the item is made available.'
+        p9: 'If you are attempting to loan the item that was on loan, then you will need to scan the item a second time.'
+'Library Item': 'Library Item'
+Instructions: Instructions
+'Borrower Identifiers': 'Borrower Identifiers'
+'Borrower List Generator': 'Borrower List Generator'
+borrower:
+    type:
+        student: Öğrenci
+        staff: Personel
+        parent: ebeveyn
+        other: Diğer
+        empty: ''
+'Roll Group': 'Rulo Grubu'
+'Only required with a Student Types': 'Only required with a Student Types'
+'Borrower List - {borrowerType}': 'Borrower List - {borrowerType}'
+'Roll Group: {roll_group}': 'Roll Group: {roll_group}'
+'Include Borrower Photo': 'Include Borrower Photo'
+'Borrowing Limit': 'Borrowing Limit'
+'The maximum number of items a borrower can have on loan.': 'The maximum number of items a borrower can have on loan.'

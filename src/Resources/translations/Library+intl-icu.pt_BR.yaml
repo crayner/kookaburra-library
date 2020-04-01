@@ -1,0 +1,347 @@
+Library: Biblioteca
+return_date_help: return_date_help
+'Fiction - Best Sellers': 'Fiction - Best Sellers'
+'Fiction - Classics': 'Fiction - Classics'
+'Fiction - Mystery': 'Fiction - Mystery'
+'Fiction - Series': 'Fiction - Series'
+'Fiction - Young Adult': 'Fiction - Young Adult'
+Nonfiction: Nonfiction
+'Nonfiction - College Prep': 'Nonfiction - College Prep'
+'Nonfiction - Graphic Novels': 'Nonfiction - Graphic Novels'
+'Nonfiction - Life Skills': 'Nonfiction - Life Skills'
+'Nonfiction - Reference': 'Nonfiction - Reference'
+Borrower: 'Solicitante do empréstimo'
+'Who is borrowing the library item?': 'Who is borrowing the library item?'
+'Expected Return Date': 'Data de devolução esperada'
+Loan: Loan
+'View Item': 'Ver Item'
+'Item Details': 'Detalhes do Item'
+Borrowable: Emprestável
+Lending: Empréstimo
+'On Return': 'No Retorno'
+'What to do when item is next returned.': 'O que fazer quando o item é retornado em seguida.'
+'Make Available': 'Make Available'
+Decommission: Desativação
+Reserve: Reserva
+'Responsible User': 'Usuário responsável'
+'Who will be responsible for the future status?': 'Quem será responsável pelo futuro status?'
+' ': ' '
+'Date Out & In': 'Data Saída e Chegada'
+'Due Date': 'Data de Vencimento'
+'Return Action': 'Ação de retorno'
+'Recorded By': 'Salvo por'
+Actions: Ações
+Out: Ausente
+In: 'Em sala'
+'Image File': 'Arquivo da imagem'
+'Image Link': 'Link da imagem'
+Catalogue: Catalogue
+'Browse The Library': 'Navegar pela biblioteca'
+'Lending & Activity Log': 'Registro de Empréstimos e Atividades'
+'Manage Catalog': 'Gerenciar catálogo'
+Reports: Relatórios
+'Catalogue Summary': 'Catalogue Summary'
+'Student Borrowing Record': 'Registro de empréstimo do aluno'
+'View Overdue Items': 'Ver itens em atraso'
+'Module Menu': 'Menu de Módulos'
+Available: Disponível
+'Yes': Sim
+Edit: Editar
+Delete: Apagar
+Duplicate: Duplicar
+SchoolID: SchoolID
+Name: Nome
+Location: Localidade
+Ownership: 'Direito de propriedade'
+Status: Situação
+'There are no records to display.': 'Não há registros para mostrar.'
+'Records {start}-{end} of {total}': 'Records {start}-{end} of {total}'
+'First Page': 'Primeira Página'
+'Previous Page': 'Previous Page'
+'Next Page': 'Next Page'
+'Last Page': 'Última Página'
+'Are you sure you want to delete this record?': 'Você tem certeza de que quer apagar este registro?'
+'This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!': 'Esta operação não pode ser desfeita e pode levar à perda de dados vitais no seu sistema. PROSSIGA COM CAUTELA!'
+Close: Fechar
+'Search & Filter': 'Buscar e Filtrar'
+ID/Name/Producer: ID/Nome/Produtor
+'Item Type': 'Tipo de Item'
+'Print Publication': 'Publicação impressa'
+Computer: Computador
+Electronics: Eletrônicos
+Other: Outro
+Software: Software
+'Audio/Visual Hardware': 'Hardware audiovisual'
+'Optical Media': 'Mídia Ótica'
+'In Use': 'Em uso'
+Decommissioned: Desativado
+Lost: Perdido
+'On Loan': 'Em empréstimo'
+Repair: Reparar
+Reserved: Reservado
+Owner/User: 'Proprietário / Utilizador'
+'Type Specific Fields': 'Type Specific Fields'
+'For example, a computer''s MAC address or a book''s ISBN.': 'Por exemplo, um endereço MAC do computador ou um ISBN do livro.'
+Search: Buscar
+'Clear Search': 'Limpar Busca'
+Clear: Limpar
+View: Visualizar
+Add: Adicionar
+'Please enter an ISBN13 or ISBN10 value before trying to get data from Google Books.': 'Insira um valor ISBN13 ou ISBN10 antes de tentar obter dados do Google Livros.'
+'The specified record cannot be found.': 'O registro especificado não pode ser encontrado.'
+'Please select...': 'Por favor, selecione...'
+'denotes a required field': 'indica um campo obrigatório'
+Action: Ação
+'Close Message': 'Close Message'
+Identifier: Identifier
+Author/Brand: 'Autor / Marca'
+'Manage Catalogue': 'Manage Catalogue'
+'This item is not available to borrow.': 'This item is not available to borrow.'
+'No': Não
+Fiction: Fiction
+'Library Item Type': 'Library Item Type'
+'General Details': 'Detalhes Gerais'
+'Volume or Product name': 'Volume or Product name'
+'Image Type': 'Tipo de imagem'
+'Location Details': 'Location Details'
+School: Escola
+Individual: Individual
+'Which department is responsible for the item?': 'Qual departamento é responsável pelo item?'
+'Bookable As Facility?': 'Reservado como Local Físico?'
+'Can item be booked via Facility Booking in Timetable? Useful for laptop carts, etc.': 'Item pode ser reservado através da Reserva de Loca Físico no Horário? Útil para transporte de laptop, etc.'
+Availability: Disponibilidade
+'Plan Replacement?': 'Substituição de plano?'
+'Physical Condition': 'Condição física'
+'As New': 'Como novo'
+'Lightly Worn': 'Desgastado levemente'
+'Moderately Worn': 'Desgastado moderadamente'
+Damaged: Danificado
+Unusable: Inutilizável
+'Submit All': 'Submit All'
+'Specific Details': 'Specific Details'
+'Get Book Data From Google': 'Obter dados de livros do Google'
+'Art - Original': 'Art - Original'
+'Art - Reproduction': 'Art - Reproduction'
+Book: Book
+Braille: Braille
+'Cartographic material': 'Cartographic material'
+Chart: Chart
+Diorama: Diorama
+'Electronic Resource': 'Electronic Resource'
+Filmstrip: Filmstrip
+'Flash Card': 'Flash Card'
+Game: Game
+Globe: Globe
+Journal: Journal
+Kit: Kit
+'Large print': 'Large print'
+Magazine: Magazine
+Manuscript: Manuscript
+Microform: Microform
+'Microscope slide': 'Microscope slide'
+Model: Model
+'Motion Picture': 'Motion Picture'
+Music: Música
+Picture: Picture
+Realia: Realia
+Resource: Resource
+Serial: Serial
+Slide: Slide
+'Sound Recording': 'Sound Recording'
+'Technical Drawing': 'Technical Drawing'
+Toy: Toy
+Transparency: Transparency
+Videorecording: Videorecording
+'Format: dd/mm/yyyy, mm/yyyy or yyyy.': 'Format: dd/mm/yyyy, mm/yyyy or yyyy.'
+General: Geral
+Specific: Specific
+'Edit Item': 'Editar Item'
+'Add Item': 'Adiocionar Item'
+'Google Developers Developer Key': 'Google Developers Developer Key'
+'SMTP Username': 'SMTP Usuário'
+'Username to use for SMTP authentication. Leave blank for no authentication.': 'Nome de usuário a ser usado para autenticação SMTP. Deixe em branco para sem autenticação.'
+'SMTP Password': 'SMTP Senha'
+'SMTP Host': 'SMTP Host'
+'Set the hostname of the mail server.': 'Defina o nome de host do servidor de email.'
+'SMTP Port': 'SMTP Porta'
+'Set the SMTP port number - likely to be 25, 465 or 587.': 'Defina o número da porta SMTP - provavelmente 25, 465 ou 587.'
+'SMTP Encryption': 'Encriptação SMTP'
+'Automatically sets the encryption based on the port, otherwise select one manually.': 'Define automaticamente a criptografia com base na porta, caso contrário, selecione uma manualmente.'
+'Password to use for SMTP authentication. Leave blank for no authentication.': 'Senha a ser usada para autenticação SMTP. Deixe em branco para sem autenticação.'
+'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.': 'If your school uses Google Apps, you can enable single sign on and calendar integration with Kookaburra. This process makes use of Google''s APIs, and allows a user to access Kookaburra without a username and password, provided that their listed email address is a Google account to which they have access. For configuration instructions, {oneString}click here{twoString}.'
+'Google OAuth Download File': 'Google OAuth Download File'
+'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the .json file downloaded from the %{anchor}Google Development Console.%{anchorClose}'
+'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}': 'Provide a copy of the API Key from the %{anchor}Google Development Console.%{anchorClose}'
+'Check for Installed Bundles': 'Check for Installed Bundles'
+'Load Demonstration Data': 'Load Demonstration Data'
+'Item Identifier {identifier}': 'Item Identifier {identifier}'
+'Must be unique, or will lead to update not insert.': 'Deve ser único, ou será atualizado e não inserido.'
+'Who created the item?': 'Quem criou o item?'
+Vendor: Fornecedor
+'Who supplied the item?': 'Quem forneceu o item?'
+'Purchase Date': 'Data da compra'
+'Invoice Number': 'Número da fatura'
+'Location Detail': 'Detalhes de Localização'
+'Shelf, cabinet, sector, etc': 'Prateleira, armário, setor, etc.'
+'Volume or product name.': 'Volume ou Nome do produto'
+'Ownership Type': 'Tipo de Propriedade'
+'Main User': 'Usuário Principal'
+'Username of person the device is assigned to.': 'Username da pessoa à qual o dispositivo está atribuído.'
+'Borrowable?': 'Disponível para empréstimo?'
+'Is item available for loan?': 'O item está disponível para empréstimo?'
+'Status?': 'Status?'
+'Replacement?': 'Substituir?'
+'Replacement Cost': 'Custo de substituição'
+'Replacement Year': 'Ano de substituição'
+Comments/Notes: Comentários/Anotações
+Format: Formato
+Publisher: Publicador
+'Name of the company who published the volume.': 'Name of the company who published the volume.'
+'Publication Date': 'Data de Publicação'
+'Country of Publication': 'País de Publicação'
+Edition: Edição
+ISBN10: ISBN10
+'10-digit unique ISBN number.': '10-digit unique ISBN number.'
+ISBN13: ISBN13
+'13-digit unique ISBN number.': '13-digit unique ISBN number.'
+'A brief blurb describing the volume.': 'A brief blurb describing the volume.'
+Subjects: Assuntos
+'Comma separated list of subjects.': 'Comma separated list of subjects.'
+Collection: Coleção
+'Control Number': 'Número de Controle'
+'Cataloging Authority': 'Autoridade Catalogadora'
+'Reader Age (Youngest)': 'Idade do Leitor (Mais jovem)'
+'Age in years, youngest reading age recommendation.': 'Age in years, youngest reading age recommendation.'
+'Reader Age (Oldest)': 'Idade do Leitor (Mais velho)'
+'Age in years, oldest reading age recommendation.': 'Age in years, oldest reading age recommendation.'
+'Page Count': 'Contagem de Página'
+'The number of pages in the volume.': 'The number of pages in the volume.'
+Height: Altura
+'The physical height of the volume, in cm.': 'The physical height of the volume, in cm.'
+Width: Largura
+'The physical thickness of the volume, in cm.': 'The physical thickness of the volume, in cm.'
+'The primary language of the volume.': 'The primary language of the volume.'
+'Link to web-based information on the volume.': 'Link to web-based information on the volume.'
+'Issuing authority for Control Number.': 'Issuing authority for Control Number.'
+'What kind of product is this?': 'What kind of product is this?'
+'Serial Number': 'Número de Série'
+'Model Name': 'Nome do Modelo'
+'Model ID': Modelo
+Accessories: Acessórios
+'Any chargers, remotes controls, etc?': 'Any chargers, remotes controls, etc?'
+'Warranty Number': 'Número de Garantia'
+'Warranty Expiry': 'Fim da Garantia'
+'Repair Log/Notes': 'Reparar Logs/Anotações'
+Link: Link
+File: Arquivo
+'Please Select...': 'Please Select...'
+Department: Departamento
+Text: Texto
+Description: Descrição
+'The physical width of the volume, in cm.': 'The physical width of the volume, in cm.'
+Thickness: Espessura
+Language: Idioma
+User: Usuário
+'Return Item': 'Devolver Item'
+'Renew Item': 'Renovar Item'
+'The item is not available for renewal.': 'The item is not available for renewal.'
+'This borrower has already exceeded renewal allowances for this library on this item.': 'This borrower has already exceeded renewal allowances for this library on this item.'
+'The return of the item is required for "{action}".': 'The return of the item is required for "{action}".'
+'Reserved Item Available': 'Reserved Item Available'
+reserve:
+    available: 'The item "{title}" you reserved is available for collection.  It will be kept until "{keptTill}". The item will be returned to circulation after this date.'
+'Start Loan': 'Start Loan'
+Return: Return
+'This item is not available to reserve.': 'This item is not available to reserve.'
+'Browse the Library': 'Browse the Library'
+'Library Item Details': 'Library Item Details'
+'View Description': 'Ver Descrição'
+ID: ID
+Title: Título
+Author/Producer: Autor/Produtor
+'Monthly Top 5': 'Top 5 mensal'
+'New Titles': 'Novos títulos'
+by: por
+'': ''
+'The current library has been switched to ''{name}''': 'The current library has been switched to ''{name}'''
+Settings: Configurações
+'Library Settings': 'Library Settings'
+'The current library is the ''{name}''': 'The current library is the ''{name}'''
+'Clear this value to show all items from all libraries.': 'Clear this value to show all items from all libraries.'
+'Export Summary': 'Export Summary'
+'School ID': 'ID da Escola'
+'Name Producer': 'Name Producer'
+Type: Tipo
+'Ownership User/Owner': 'Ownership User/Owner'
+'Status Borrowable': 'Status Borrowable'
+'Purchase Date Vendor': 'Purchase Date Vendor'
+Details: Detalhes
+'Choose Individual': 'Choose Individual'
+'Report Data': 'Dados de Relatório'
+'Borrow Date': 'Data de empréstimo'
+'Return Date': 'Data de devolução'
+'Show Details': 'Show Details'
+'Borrowing Record': 'Borrowing Record'
+Filter: Filtro
+'Ignore Status': 'Ignorar status'
+'Include all users, regardless of status and current enrolment.': 'Incluir todos os usuários, independentemente do status e matrícula atual.'
+'Borrowing User': 'Usuário do empréstimo'
+Item: Item
+'Days Overdue': 'Dias em atraso'
+'Overdue ({days})': 'Overdue ({days})'
+'Library {name}': 'Library {name}'
+'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.': 'This selection sets the the current Library with which yoiu are working, and also allows you to change the settings for this library.'
+'Library Name': 'Library Name'
+'Must be unique': 'Deve ser único'
+'Library Abbreviation': 'Library Abbreviation'
+Facility: 'Local Físico'
+'The storage location when the item is not in use.': 'The storage location when the item is not in use.'
+Active: Ativo
+'Default Lending Period': 'Default Lending Period'
+'in days': 'in days'
+'Background Colour': 'Background Colour'
+'Background Image': 'Background Image'
+Submit: Enviar
+'Loan / Return Manager': 'Loan / Return Manager'
+'Item/Person Search': 'Item/Person Search'
+'No results were found for your search: "{search}"': 'No results were found for your search: "{search}"'
+'The item "{name}" was added to the loan list.': 'The item "{name}" was added to the loan list.'
+Confirm: Confirmar
+single: single
+'Loan List': 'Loan List'
+'Remove Item': 'Remove Item'
+'Remove Person': 'Remove Person'
+return:
+    warning:
+        - '{person} has reached borrowing limits and may not borrow "{name}"'
+    success:
+        - 'The item "{name}" was loaned to "{person}".'
+library:
+    quick:
+        p0: 'The page is designed for use with a bar code scanner, and will accept identifiers for library items and borrowers.'
+        p1: 'Can only be identified using the library item identifier.'
+        p2: 'Borrowers can be identified by the StudentID, by their username or by their hidden system identifier.'
+        p4: 'Your barcode scanner should return the item/borrower code with a carriage return. When entering the code manually, press enter on the keyboard to action the search.'
+        p5: 'When a borrower is linked first, then the first available libray item scanned will be loaned to that borrower, and the form will reset.'
+        p6: 'Pressing Clear {button} will reset the form.'
+        p7: 'A list of select library items will be shown until a borrower is selected.  All selected items are then borrowed by the selected borrower.'
+        p8: 'Any scanned library item that is currently on loan is returned to the library. Any return action is applied or the item is made available.'
+        p9: 'If you are attempting to loan the item that was on loan, then you will need to scan the item a second time.'
+'Library Item': 'Library Item'
+Instructions: Instructions
+'Borrower Identifiers': 'Borrower Identifiers'
+'Borrower List Generator': 'Borrower List Generator'
+borrower:
+    type:
+        student: Aluno
+        staff: Funcionários
+        parent: Pai/Mãe/Responsável
+        other: Outro
+        empty: ''
+'Roll Group': 'Grupo de Inscrição'
+'Only required with a Student Types': 'Only required with a Student Types'
+'Borrower List - {borrowerType}': 'Borrower List - {borrowerType}'
+'Roll Group: {roll_group}': 'Roll Group: {roll_group}'
+'Include Borrower Photo': 'Include Borrower Photo'
+'Borrowing Limit': 'Borrowing Limit'
+'The maximum number of items a borrower can have on loan.': 'The maximum number of items a borrower can have on loan.'
