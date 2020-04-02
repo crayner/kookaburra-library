@@ -16,7 +16,7 @@
 namespace Kookaburra\Library\Manager;
 
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Manager\MessageManager;
 use App\Provider\ProviderFactory;
 use App\Util\ImageHelper;

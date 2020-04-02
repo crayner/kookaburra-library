@@ -14,7 +14,7 @@ namespace Kookaburra\Library\Entity;
 
 use Kookaburra\Departments\Entity\Department;
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use Kookaburra\SchoolAdmin\Entity\Facility;
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;

@@ -13,7 +13,7 @@
 namespace Kookaburra\Library\Entity;
 
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Manager\EntityInterface;
 use App\Provider\ProviderFactory;
 use App\Util\ImageHelper;
