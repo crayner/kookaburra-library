@@ -87,7 +87,7 @@ class BorrowerPagination extends AbstractPaginationManager
 
         $action = new PaginationAction();
         $action->setTitle('View Description')
-            ->setAClass('')
+            ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-info fa-fw fa-1-5x text-gray-700')
             ->setOnClick('displayInformation')
