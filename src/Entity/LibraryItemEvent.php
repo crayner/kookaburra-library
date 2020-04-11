@@ -37,7 +37,7 @@ class LibraryItemEvent implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="bigint", name="id", columnDefinition="INT(14) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="bigint", name="id", columnDefinition="INT(14) UNSIGNED")
      * @ORM\GeneratedValue
      */
     private $id;

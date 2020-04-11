@@ -38,7 +38,7 @@ class Library implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="smallint", columnDefinition="INT(3) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="smallint", columnDefinition="INT(3) UNSIGNED")
      * @ORM\GeneratedValue
      */
     private $id;
